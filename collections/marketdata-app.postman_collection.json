@@ -1,0 +1,165 @@
+{
+  "info": {
+    "name": "Market Data API",
+    "description": "Real-time and historical U.S. stock, options, and index market data over REST. Base URL: https://api.marketdata.app/v1. All requests are authenticated with a Bearer token. Note: endpoints may return HTTP 203 from the caching tier and should be treated as success. Multi-symbol responses (bulk quotes, bulk candles, option chains) consume one API credit per symbol returned.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      { "key": "token", "value": "{{bearerToken}}", "type": "string" }
+    ]
+  },
+  "variable": [
+    { "key": "baseUrl", "value": "https://api.marketdata.app/v1", "type": "string" },
+    { "key": "bearerToken", "value": "", "type": "string" }
+  ],
+  "item": [
+    {
+      "name": "Stocks",
+      "item": [
+        {
+          "name": "Stock candles",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "{{baseUrl}}/stocks/candles/:resolution/:symbol/", "host": ["{{baseUrl}}"], "path": ["stocks", "candles", ":resolution", ":symbol", ""], "variable": [{ "key": "resolution", "value": "D" }, { "key": "symbol", "value": "AAPL" }] },
+            "description": "Retrieve OHLCV candlestick data for a stock at the requested resolution."
+          }
+        },
+        {
+          "name": "Stock quote",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "{{baseUrl}}/stocks/quotes/:symbol/", "host": ["{{baseUrl}}"], "path": ["stocks", "quotes", ":symbol", ""], "variable": [{ "key": "symbol", "value": "AAPL" }] },
+            "description": "Fetch a real-time or historical quote for a single stock symbol."
+          }
+        },
+        {
+          "name": "Bulk stock quotes",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "{{baseUrl}}/stocks/bulkquotes/?symbols=AAPL,MSFT,NVDA", "host": ["{{baseUrl}}"], "path": ["stocks", "bulkquotes", ""], "query": [{ "key": "symbols", "value": "AAPL,MSFT,NVDA" }] },
+            "description": "Fetch quotes for many symbols at once. Each symbol returned consumes a credit."
+          }
+        },
+        {
+          "name": "Bulk stock candles",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "{{baseUrl}}/stocks/bulkcandles/:resolution/?symbols=AAPL,MSFT,NVDA", "host": ["{{baseUrl}}"], "path": ["stocks", "bulkcandles", ":resolution", ""], "variable": [{ "key": "resolution", "value": "D" }], "query": [{ "key": "symbols", "value": "AAPL,MSFT,NVDA" }] },
+            "description": "Fetch candles for many symbols at once for a single date. Each symbol returned consumes a credit."
+          }
+        },
+        {
+          "name": "Stock earnings",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "{{baseUrl}}/stocks/earnings/:symbol/", "host": ["{{baseUrl}}"], "path": ["stocks", "earnings", ":symbol", ""], "variable": [{ "key": "symbol", "value": "AAPL" }] },
+            "description": "Retrieve reported and estimated earnings data for a stock."
+          }
+        },
+        {
+          "name": "Stock news",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "{{baseUrl}}/stocks/news/:symbol/", "host": ["{{baseUrl}}"], "path": ["stocks", "news", ":symbol", ""], "variable": [{ "key": "symbol", "value": "AAPL" }] },
+            "description": "Retrieve news headlines related to a stock symbol."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Options",
+      "item": [
+        {
+          "name": "Option expirations",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "{{baseUrl}}/options/expirations/:underlyingSymbol/", "host": ["{{baseUrl}}"], "path": ["options", "expirations", ":underlyingSymbol", ""], "variable": [{ "key": "underlyingSymbol", "value": "AAPL" }] },
+            "description": "Get current or historical option expiration dates for an underlying symbol."
+          }
+        },
+        {
+          "name": "Option symbol lookup",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "{{baseUrl}}/options/lookup/:userInput/", "host": ["{{baseUrl}}"], "path": ["options", "lookup", ":userInput", ""], "variable": [{ "key": "userInput", "value": "AAPL 7/28/23 $200 Call" }] },
+            "description": "Convert a human-readable option description into a valid OCC option symbol."
+          }
+        },
+        {
+          "name": "Option strikes",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "{{baseUrl}}/options/strikes/:underlyingSymbol/", "host": ["{{baseUrl}}"], "path": ["options", "strikes", ":underlyingSymbol", ""], "variable": [{ "key": "underlyingSymbol", "value": "AAPL" }] },
+            "description": "Get current or historical option strike prices for an underlying symbol."
+          }
+        },
+        {
+          "name": "Option chain",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "{{baseUrl}}/options/chain/:underlyingSymbol/", "host": ["{{baseUrl}}"], "path": ["options", "chain", ":underlyingSymbol", ""], "variable": [{ "key": "underlyingSymbol", "value": "AAPL" }] },
+            "description": "Get an end-of-day or real-time option chain for an underlying. Each option symbol returned consumes a credit."
+          }
+        },
+        {
+          "name": "Option quote",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "{{baseUrl}}/options/quotes/:optionSymbol/", "host": ["{{baseUrl}}"], "path": ["options", "quotes", ":optionSymbol", ""], "variable": [{ "key": "optionSymbol", "value": "AAPL230728C00200000" }] },
+            "description": "Get a real-time or historical quote for a single option contract, including Greeks."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Indices",
+      "item": [
+        {
+          "name": "Index candles",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "{{baseUrl}}/indices/candles/:resolution/:symbol/", "host": ["{{baseUrl}}"], "path": ["indices", "candles", ":resolution", ":symbol", ""], "variable": [{ "key": "resolution", "value": "D" }, { "key": "symbol", "value": "VIX" }] },
+            "description": "Retrieve OHLC candlestick data for an index at the requested resolution."
+          }
+        },
+        {
+          "name": "Index quote",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "{{baseUrl}}/indices/quotes/:symbol/", "host": ["{{baseUrl}}"], "path": ["indices", "quotes", ":symbol", ""], "variable": [{ "key": "symbol", "value": "VIX" }] },
+            "description": "Fetch a real-time or historical quote for a single index symbol."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Markets",
+      "item": [
+        {
+          "name": "Market status",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "{{baseUrl}}/markets/status/", "host": ["{{baseUrl}}"], "path": ["markets", "status", ""] },
+            "description": "Return whether the market is open or closed for a date or date range. Defaults to the current US market day."
+          }
+        }
+      ]
+    }
+  ]
+}

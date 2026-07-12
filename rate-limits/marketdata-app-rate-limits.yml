@@ -1,0 +1,84 @@
+specification: API Commons Rate Limits
+specificationVersion: '0.1'
+schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main/schema/api-commons.yml#/$defs/RateLimits
+provider: Market Data
+providerId: marketdata-app
+created: '2026-07-11'
+modified: '2026-07-11'
+reconciled: false
+tags:
+- Market Data
+- Financial Data
+- Rate Limiting
+- Quotas
+- Credits
+description: >-
+  Market Data governs usage with an API-credit model rather than a simple
+  requests-per-second limit. Every successful call costs at least one credit,
+  and the multi-symbol endpoints (stocks/bulkquotes, stocks/bulkcandles,
+  options/chain, stocks/quotes) consume one credit for each symbol returned in
+  the response - so a full option chain can cost thousands of credits. Free,
+  Starter, and Trader plans enforce a daily credit cap that resets at 9:30 AM
+  Eastern; Quant and Prime remove the daily cap and apply a per-minute credit
+  ceiling instead. Across all plans there is a hard limit of 50 simultaneous
+  requests, and an account may only be used from a single IP address at a time.
+notes: >-
+  An in-flight request is allowed to proceed as long as at least one credit
+  remains, even if it pushes the balance negative; subsequent calls are blocked
+  until the window resets. Verify current credit allowances and caps on the plan
+  limits page during reconciliation.
+sources:
+- https://www.marketdata.app/docs/account/plan-limits/
+- https://www.marketdata.app/docs/api/
+- https://www.marketdata.app/pricing/
+responseCodes:
+  throttled: 429
+  cached: 203
+limits:
+- name: Free Forever Daily Requests
+  scope: account
+  metric: requests
+  limit: 100 per day
+  notes: Free tier is capped at 100 requests per day; resets 9:30 AM Eastern.
+- name: Starter Daily Credits
+  scope: account
+  metric: credits
+  limit: 10000 per day
+  notes: Resets 9:30 AM Eastern. No per-minute cap.
+- name: Trader Daily Credits
+  scope: account
+  metric: credits
+  limit: 100000 per day
+  notes: Resets 9:30 AM Eastern. No per-minute cap.
+- name: Quant Per-Minute Credits
+  scope: account
+  metric: credits
+  limit: 10000 per minute
+  notes: No daily cap; credits are governed on a per-minute window.
+- name: Prime Per-Minute Credits
+  scope: account
+  metric: credits
+  limit: 100000 per minute
+  notes: No daily cap; credits are governed on a per-minute window.
+- name: Simultaneous Requests
+  scope: account
+  metric: connections
+  limit: 50 concurrent
+  notes: All plans are capped at 50 simultaneous in-flight requests.
+- name: Per-Symbol Credit Consumption
+  scope: request
+  metric: credits
+  limit: 1 credit per symbol returned
+  notes: bulkquotes, bulkcandles, options/chain, and multi-symbol quotes charge one credit per symbol in the response.
+policies:
+- name: Single IP per Account
+  description: An account may only be accessed from one IP address at a time; concurrent connections from multiple locations are not permitted.
+- name: Cached Responses
+  description: Any endpoint may return HTTP 203 Non-Authoritative Information when served from the caching tier; clients must treat 203 the same as 200 OK.
+- name: Negative Balance Grace
+  description: A request proceeds if at least one credit remains, even if it drives the balance negative; further requests block until the window resets.
+- name: Backoff Strategy
+  description: Clients should implement exponential backoff with jitter and honor Retry-After on 429 responses.
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com

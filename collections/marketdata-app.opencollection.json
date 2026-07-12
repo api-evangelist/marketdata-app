@@ -1,0 +1,185 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Market Data API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": { "name": "Stocks", "type": "folder" },
+      "items": [
+        {
+          "info": { "name": "Stock candles.", "type": "http" },
+          "http": {
+            "method": "GET",
+            "url": "https://api.marketdata.app/v1/stocks/candles/:resolution/:symbol/",
+            "params": [
+              { "name": "resolution", "value": "D", "type": "path", "description": "Candle resolution such as D (daily)." },
+              { "name": "symbol", "value": "AAPL", "type": "path", "description": "The company's ticker symbol." }
+            ]
+          },
+          "docs": "Retrieve OHLCV candlestick data for a stock at the requested resolution."
+        },
+        {
+          "info": { "name": "Stock quote.", "type": "http" },
+          "http": {
+            "method": "GET",
+            "url": "https://api.marketdata.app/v1/stocks/quotes/:symbol/",
+            "params": [
+              { "name": "symbol", "value": "AAPL", "type": "path", "description": "The company's ticker symbol." }
+            ]
+          },
+          "docs": "Fetch a real-time or historical quote for a single stock symbol."
+        },
+        {
+          "info": { "name": "Bulk stock quotes.", "type": "http" },
+          "http": {
+            "method": "GET",
+            "url": "https://api.marketdata.app/v1/stocks/bulkquotes/?symbols=AAPL,MSFT,NVDA"
+          },
+          "docs": "Fetch quotes for many symbols at once. Each symbol returned consumes a credit."
+        },
+        {
+          "info": { "name": "Bulk stock candles.", "type": "http" },
+          "http": {
+            "method": "GET",
+            "url": "https://api.marketdata.app/v1/stocks/bulkcandles/:resolution/?symbols=AAPL,MSFT,NVDA",
+            "params": [
+              { "name": "resolution", "value": "D", "type": "path", "description": "Candle resolution such as D (daily)." }
+            ]
+          },
+          "docs": "Fetch candles for many symbols at once for a single date. Each symbol returned consumes a credit."
+        },
+        {
+          "info": { "name": "Stock earnings.", "type": "http" },
+          "http": {
+            "method": "GET",
+            "url": "https://api.marketdata.app/v1/stocks/earnings/:symbol/",
+            "params": [
+              { "name": "symbol", "value": "AAPL", "type": "path", "description": "The company's ticker symbol." }
+            ]
+          },
+          "docs": "Retrieve reported and estimated earnings data for a stock."
+        },
+        {
+          "info": { "name": "Stock news.", "type": "http" },
+          "http": {
+            "method": "GET",
+            "url": "https://api.marketdata.app/v1/stocks/news/:symbol/",
+            "params": [
+              { "name": "symbol", "value": "AAPL", "type": "path", "description": "The company's ticker symbol." }
+            ]
+          },
+          "docs": "Retrieve news headlines related to a stock symbol."
+        }
+      ]
+    },
+    {
+      "info": { "name": "Options", "type": "folder" },
+      "items": [
+        {
+          "info": { "name": "Option expirations.", "type": "http" },
+          "http": {
+            "method": "GET",
+            "url": "https://api.marketdata.app/v1/options/expirations/:underlyingSymbol/",
+            "params": [
+              { "name": "underlyingSymbol", "value": "AAPL", "type": "path", "description": "The underlying ticker symbol." }
+            ]
+          },
+          "docs": "Get current or historical option expiration dates for an underlying symbol."
+        },
+        {
+          "info": { "name": "Option symbol lookup.", "type": "http" },
+          "http": {
+            "method": "GET",
+            "url": "https://api.marketdata.app/v1/options/lookup/:userInput/",
+            "params": [
+              { "name": "userInput", "value": "AAPL 7/28/23 $200 Call", "type": "path", "description": "Human-readable option description." }
+            ]
+          },
+          "docs": "Convert a human-readable option description into a valid OCC option symbol."
+        },
+        {
+          "info": { "name": "Option strikes.", "type": "http" },
+          "http": {
+            "method": "GET",
+            "url": "https://api.marketdata.app/v1/options/strikes/:underlyingSymbol/",
+            "params": [
+              { "name": "underlyingSymbol", "value": "AAPL", "type": "path", "description": "The underlying ticker symbol." }
+            ]
+          },
+          "docs": "Get current or historical option strike prices for an underlying symbol."
+        },
+        {
+          "info": { "name": "Option chain.", "type": "http" },
+          "http": {
+            "method": "GET",
+            "url": "https://api.marketdata.app/v1/options/chain/:underlyingSymbol/",
+            "params": [
+              { "name": "underlyingSymbol", "value": "AAPL", "type": "path", "description": "The underlying ticker symbol." }
+            ]
+          },
+          "docs": "Get an end-of-day or real-time option chain for an underlying. Each option symbol returned consumes a credit."
+        },
+        {
+          "info": { "name": "Option quote.", "type": "http" },
+          "http": {
+            "method": "GET",
+            "url": "https://api.marketdata.app/v1/options/quotes/:optionSymbol/",
+            "params": [
+              { "name": "optionSymbol", "value": "AAPL230728C00200000", "type": "path", "description": "The OCC option symbol." }
+            ]
+          },
+          "docs": "Get a real-time or historical quote for a single option contract, including Greeks."
+        }
+      ]
+    },
+    {
+      "info": { "name": "Indices", "type": "folder" },
+      "items": [
+        {
+          "info": { "name": "Index candles.", "type": "http" },
+          "http": {
+            "method": "GET",
+            "url": "https://api.marketdata.app/v1/indices/candles/:resolution/:symbol/",
+            "params": [
+              { "name": "resolution", "value": "D", "type": "path", "description": "Candle resolution such as D (daily)." },
+              { "name": "symbol", "value": "VIX", "type": "path", "description": "The index symbol." }
+            ]
+          },
+          "docs": "Retrieve OHLC candlestick data for an index at the requested resolution."
+        },
+        {
+          "info": { "name": "Index quote.", "type": "http" },
+          "http": {
+            "method": "GET",
+            "url": "https://api.marketdata.app/v1/indices/quotes/:symbol/",
+            "params": [
+              { "name": "symbol", "value": "VIX", "type": "path", "description": "The index symbol." }
+            ]
+          },
+          "docs": "Fetch a real-time or historical quote for a single index symbol."
+        }
+      ]
+    },
+    {
+      "info": { "name": "Markets", "type": "folder" },
+      "items": [
+        {
+          "info": { "name": "Market status.", "type": "http" },
+          "http": {
+            "method": "GET",
+            "url": "https://api.marketdata.app/v1/markets/status/"
+          },
+          "docs": "Return whether the market is open or closed for a date or date range. Defaults to the current US market day."
+        }
+      ]
+    }
+  ]
+}

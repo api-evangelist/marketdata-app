@@ -1,0 +1,94 @@
+specification: FinOps Framework
+specificationVersion: '1.0'
+schema: https://www.finops.org/framework/
+provider: Market Data
+providerId: marketdata-app
+created: '2026-07-11'
+modified: '2026-07-11'
+reconciled: false
+tags:
+- Market Data
+- Financial Data
+- Stocks
+- Options
+- FinOps
+- Cost Management
+- FOCUS
+description: >-
+  FinOps view of Market Data spend. Market Data is a SaaS market-data API billed
+  on a subscription plan that grants a daily (or per-minute) allocation of API
+  credits. The dominant cost driver is credit consumption: every call spends at
+  least one credit, and multi-symbol responses - bulk quotes, bulk candles, and
+  especially large options chains - spend one credit per symbol returned. Cost
+  is therefore controlled less by request count than by how wide each response
+  is. Plans range from Free Forever through Starter, Trader, Quant, and Prime,
+  with a 30-day trial up front.
+notes: >-
+  The single largest optimization lever is filtering options chains (by
+  expiration, strike range, side, or moneyness) so responses return fewer
+  contracts and consume fewer credits. Verify per-plan credit allowances and
+  prices on the Market Data pricing page during reconciliation.
+sources:
+- https://www.marketdata.app/pricing/
+- https://www.marketdata.app/docs/account/plan-limits/
+- https://www.marketdata.app/docs/api/
+- https://focus.finops.org/focus-specification/v1-3/
+alignedWith:
+  framework: FinOps Foundation Framework
+  frameworkUrl: https://www.finops.org/framework/
+  dataSpec: FOCUS
+  dataSpecVersion: '1.3'
+  dataSpecUrl: https://focus.finops.org/focus-specification/v1-3/
+publisherName: Market Data
+serviceCategory: Financial Market Data
+billingModel:
+  pricingCategory: Subscription-Based
+  billingFrequency: Monthly
+  billingCurrency: USD
+  chargeCategories:
+  - Purchase
+  - Usage
+focusColumns:
+  ServiceName: Market Data API
+  ServiceCategory: Financial Market Data
+  ProviderName: Market Data
+  PublisherName: Market Data
+  InvoiceIssuerName: Market Data
+  BillingCurrency: USD
+  ChargeCategory: Purchase
+  PricingCategory: Subscription-Based
+meters:
+- name: api_credits
+  description: API credits consumed by successful requests; one credit per request minimum, one per symbol on multi-symbol responses.
+  unit: credits
+  aggregation: sum
+  dimensions:
+  - account
+  - endpoint
+  - plan
+- name: symbols_returned
+  description: Count of symbols in multi-symbol responses (bulk quotes, bulk candles, options chains), each of which spends a credit.
+  unit: symbols
+  aggregation: sum
+  dimensions:
+  - account
+  - endpoint
+- name: subscription_fee
+  description: Recurring plan subscription charge (Starter, Trader, Quant, Prime).
+  unit: months
+  aggregation: sum
+  dimensions:
+  - account
+  - plan
+principles:
+- name: Visibility
+  description: Track daily credit burn against the plan allowance and attribute it per endpoint; watch options-chain calls, which can spend thousands of credits each.
+- name: Allocation
+  description: Map API tokens or accounts to workloads/teams so credit consumption and the monthly subscription map to internal cost centers.
+- name: Optimization
+  description: Filter options chains and use single-symbol quotes over broad bulk requests where possible; right-size the plan (Free/Starter/Trader daily cap vs Quant/Prime per-minute) to the actual burn pattern.
+- name: Accountability
+  description: Review monthly credit usage against the chosen plan and downgrade or upgrade tiers as the daily/per-minute burn stabilizes.
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com

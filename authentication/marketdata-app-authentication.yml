@@ -1,0 +1,18 @@
+generated: '2026-07-11'
+method: derived
+source: openapi/marketdata-app-openapi.yml
+summary:
+  types:
+  - http
+schemes:
+- name: bearerAuth
+  type: http
+  scheme: bearer
+  description: >-
+    Bearer token generated in the Market Data dashboard. Passed as
+    `Authorization: Bearer YOUR_API_TOKEN`. The token may also be supplied via a
+    `token` query parameter for quick browser or spreadsheet use. A single IP
+    address per account is enforced.
+  sources:
+  - openapi/marketdata-app-openapi.yml
+  - https://www.marketdata.app/docs/api/authentication/

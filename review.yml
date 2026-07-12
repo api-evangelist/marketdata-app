@@ -1,0 +1,95 @@
+aid: marketdata-app
+name: Market Data
+review:
+  question: Does Market Data expose a documented public WebSocket API?
+  answer: false
+  date: '2026-07-11'
+  reviewer: API Evangelist
+  asyncapiSpecCreated: false
+  asyncapiScopeNote: |
+    No AsyncAPI document was authored. Market Data's entire public surface is
+    request/response REST over HTTPS at https://api.marketdata.app/v1. "Real-time"
+    on Market Data means a live quote returned synchronously from a REST call, not
+    a server-push stream. There is no WebSocket (ws:// or wss://) or Server-Sent
+    Events endpoint documented anywhere in the API reference, so there is no
+    event-driven transport to model in AsyncAPI.
+findings:
+  summary: |
+    Market Data does not publish a documented public WebSocket API. Market Data
+    (marketdata.app) is a U.S. stock, options, and index market-data provider
+    whose API is a pure REST interface at https://api.marketdata.app/v1,
+    authenticated with a Bearer token (also accepted as a token query parameter).
+    Every documented endpoint - stocks candles/quotes/bulk/earnings/news, options
+    chain/quotes/expirations/strikes/lookup, indices candles/quotes, and markets
+    status - is a GET request returning JSON or CSV. Market Data advertises
+    "real-time" data, but this refers to live values returned synchronously in a
+    REST response, not a streaming push channel. No ws:// or wss:// endpoint, and
+    no SSE surface, is documented as of the review date. The official SDKs
+    (Python, Go, PHP) are HTTP clients, not streaming clients.
+  openSource: |
+    Market Data is a commercial hosted service; the API itself is not open source.
+    The company publishes official open-source client SDKs under the MarketDataApp
+    GitHub organization (github.com/MarketDataApp), including a Python SDK (sdk-py),
+    a Go SDK, and a PHP SDK in beta. These are REST/HTTP client libraries.
+  transports:
+    - protocol: REST
+      scheme: https
+      baseURL: https://api.marketdata.app/v1
+      documented: true
+      note: All Stocks, Options, Indices, and Markets endpoints are GET request/response REST returning JSON or CSV.
+    - protocol: WebSocket
+      scheme: wss
+      documented: false
+      note: No WebSocket endpoint is documented anywhere in the Market Data API reference as of the review date.
+    - protocol: SSE
+      scheme: https
+      documented: false
+      note: No Server-Sent Events / streaming push transport is documented; "real-time" refers to synchronous REST responses.
+  endpointsConfirmedRest:
+    - GET https://api.marketdata.app/v1/stocks/candles/{resolution}/{symbol}/
+    - GET https://api.marketdata.app/v1/stocks/quotes/{symbol}/
+    - GET https://api.marketdata.app/v1/stocks/bulkquotes/
+    - GET https://api.marketdata.app/v1/stocks/bulkcandles/{resolution}/
+    - GET https://api.marketdata.app/v1/stocks/earnings/{symbol}/
+    - GET https://api.marketdata.app/v1/stocks/news/{symbol}/
+    - GET https://api.marketdata.app/v1/options/expirations/{underlyingSymbol}/
+    - GET https://api.marketdata.app/v1/options/lookup/{userInput}/
+    - GET https://api.marketdata.app/v1/options/strikes/{underlyingSymbol}/
+    - GET https://api.marketdata.app/v1/options/chain/{underlyingSymbol}/
+    - GET https://api.marketdata.app/v1/options/quotes/{optionSymbol}/
+    - GET https://api.marketdata.app/v1/indices/candles/{resolution}/{symbol}/
+    - GET https://api.marketdata.app/v1/indices/quotes/{symbol}/
+    - GET https://api.marketdata.app/v1/markets/status/
+sources:
+  - url: https://www.marketdata.app/docs/api/
+    type: Documentation
+    note: Root endpoint https://api.marketdata.app/, REST, JSON/CSV, HTTP 203 caching note. No WebSocket mentioned.
+  - url: https://www.marketdata.app/docs/api/stocks
+    type: APIReference
+    note: Stocks candles, quotes, bulkquotes, bulkcandles, earnings, news - all GET REST.
+  - url: https://www.marketdata.app/docs/api/options/chain
+    type: APIReference
+    note: Options chain GET endpoint at /v1/options/chain/{underlyingSymbol}/.
+  - url: https://www.marketdata.app/docs/api/options/expirations/
+    type: APIReference
+    note: Options expirations, strikes, lookup, and quotes - all GET REST.
+  - url: https://www.marketdata.app/docs/api/markets/status
+    type: APIReference
+    note: Markets status GET endpoint at /v1/markets/status/.
+  - url: https://github.com/MarketDataApp/sdk-py
+    type: SourceCode
+    note: Official Python SDK; HTTP client for the REST API, not a streaming client.
+  - url: https://www.marketdata.app/docs/account/plan-limits/
+    type: Documentation
+    note: API-credit model, 50 simultaneous request cap; no streaming transport described.
+actions:
+  asyncapiPath: null
+  apisYmlUpdated: true
+  reason: |
+    No WebSocket or other server-push protocol surface exists on Market Data's
+    public API. Every documented endpoint is request/response REST over HTTPS.
+    No AsyncAPI document was created because there is no event-driven transport
+    to model; "real-time" data is delivered synchronously in REST responses.
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com

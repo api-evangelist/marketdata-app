@@ -1,0 +1,169 @@
+specification: API Commons Plans
+specificationVersion: '0.1'
+schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main/schema/api-commons.yml#/$defs/Plans
+provider: Market Data
+providerId: marketdata-app
+created: '2026-07-11'
+modified: '2026-07-11'
+reconciled: false
+tags:
+- Market Data
+- Financial Data
+- Stocks
+- Options
+- Indices
+- Plans
+description: >-
+  Market Data is metered on a daily (or per-minute, on higher tiers) API-credit
+  model rather than a flat per-endpoint fee. Every successful request costs at
+  least one credit, and multi-symbol responses - bulk quotes, bulk candles, and
+  options chains - consume one credit per symbol returned, so a single SPX
+  option-chain call can cost thousands of credits. New users get a 30-day trial
+  (no credit card) that rolls into a Free Forever plan (100 requests/day). Paid
+  plans - Starter, Trader, Prime, and Quant - raise or remove the daily cap.
+  Real-time data is the one feature excluded from free trials due to exchange
+  regulations for non-professional users. Prices below reflect published rates
+  and should be reconciled against the live pricing page.
+notes: >-
+  Starter and Trader advertise a lower effective monthly rate when billed
+  annually versus month-to-month. Prime and Quant remove the daily credit cap
+  and instead apply a high per-minute credit ceiling. Verify current tiers,
+  prices, and credit allowances on the Market Data pricing page during
+  reconciliation.
+sources:
+- https://www.marketdata.app/pricing/
+- https://www.marketdata.app/docs/account/plans/
+- https://www.marketdata.app/docs/account/plan-limits/
+- https://www.marketdata.app/docs/account/free-accounts/
+plans:
+- id: marketdata-trial
+  name: Free Trial
+  type: trial
+  description: >-
+    30-day full-feature trial with no credit card required. Provides the credit
+    allowance of the Starter or Trader tier during the trial window; at the end
+    the account rolls into Free Forever. Real-time data is excluded from the
+    trial for non-professional users per exchange rules.
+  entries:
+  - label: Trial API Credits
+    name: trial_credits
+    type: usage
+    metric: credits
+    limit: 100000
+    timeFrame: day
+    geo: global
+    unit: 1
+    price: free for 30 days
+    userMultiplied: false
+  elements:
+  - name: Stocks, Options, Indices, and Markets Endpoints
+  - name: Historical Data
+  - name: No Credit Card Required
+- id: marketdata-free
+  name: Free Forever
+  type: free
+  description: >-
+    Permanent free tier for light and hobby usage. Capped at 100 API requests
+    per day with delayed/historical data.
+  entries:
+  - label: Daily API Requests
+    name: free_daily_requests
+    type: usage
+    metric: requests
+    limit: 100
+    timeFrame: day
+    geo: global
+    unit: 1
+    price: $0
+    userMultiplied: false
+  elements:
+  - name: Stocks, Options, Indices, and Markets Endpoints
+  - name: Historical and Delayed Data
+- id: marketdata-starter
+  name: Starter
+  type: paid
+  description: >-
+    Entry paid plan with 10,000 API credits per day and no per-minute cap.
+    Advertised around $12/month billed annually or $30/month month-to-month.
+  entries:
+  - label: Daily API Credits
+    name: starter_credits
+    type: usage
+    metric: credits
+    limit: 10000
+    timeFrame: day
+    geo: global
+    unit: 1
+    price: from $12/month billed annually (about $30/month monthly)
+    userMultiplied: false
+  elements:
+  - name: 10,000 Credits Per Day
+  - name: Stocks, Options, Indices, and Markets Endpoints
+- id: marketdata-trader
+  name: Trader
+  type: paid
+  description: >-
+    Mid-tier paid plan with 100,000 API credits per day and no per-minute cap.
+    Advertised around $30/month billed annually or $75/month month-to-month.
+  entries:
+  - label: Daily API Credits
+    name: trader_credits
+    type: usage
+    metric: credits
+    limit: 100000
+    timeFrame: day
+    geo: global
+    unit: 1
+    price: from $30/month billed annually (about $75/month monthly)
+    userMultiplied: false
+  elements:
+  - name: 100,000 Credits Per Day
+  - name: Real-Time Data
+  - name: Stocks, Options, Indices, and Markets Endpoints
+- id: marketdata-quant
+  name: Quant
+  type: paid
+  description: >-
+    High-volume plan that removes the daily credit cap and instead applies a
+    per-minute ceiling of 10,000 credits, for sustained quantitative workloads.
+  entries:
+  - label: Per-Minute API Credits
+    name: quant_credits
+    type: usage
+    metric: credits
+    limit: 10000
+    timeFrame: minute
+    geo: global
+    unit: 1
+    price: see pricing page
+    userMultiplied: false
+  elements:
+  - name: No Daily Credit Cap
+  - name: 10,000 Credits Per Minute
+  - name: Real-Time Data
+- id: marketdata-prime
+  name: Prime
+  type: paid
+  description: >-
+    Market Data's most robust plan for high-powered traders and investors -
+    removes the daily credit cap and raises the per-minute ceiling to 100,000
+    credits, with extensive data access and customization.
+  entries:
+  - label: Per-Minute API Credits
+    name: prime_credits
+    type: usage
+    metric: credits
+    limit: 100000
+    timeFrame: minute
+    geo: global
+    unit: 1
+    price: see pricing page
+    userMultiplied: false
+  elements:
+  - name: No Daily Credit Cap
+  - name: 100,000 Credits Per Minute
+  - name: Real-Time Data
+  - name: Priority Support
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com
