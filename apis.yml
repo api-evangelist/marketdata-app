@@ -126,6 +126,8 @@ apis:
     status endpoint reports open or closed for a given date or date range, per
     country, honoring weekends and exchange holidays.
 common:
+- type: AgenticAccess
+  url: agentic-access/marketdata-app-agentic-access.yml
 - type: Authentication
   url: authentication/marketdata-app-authentication.yml
 - type: GitHubOrganization
