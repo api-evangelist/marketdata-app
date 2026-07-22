@@ -1,0 +1,43 @@
+generated: '2026-07-22'
+method: searched
+source: https://roadmap.marketdata.app/changelog
+scheme: monthly-dated
+notes: >-
+  Public changelog hosted on Canny (roadmap.marketdata.app redirects to
+  marketdata.canny.io). Entries are monthly, dated posts; newsletter
+  subscribers receive the same changelog monthly by email. Recent window only;
+  the live changelog is the source of truth.
+entries:
+  - date: '2026-07-01'
+    title: June 2026 Update - Java & Kotlin SDK released
+    breaking: false
+    highlights:
+      - v1.0.0 of the Market Data Java & Kotlin SDK on Maven Central (app.marketdata:marketdata-sdk-java), JDK 17/21/25, null-annotated (JSpecify), sync + CompletableFuture on every endpoint.
+      - Auto-splitting of multi-year intraday candle requests into concurrent year-sized slices.
+      - Automatic retries with exponential backoff, Retry-After honored, rate-limit tracking.
+      - Adding server capacity in a second datacenter to remove the remaining single point of failure (expected online July 2026).
+  - date: '2026-05-01'
+    title: April 2026 - Google Sheets pricing cut
+    breaking: false
+    highlights:
+      - Repeat Market Data formulas in Google Sheets bill 0 credits (first run of a formula costs 1 credit per day; all recalcs free) - up to 50x cheaper live dashboards.
+      - One-click Refresh Current Sheet / Refresh Current Sheet Errors menu items.
+      - Sheets errors now include numeric codes in the cell (e.g. [ERROR-402], [ERROR-404]).
+  - date: '2026-02-20'
+    title: February 2026 - PHP SDK v1.0.0
+    breaking: false
+    highlights:
+      - Official v1.0.0 release of the Market Data PHP SDK (PHP 8.2+, strict typing, PSR-3 logging, retries with backoff, options-chain filtering).
+      - Fixed a bug that caused users to get cached mode even when not requested.
+      - Began work on dividend-adjusted candles.
+  - date: '2026-01-09'
+    title: January 2026 - Python SDK released
+    breaking: false
+    highlights:
+      - Official Market Data Python SDK (Pydantic validation, pandas/polars output, structured error results, automatic rate-limit awareness).
+      - New relative date keyphrase "last session" for both Sheets and API.
+  - date: '2024-09-16'
+    title: September 2024 - PHP SDK beta
+    breaking: false
+    highlights:
+      - Beta release of the official Market Data PHP SDK.

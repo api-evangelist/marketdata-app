@@ -1,0 +1,195 @@
+openapi: 3.0.3
+info:
+  title: Market Data Indices API
+  description: The Market Data API delivers real-time and historical U.S. stock, options, and index market data over a simple REST interface. All endpoints are served from https://api.marketdata.app/v1 and return JSON (or CSV) responses. Most endpoints require only a ticker symbol as a path parameter. Requests are authenticated with a Bearer token generated in the Market Data dashboard. Coverage spans stock candles and quotes (single and bulk), corporate earnings and news, full options chains with per-contract quotes, expirations, strikes and OCC symbol lookup, index candles and quotes, and market open/closed status. Note that Market Data may return HTTP 203 Non-Authoritative Information (instead of 200 OK) when a response is served from its caching tier; clients must treat 203 as success.
+  version: '1.0'
+  contact:
+    name: Market Data
+    url: https://www.marketdata.app
+  termsOfService: https://www.marketdata.app/terms/
+servers:
+- url: https://api.marketdata.app/v1
+  description: Market Data API v1
+security:
+- bearerAuth: []
+tags:
+- name: Indices
+  description: Real-time and historical index candles and quotes.
+paths:
+  /indices/candles/{resolution}/{symbol}/:
+    get:
+      operationId: getIndexCandles
+      tags:
+      - Indices
+      summary: Index candles
+      description: Retrieve OHLC candlestick data for an index over a date range at the requested resolution.
+      parameters:
+      - name: resolution
+        in: path
+        required: true
+        description: Candle resolution such as D (daily).
+        schema:
+          type: string
+      - name: symbol
+        in: path
+        required: true
+        description: The index symbol, e.g. VIX or SPX.
+        schema:
+          type: string
+      - name: from
+        in: query
+        required: false
+        description: The leftmost (earliest) date of the date range.
+        schema:
+          type: string
+      - name: to
+        in: query
+        required: false
+        description: The rightmost (latest) date of the date range.
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OHLC candle series for the index.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CandlesResponse'
+        '203':
+          description: Cached index candles (treat as success).
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CandlesResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+  /indices/quotes/{symbol}/:
+    get:
+      operationId: getIndexQuote
+      tags:
+      - Indices
+      summary: Index quote
+      description: Fetch a real-time or historical quote for a single index symbol, including last value and change.
+      parameters:
+      - name: symbol
+        in: path
+        required: true
+        description: The index symbol, e.g. VIX or SPX.
+        schema:
+          type: string
+      responses:
+        '200':
+          description: A quote for the requested index.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/QuoteResponse'
+        '203':
+          description: Cached index quote (treat as success).
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/QuoteResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+components:
+  responses:
+    TooManyRequests:
+      description: Credit allocation or simultaneous-request limit exceeded.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    Unauthorized:
+      description: Authentication failed or the token is missing or invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+  schemas:
+    CandlesResponse:
+      type: object
+      description: Column-oriented OHLCV candle series.
+      properties:
+        s:
+          type: string
+          description: Status of the response - ok, no_data, or error.
+        t:
+          type: array
+          description: Candle timestamps (Unix seconds).
+          items:
+            type: integer
+        o:
+          type: array
+          description: Open prices.
+          items:
+            type: number
+        h:
+          type: array
+          description: High prices.
+          items:
+            type: number
+        l:
+          type: array
+          description: Low prices.
+          items:
+            type: number
+        c:
+          type: array
+          description: Close prices.
+          items:
+            type: number
+        v:
+          type: array
+          description: Volume.
+          items:
+            type: integer
+    ErrorResponse:
+      type: object
+      properties:
+        s:
+          type: string
+          description: Always error for failed requests.
+        errmsg:
+          type: string
+          description: Human-readable error message.
+    QuoteResponse:
+      type: object
+      description: Column-oriented quote payload.
+      properties:
+        s:
+          type: string
+          description: Status of the response.
+        symbol:
+          type: array
+          items:
+            type: string
+        last:
+          type: array
+          items:
+            type: number
+        bid:
+          type: array
+          items:
+            type: number
+        ask:
+          type: array
+          items:
+            type: number
+        volume:
+          type: array
+          items:
+            type: integer
+        updated:
+          type: array
+          items:
+            type: integer
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: Bearer token generated in the Market Data dashboard. Passed as Authorization Bearer YOUR_API_TOKEN. A token may also be supplied via the token query parameter.

@@ -1,0 +1,25 @@
+generated: '2026-07-22'
+method: searched
+source: https://www.marketdata.app/docs/api/
+versioning:
+  scheme: uri-path
+  current: v1
+  docs: https://www.marketdata.app/docs/api/
+  notes: All endpoints are served under https://api.marketdata.app/v1/.
+deprecation:
+  policy_url: null
+  sunset_header: false
+  notes: No published deprecation policy or RFC 8594 Sunset-header support found as of 2026-07-22.
+status_page: https://status.marketdata.app/
+status_api:
+  url: https://api.marketdata.app/status/
+  notes: >-
+    Public JSON status endpoint (no token required) updated every 5 minutes,
+    reporting per-service online status plus 30-day and 90-day uptime
+    percentages.
+changelog: https://roadmap.marketdata.app/changelog
+roadmap: https://roadmap.marketdata.app/
+sla:
+  url: null
+  notes: No published SLA found; uptime is reported publicly on the status page and status endpoint.
+deprecated_operations: []

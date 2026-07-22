@@ -1,0 +1,45 @@
+# Market Data
+
+> Market Data (marketdata.app) is a financial market data provider offering a Bearer-token-authenticated REST API for real-time and historical U.S. stock, options, index, and mutual fund data. All endpoints are served from https://api.marketdata.app/v1 and return JSON or CSV. Usage is billed on a daily API-credit model; multi-symbol responses (bulk quotes, options chains) consume one credit per symbol. Clients must treat HTTP 203 (served from the caching tier) as success.
+
+Important notes:
+
+- Authentication uses a Bearer token in the Authorization header (or a `token` query parameter as a last resort). Tokens come from the customer dashboard.
+- Demo without a token: any stock endpoint with AAPL, any options endpoint with an AAPL contract (e.g. AAPL271217C00250000), mutual fund endpoints with VFINX. Historical data only.
+- Rate limits: daily API credits (Free 100 / Starter 10,000 / Trader 100,000) or per-minute credits (Quant 10,000 / Prime 100,000), plus a 50-concurrent-request cap. Manage with the X-Api-Ratelimit-Limit / -Remaining / -Reset / -Consumed response headers. The daily counter resets at 9:30 AM Eastern (NYSE opening bell).
+- Universal parameters on every endpoint: format=json|csv, dateformat=timestamp|unix|spreadsheet, limit (default 10,000, max 50,000), offset, headers=false (CSV), columns, human=true, mode=cached (paid plans).
+- All timestamps use the America/New_York timezone.
+- Error envelope: {"s": "error", "errmsg": "..."}; only 200/203 responses consume credits.
+
+## APIs
+
+- [Market Data API docs](https://www.marketdata.app/docs/api/): REST API reference for stocks, options, markets, and mutual funds
+- [Stocks API](https://www.marketdata.app/docs/api/stocks/): candles, quotes, bulk quotes/candles, prices, earnings, news
+- [Options API](https://www.marketdata.app/docs/api/options/): chains, quotes, expirations, strikes, OCC symbol lookup
+- [Markets API](https://www.marketdata.app/docs/api/markets/status/): market open/closed status
+- [API status endpoint](https://api.marketdata.app/status/): public service status and 30/90-day uptime, no token required
+
+## Specs
+
+- [OpenAPI 3.0.3 (provider-published)](https://api.marketdata.app/schema/): the live schema behind the Swagger UI at https://api.marketdata.app/
+- [Swagger UI](https://api.marketdata.app/): try the API from a browser
+- [Postman collection](https://app.getpostman.com/run-collection/27146376-b1331cd2-4749-4708-96fe-2f1708b02854?action=collection%2Ffork&source=rip_markdown&collection-url=entityId%3D27146376-b1331cd2-4749-4708-96fe-2f1708b02854%26entityType%3Dcollection%26workspaceId%3Dbd65af1d-3c36-4e62-ae64-f71008c154b4): fork the official collection
+
+## Docs
+
+- [Authentication](https://www.marketdata.app/docs/api/authentication/): Bearer token usage, header vs URL parameter, single-IP policy
+- [Rate limits](https://www.marketdata.app/docs/api/rate-limiting/): credit model, plan limits, rate-limit headers
+- [Universal parameters](https://www.marketdata.app/docs/api/universal-parameters/): format, dateformat, limit, offset, headers, columns, mode
+- [Troubleshooting](https://www.marketdata.app/docs/api/troubleshooting/): complete HTTP status-code catalog including 203/204 caching semantics
+- [Changelog](https://roadmap.marketdata.app/changelog): monthly dated release notes
+- [Status page](https://status.marketdata.app/): service status and uptime
+- [Pricing](https://www.marketdata.app/pricing/): Free Forever, Starter, Trader, Quant, and Prime plans
+
+## SDKs
+
+- [JavaScript/TypeScript](https://www.npmjs.com/package/@marketdata/sdk): npm install @marketdata/sdk
+- [Python](https://pypi.org/project/marketdata-sdk-py/): pip install marketdata-sdk-py
+- [PHP](https://packagist.org/packages/marketdataapp/sdk-php): composer require marketdataapp/sdk-php
+- [Java/Kotlin](https://central.sonatype.com/artifact/app.marketdata/marketdata-sdk-java): app.marketdata:marketdata-sdk-java on Maven Central
+- [Go](https://pkg.go.dev/github.com/MarketDataApp/sdk-go): go get github.com/MarketDataApp/sdk-go
+- [Google Sheets Add-On](https://www.marketdata.app/docs/sheets/): spreadsheet formulas with free recalcs

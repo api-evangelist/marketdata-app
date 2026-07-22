@@ -1,0 +1,79 @@
+generated: '2026-07-22'
+method: derived
+source: openapi/marketdata-app-openapi-original.yml
+notes: >-
+  Market Data is a read-only, symbol-keyed market data API; there are no
+  mutable resources with server-issued ids. Entities are keyed by ticker
+  symbol (stocks, indices, funds) or OCC option symbol (options), and
+  responses use a columnar envelope of parallel arrays.
+entities:
+  - name: Stock
+    key: ticker symbol (e.g. AAPL)
+    surfaces: [candles, quotes, bulkquotes, bulkcandles, prices, earnings, news]
+  - name: StockCandle
+    key: symbol + resolution + timestamp
+    fields: [o, h, l, c, v, t]
+  - name: StockQuote
+    key: symbol
+    fields: [bid, ask, mid, last, volume, updated]
+  - name: OptionContract
+    key: OCC option symbol (e.g. AAPL271217C00250000)
+    surfaces: [quotes]
+  - name: OptionChain
+    key: underlying symbol
+    filters: [expiration, strike range, delta range, side, liquidity, open interest, volume]
+  - name: Expiration
+    key: underlying symbol + date
+  - name: Strike
+    key: underlying symbol + expiration + price
+  - name: Earnings
+    key: symbol + report date
+  - name: NewsItem
+    key: symbol + published timestamp
+  - name: MarketStatus
+    key: date
+    fields: [status (open|closed)]
+relationships:
+  - from: OptionChain
+    to: OptionContract
+    kind: has_many
+    via: optionSymbol
+  - from: Stock
+    to: OptionChain
+    kind: has_one
+    via: underlying
+  - from: Stock
+    to: Expiration
+    kind: has_many
+    via: underlying
+  - from: Stock
+    to: Strike
+    kind: has_many
+    via: underlying
+  - from: Stock
+    to: StockCandle
+    kind: has_many
+    via: symbol
+  - from: Stock
+    to: StockQuote
+    kind: has_one
+    via: symbol
+  - from: Stock
+    to: Earnings
+    kind: has_many
+    via: symbol
+  - from: Stock
+    to: NewsItem
+    kind: has_many
+    via: symbol
+  - from: OptionContract
+    to: Stock
+    kind: belongs_to
+    via: underlying
+id_conventions:
+  - domain: options
+    format: OCC option symbol - underlying + yymmdd expiration + C/P + strike*1000 zero-padded
+    example: AAPL271217C00250000
+  - domain: stocks
+    format: exchange ticker symbol
+    example: AAPL

@@ -1,0 +1,70 @@
+generated: '2026-07-22'
+method: searched
+source: https://www.marketdata.app/docs/api/universal-parameters/
+authentication:
+  style: bearer-token
+  header: 'Authorization: Bearer <token>'
+  url_parameter: token (read-only access token; discouraged - exposed in logs and caches)
+  notes: >-
+    Header authentication is recommended. Each account may connect from only
+    one IP address at a time; switching IPs within a 5-minute window triggers a
+    temporary block. See authentication/marketdata-app-authentication.yml.
+idempotency:
+  supported: false
+  notes: >-
+    The API is read-only (all operations are GET), so requests are naturally
+    idempotent, but no Idempotency-Key contract is documented.
+pagination:
+  style: limit-offset
+  params:
+    limit: Default 10,000; maximum 50,000 results per request.
+    offset: Return values starting at a given position; combine with limit.
+  notes: Endpoints have per-endpoint default windows (e.g. daily candles default to the last 252 bars).
+formats:
+  param: format
+  values: [json, csv]
+  default: json
+  csv_headers: headers=false turns off the header row in CSV output.
+  columns: columns parameter trims the response to only the columns requested.
+  human_readable: human=true returns human-friendly column names.
+dates_and_times:
+  param: dateformat
+  values: [timestamp, unix, spreadsheet]
+  timezone: America/New_York
+  relative_keyphrases: ['last session (previous closed market session, holiday-aware)']
+  notes: All timestamps for US markets use the America/New_York timezone regardless of format.
+caching:
+  http_203: >-
+    Any endpoint may return HTTP 203 Non-Authoritative Information instead of
+    200 when served from the caching tier; clients MUST treat 203 as success.
+  http_204: HTTP 204 is returned when mode=cached is requested and no cached data exists.
+  mode_param: mode=cached retrieves previously cached quotes at reduced credit cost (paid plans only).
+  maxage: maxage controls cache freshness boundaries when using cached mode.
+error_envelope:
+  shape: '{"s": "error", "errmsg": "..."}'
+  reference: errors/marketdata-app-problem-types.yml
+rate_limit_signaling:
+  headers:
+    - name: X-Api-Ratelimit-Limit
+      description: Maximum API credits permitted (per day or per minute by plan).
+    - name: X-Api-Ratelimit-Remaining
+      description: API credits remaining in the current window.
+    - name: X-Api-Ratelimit-Reset
+      description: Time the current window resets, UTC epoch seconds.
+    - name: X-Api-Ratelimit-Consumed
+      description: Credits consumed by the current request.
+  credit_model: >-
+    Each 200/203 response consumes at least 1 credit; multi-symbol responses
+    (stocks/quotes, stocks/prices, stocks/bulkcandles, options/chain) consume
+    one credit per symbol that includes bid/ask/mid/last columns. Daily
+    counters reset at 9:30 AM Eastern (NYSE opening bell).
+  concurrency: Maximum 50 concurrent requests on all plans.
+  reference: rate-limits/marketdata-app-rate-limits.yml
+versioning:
+  scheme: uri-path
+  current: v1
+  reference: lifecycle/marketdata-app-lifecycle.yml
+cors:
+  docs: https://www.marketdata.app/docs/api/cors/
+request_tracing:
+  notes: 500-errors reference a Cloudflare Ray ID that support asks for in tickets.

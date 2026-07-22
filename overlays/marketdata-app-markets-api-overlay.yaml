@@ -1,0 +1,25 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for Market Data Markets API
+  version: 1.0.0
+extends: openapi/marketdata-app-markets-api-openapi.yml
+actions:
+  - target: $.info
+    update:
+      x-apievangelist:
+        provider: marketdata-app
+        generated: '2026-07-22'
+        provider_schema: https://api.marketdata.app/schema/
+        notes: >-
+          The provider publishes a live OpenAPI 3.0.3 schema behind the Swagger
+          UI at https://api.marketdata.app/ (saved verbatim at
+          openapi/marketdata-app-openapi-original.yml). Clients must treat HTTP
+          203 responses from the caching tier as success, and HTTP 204 as
+          cache-miss when mode=cached is requested.
+  - target: $.info
+    update:
+      x-rate-limit-headers:
+        - X-Api-Ratelimit-Limit
+        - X-Api-Ratelimit-Remaining
+        - X-Api-Ratelimit-Reset
+        - X-Api-Ratelimit-Consumed

@@ -1,0 +1,90 @@
+generated: '2026-07-22'
+method: searched
+source: https://www.marketdata.app/docs/api/troubleshooting/
+format: custom-envelope
+envelope:
+  description: 'Error responses use a JSON envelope: {"s": "error", "errmsg": "..."}.'
+  status_field: s
+  message_field: errmsg
+success_semantics:
+  - status: 200
+    title: OK
+    detail: Successfully answered the request.
+  - status: 203
+    title: Non-Authoritative Information
+    detail: >-
+      Successfully served from the caching tier. Clients MUST treat 203 the
+      same as 200; libraries that only accept 200 will silently drop valid
+      responses.
+  - status: 204
+    title: No Content
+    detail: >-
+      Successful request for explicitly requested cached data (mode=cached),
+      but no cached data exists for the symbol. Resend using live mode.
+problems:
+  - status: 400
+    title: Bad Request
+    detail: Input could not be parsed or validated (URL construction, invalid parameter values/types, invalid dates, invalid option symbols).
+    remediation: https://www.marketdata.app/docs/api/troubleshooting/bad-request/
+  - status: 401
+    title: Unauthorized
+    detail: The token supplied with the request is missing, invalid, or cannot be used.
+    remediation: https://www.marketdata.app/docs/api/troubleshooting/authentication/
+  - status: 402
+    title: Payment Required
+    detail: The requested action is not available on the current plan (data older than plan allows, premium endpoints on Free/Trial, mode=cached on Free/Trial).
+    remediation: https://www.marketdata.app/docs/api/troubleshooting/payment-required/
+  - status: 403
+    title: Forbidden
+    detail: Access denied - only one IP address may access the API at a time; switching IPs within a 5-minute window triggers a temporary block.
+    remediation: https://www.marketdata.app/docs/api/troubleshooting/multiple-ip-addresses/
+  - status: 404
+    title: Not Found
+    detail: No data exists for the requested symbol or time period.
+  - status: 413
+    title: Payload Too Large
+    detail: Request payload too large - often more than 1 year of intraday candle data in one request. Reduce the intraday window.
+    remediation: https://www.marketdata.app/docs/api/troubleshooting/payload-too-large/
+  - status: 429
+    title: Too Many Requests (credit limit)
+    detail: API credit limit exceeded for the current window (daily for Free/Starter/Trader, per-minute for Quant/Prime).
+    remediation: https://www.marketdata.app/docs/api/troubleshooting/running-out-of-credits/
+  - status: 429
+    title: Too Many Requests (concurrency)
+    detail: More than 50 simultaneous in-flight requests.
+    remediation: https://www.marketdata.app/docs/api/troubleshooting/too-many-concurrent-requests/
+  - status: 500
+    title: Internal Server Error
+    detail: Unknown server issue; open a helpdesk ticket including the Ray ID of the request.
+    remediation: https://www.marketdata.app/docs/api/troubleshooting/service-outages/
+  - status: 502
+    title: Bad Gateway
+    detail: API server does not respond to the gateway; normally sporadic and resolves in 1-2 minutes. Retry.
+  - status: 503
+    title: Service Unavailable
+    detail: API server reachable but cannot fulfill the request, usually server overload. Retry in a few minutes.
+  - status: 504
+    title: Gateway Timeout
+    detail: Load balancer received no response; retry in 1-2 minutes.
+  - status: 509
+    title: API Endpoint Overloaded
+    detail: Endpoint currently overloaded; retry in a few minutes, report if it persists over 15 minutes.
+  - status: 524
+    title: A Timeout Occurred
+    detail: No HTTP response before the 100-second connection timeout.
+  - status: 529
+    title: Database Offline
+    detail: Database offline, overloaded, or not responding.
+  - status: 530
+    title: Database Error
+    detail: The request resulted in a database error; submit a ticket with request details.
+  - status: 540
+    title: API Endpoint Offline
+    detail: The expected API endpoint is offline.
+  - status: 598
+    title: API Gateway Offline
+    detail: The gateway server is not responding or unavailable.
+notes: >-
+  Only status 200/203 responses consume API credits; NULL and error responses
+  are not counted. Non-standard 5xx codes (509, 524, 529, 530, 540, 598) are
+  documented by the provider as temporary failures that should be retried.

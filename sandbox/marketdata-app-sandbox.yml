@@ -1,0 +1,33 @@
+generated: '2026-07-22'
+method: searched
+source: https://www.marketdata.app/docs/api/
+modes:
+  test_vs_live: >-
+    Market Data has no separate sandbox environment; instead, specific demo
+    symbols are unlocked on the production API with no authentication token,
+    and specific trial symbols are exempt from API-credit consumption.
+demo_symbols:
+  description: Endpoints usable with NO token (historical data only), no registration required.
+  values:
+    - endpoint_family: stocks
+      symbol: AAPL
+    - endpoint_family: options
+      symbol: AAPL271217C00250000
+      notes: Any AAPL option contract works.
+    - endpoint_family: funds
+      symbol: VFINX
+credit_exempt_symbols:
+  description: Free trial symbols that never consume API credits on any plan.
+  values:
+    - AAPL (stock)
+    - AAPL options
+    - VIX (index)
+    - VFINX (mutual fund)
+trial:
+  description: >-
+    30-day free trial after registering (no credit card required); after the
+    trial, accounts keep 100 free requests per day on the Free Forever plan.
+  signup: https://www.marketdata.app/signup/
+try_it:
+  swagger_ui: https://api.marketdata.app/
+  postman: https://app.getpostman.com/run-collection/27146376-b1331cd2-4749-4708-96fe-2f1708b02854?action=collection%2Ffork&source=rip_markdown&collection-url=entityId%3D27146376-b1331cd2-4749-4708-96fe-2f1708b02854%26entityType%3Dcollection%26workspaceId%3Dbd65af1d-3c36-4e62-ae64-f71008c154b4

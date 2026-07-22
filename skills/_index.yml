@@ -1,0 +1,15 @@
+generated: '2026-07-22'
+method: generated
+skills:
+  - file: marketdata-app-stock-quotes-and-candles.md
+    name: Fetch stock quotes and historical candles
+    api: openapi/marketdata-app-stocks-api-openapi.yml
+    operations: [getStockQuote, getStockBulkQuotes, getStockCandles, getStockBulkCandles]
+  - file: marketdata-app-options-chain-analysis.md
+    name: Analyze an options chain without exhausting credits
+    api: openapi/marketdata-app-options-api-openapi.yml
+    operations: [getOptionExpirations, getOptionStrikes, getOptionChain, getOptionQuote, getOptionLookup]
+  - file: marketdata-app-market-status-check.md
+    name: Check market status before trading-hours logic
+    api: openapi/marketdata-app-markets-api-openapi.yml
+    operations: [getMarketStatus]

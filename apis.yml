@@ -14,7 +14,20 @@ description: >-
   symbol. A 30-day trial, a Free Forever tier, and paid Starter, Trader, and
   Prime plans are available. Note that the API may return HTTP 203 from its
   caching tier and clients must treat it as success.
-image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+accessModel:
+  pricing: freemium
+  onboarding: open
+  trial: true
+  try_now: true
+  public: true
+  label: Freemium (free trial) · Open access
+  confidence: high
+  source:
+  - plans
+  - authentication
+  generated: '2026-07-22'
+  method: derived
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/marketdata-app.png
 tags:
 - Market Data
 - Financial Data
@@ -25,121 +38,152 @@ tags:
 - Historical Data
 - Quotes
 created: '2026-07-11'
-modified: '2026-07-11'
+modified: '2026-07-22'
 specificationVersion: '0.19'
 apis:
-- aid: marketdata-app:marketdata-app-stocks-api
-  name: Market Data Stocks API
-  tags:
-  - Stocks
-  - Market Data
-  - Financial Data
-  - Quotes
-  - Candles
-  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
-  humanURL: https://www.marketdata.app/docs/api/stocks
-  baseURL: https://api.marketdata.app/v1/stocks
-  properties:
-  - url: https://www.marketdata.app/docs/api/stocks
-    type: Documentation
-  - url: https://www.marketdata.app/docs/api/stocks/candles
-    type: APIReference
-  - url: openapi/marketdata-app-openapi.yml
-    type: OpenAPI
-  - url: collections/marketdata-app.postman_collection.json
-    type: PostmanCollection
-  - url: collections/marketdata-app.opencollection.json
-    type: OpenCollection
-  description: >-
-    Real-time and historical stock data - OHLCV candles at any resolution,
-    single and bulk quotes, corporate earnings, and news - for U.S. equities.
-    Multi-symbol bulk endpoints consume one API credit per symbol returned.
-- aid: marketdata-app:marketdata-app-options-api
-  name: Market Data Options API
-  tags:
-  - Options
-  - Market Data
-  - Financial Data
-  - Options Chain
-  - Greeks
-  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
-  humanURL: https://www.marketdata.app/docs/api/options
-  baseURL: https://api.marketdata.app/v1/options
-  properties:
-  - url: https://www.marketdata.app/docs/api/options
-    type: Documentation
-  - url: https://www.marketdata.app/docs/api/options/chain
-    type: APIReference
-  - url: openapi/marketdata-app-openapi.yml
-    type: OpenAPI
-  - url: collections/marketdata-app.postman_collection.json
-    type: PostmanCollection
-  - url: collections/marketdata-app.opencollection.json
-    type: OpenCollection
-  description: >-
-    Full options coverage - end-of-day and real-time option chains with
-    extensive filtering, per-contract quotes with Greeks and open interest,
-    expiration and strike lists, and OCC option-symbol lookup. Each option
-    symbol returned in a chain consumes an API credit.
 - aid: marketdata-app:marketdata-app-indices-api
   name: Market Data Indices API
+  description: Real-time and historical index candles and quotes.
+  humanURL: https://www.marketdata.app/docs/api/
+  baseURL: https://api.marketdata.app/v1
   tags:
   - Indices
-  - Market Data
-  - Financial Data
-  - Real-Time Data
-  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
-  humanURL: https://www.marketdata.app/docs/api/indices
-  baseURL: https://api.marketdata.app/v1/indices
   properties:
-  - url: https://www.marketdata.app/docs/api/indices
-    type: Documentation
-  - url: openapi/marketdata-app-openapi.yml
-    type: OpenAPI
-  - url: collections/marketdata-app.postman_collection.json
-    type: PostmanCollection
-  - url: collections/marketdata-app.opencollection.json
-    type: OpenCollection
-  description: >-
-    Real-time and historical index data - OHLC candles at any resolution and
-    quotes for market indices such as VIX and SPX.
+  - type: OpenAPI
+    url: openapi/marketdata-app-indices-api-openapi.yml
+  - type: Overlay
+    url: overlays/marketdata-app-indices-api-overlay.yaml
+  - type: Documentation
+    url: https://www.marketdata.app/docs/api/
+  - type: PostmanCollection
+    url: collections/marketdata-app.postman_collection.json
+  - type: OpenCollection
+    url: collections/marketdata-app.opencollection.json
 - aid: marketdata-app:marketdata-app-markets-api
   name: Market Data Markets API
+  description: Reference and status data about the markets covered by Market Data.
+  humanURL: https://www.marketdata.app/docs/api/markets/status/
+  baseURL: https://api.marketdata.app/v1/markets
   tags:
   - Markets
-  - Market Status
-  - Reference Data
-  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
-  humanURL: https://www.marketdata.app/docs/api/markets/status
-  baseURL: https://api.marketdata.app/v1/markets
   properties:
-  - url: https://www.marketdata.app/docs/api/markets/status
-    type: Documentation
-  - url: openapi/marketdata-app-openapi.yml
-    type: OpenAPI
-  - url: collections/marketdata-app.postman_collection.json
-    type: PostmanCollection
-  - url: collections/marketdata-app.opencollection.json
-    type: OpenCollection
-  description: >-
-    Reference and status data about the markets Market Data covers - the market
-    status endpoint reports open or closed for a given date or date range, per
-    country, honoring weekends and exchange holidays.
+  - type: OpenAPI
+    url: openapi/marketdata-app-markets-api-openapi.yml
+  - type: Overlay
+    url: overlays/marketdata-app-markets-api-overlay.yaml
+  - type: Documentation
+    url: https://www.marketdata.app/docs/api/markets/status/
+  - type: APIReference
+    url: https://www.marketdata.app/docs/api/markets/status/
+  - type: PostmanCollection
+    url: collections/marketdata-app.postman_collection.json
+  - type: OpenCollection
+    url: collections/marketdata-app.opencollection.json
+- aid: marketdata-app:marketdata-app-options-api
+  name: Market Data Options API
+  description: Options chains, per-contract quotes, expirations, strikes, and OCC symbol lookup.
+  humanURL: https://www.marketdata.app/docs/api/options/
+  baseURL: https://api.marketdata.app/v1/options
+  tags:
+  - Options
+  properties:
+  - type: OpenAPI
+    url: openapi/marketdata-app-options-api-openapi.yml
+  - type: Overlay
+    url: overlays/marketdata-app-options-api-overlay.yaml
+  - type: Documentation
+    url: https://www.marketdata.app/docs/api/options/
+  - type: APIReference
+    url: https://www.marketdata.app/docs/api/options/chain/
+  - type: PostmanCollection
+    url: collections/marketdata-app.postman_collection.json
+  - type: OpenCollection
+    url: collections/marketdata-app.opencollection.json
+- aid: marketdata-app:marketdata-app-stocks-api
+  name: Market Data Stocks API
+  description: Real-time and historical stock candles, quotes, bulk data, prices, earnings, and news.
+  humanURL: https://www.marketdata.app/docs/api/stocks/
+  baseURL: https://api.marketdata.app/v1/stocks
+  tags:
+  - Stocks
+  properties:
+  - type: OpenAPI
+    url: openapi/marketdata-app-stocks-api-openapi.yml
+  - type: Overlay
+    url: overlays/marketdata-app-stocks-api-overlay.yaml
+  - type: Documentation
+    url: https://www.marketdata.app/docs/api/stocks/
+  - type: APIReference
+    url: https://www.marketdata.app/docs/api/stocks/candles/
+  - type: PostmanCollection
+    url: collections/marketdata-app.postman_collection.json
+  - type: OpenCollection
+    url: collections/marketdata-app.opencollection.json
 common:
+- type: OpenAPI
+  url: openapi/marketdata-app-openapi-original.yml
+- type: DomainSecurity
+  url: security/marketdata-app-domain-security.yml
 - type: AgenticAccess
   url: agentic-access/marketdata-app-agentic-access.yml
 - type: Authentication
   url: authentication/marketdata-app-authentication.yml
+- type: Packages
+  url: packages/marketdata-app-packages.yml
+- type: SDKs
+  url: packages/marketdata-app-packages.yml
+- type: WellKnown
+  url: well-known/marketdata-app-well-known.yml
+- type: MCPServer
+  url: mcp/marketdata-app-mcp.yml
+- type: LLMsTxt
+  url: llms/marketdata-app-llms.txt
+- type: Conformance
+  url: conformance/marketdata-app-conformance.yml
+- type: ErrorCatalog
+  url: errors/marketdata-app-problem-types.yml
+- type: Lifecycle
+  url: lifecycle/marketdata-app-lifecycle.yml
+- type: StatusPage
+  url: https://status.marketdata.app/
+- type: ChangeLog
+  url: changelog/marketdata-app-changelog.yml
+- type: Roadmap
+  url: https://roadmap.marketdata.app/
+- type: Sandbox
+  url: sandbox/marketdata-app-sandbox.yml
+- type: Conventions
+  url: conventions/marketdata-app-conventions.yml
+- type: Components
+  url: components/marketdata-app-components.yml
+- type: DataModel
+  url: data-model/marketdata-app-data-model.yml
+- type: AgentSkill
+  url: skills/_index.yml
+- type: Postman
+  url: https://app.getpostman.com/run-collection/27146376-b1331cd2-4749-4708-96fe-2f1708b02854?action=collection%2Ffork&source=rip_markdown&collection-url=entityId%3D27146376-b1331cd2-4749-4708-96fe-2f1708b02854%26entityType%3Dcollection%26workspaceId%3Dbd65af1d-3c36-4e62-ae64-f71008c154b4
 - type: GitHubOrganization
   url: https://github.com/MarketDataApp
 - type: LinkedIn
   url: https://www.linkedin.com/company/marketdataapp
 - type: Website
   url: https://www.marketdata.app
-- type: Documentation
-  url: https://www.marketdata.app/docs/api
-- type: SignUp
+- type: DeveloperPortal
   url: https://www.marketdata.app/dashboard/
+- type: Documentation
+  url: https://www.marketdata.app/docs/api/
+- type: APIReference
+  url: https://www.marketdata.app/docs/api/
+- type: GettingStarted
+  url: https://www.marketdata.app/docs/api/
+- type: Support
+  url: https://www.marketdata.app/helpdesk/
+- type: SignUp
+  url: https://www.marketdata.app/signup/
+- type: TermsOfService
+  url: https://www.marketdata.app/terms/
+- type: PrivacyPolicy
+  url: https://www.marketdata.app/privacy/
 - type: Plans
   url: plans/marketdata-app-plans-pricing.yml
 - type: RateLimits

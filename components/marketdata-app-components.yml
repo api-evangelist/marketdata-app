@@ -1,0 +1,25 @@
+generated: '2026-07-22'
+method: searched
+source: https://www.marketdata.app/docs/sheets/
+components:
+  - family: Google Sheets Add-On
+    kind: spreadsheet-add-on
+    description: >-
+      First-party Google Sheets add-on exposing Market Data as custom
+      spreadsheet formulas (stock data, option chains, option data, option
+      lookup, market status, earnings). Formulas authenticate with the account
+      token and bill against the same API-credit model - since April 2026 a
+      formula costs 1 credit on its first run per day and all subsequent
+      recalcs are free. Includes Extensions-menu refresh actions (Refresh
+      Current Sheet, Refresh Current Sheet Errors) and in-cell numeric error
+      codes (e.g. [ERROR-402]).
+    docs: https://www.marketdata.app/docs/sheets/
+    surfaces:
+      - Stock data formulas
+      - Option chain / option data / option lookup formulas
+      - Market status formulas
+      - Automatic refresh and sharing controls
+notes: >-
+  No embeddable web components, JS element libraries, or hosted UI surfaces are
+  published; the Sheets add-on is the only first-party client-side component
+  as of 2026-07-22.

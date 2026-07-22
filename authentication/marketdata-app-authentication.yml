@@ -1,18 +1,42 @@
-generated: '2026-07-11'
-method: derived
-source: openapi/marketdata-app-openapi.yml
+generated: '2026-07-22'
+method: searched
+source: https://www.marketdata.app/docs/api/authentication/
+docs: https://www.marketdata.app/docs/api/authentication/
 summary:
   types:
   - http
+  - apiKey
+  api_key_in:
+  - query
+  oauth2_flows: []
 schemes:
 - name: bearerAuth
   type: http
   scheme: bearer
   description: >-
-    Bearer token generated in the Market Data dashboard. Passed as
-    `Authorization: Bearer [example key]`. The token may also be supplied via a
-    `token` query parameter for quick browser or spreadsheet use. A single IP
-    address per account is enforced.
+    Bearer token generated in the Market Data customer dashboard (delivered by
+    email) and passed in the Authorization header. The token is a programmatic
+    representation of the account credentials and must be kept secret.
   sources:
-  - openapi/marketdata-app-openapi.yml
+  - openapi/marketdata-app-openapi-original.yml
   - https://www.marketdata.app/docs/api/authentication/
+- name: tokenQueryParameter
+  type: apiKey
+  in: query
+  parameter: token
+  description: >-
+    A read-only access token may be supplied as a token query parameter for
+    quick browser or spreadsheet use. The provider discourages this - tokens
+    in URLs are exposed in server logs and caches - and recommends header
+    authentication.
+  sources:
+  - https://www.marketdata.app/docs/api/universal-parameters/token/
+policies:
+  single_ip: >-
+    Each account may only connect from one IP address at a time; switching
+    back and forth between IPs within a 5-minute window triggers a temporary
+    block (HTTP 403).
+  demo_without_auth: >-
+    Stock endpoints with AAPL, options endpoints with any AAPL contract
+    (e.g. AAPL271217C00250000), and fund endpoints with VFINX work with no
+    token at all (historical data only).
