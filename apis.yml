@@ -120,6 +120,8 @@ apis:
   - type: OpenCollection
     url: collections/marketdata-app.opencollection.json
 common:
+- type: PostmanWorkspace
+  url: https://www.postman.com/kinlaneapi/market-data/overview
 - type: OpenAPI
   url: openapi/marketdata-app-openapi-original.yml
 - type: DomainSecurity
