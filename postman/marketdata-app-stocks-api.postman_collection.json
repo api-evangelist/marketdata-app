@@ -1,0 +1,1719 @@
+{
+  "info": {
+    "_postman_id": "efc6473a-cd2d-4a4e-bd3e-61080f4783f7",
+    "name": "Market Data Indices Stocks API",
+    "description": "The Market Data API delivers real-time and historical U.S. stock, options, and index market data over a simple REST interface. All endpoints are served from https://api.marketdata.app/v1 and return JSON (or CSV) responses. Most endpoints require only a ticker symbol as a path parameter. Requests are authenticated with a Bearer token generated in the Market Data dashboard. Coverage spans stock candles and quotes (single and bulk), corporate earnings and news, full options chains with per-contract quotes, expirations, strikes and OCC symbol lookup, index candles and quotes, and market open/closed status. Note that Market Data may return HTTP 203 Non-Authoritative Information (instead of 200 OK) when a response is served from its caching tier; clients must treat 203 as success.\n\nContact Support:\n Name: Market Data",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-07-28T02:08:45.000Z",
+    "updatedAt": "2026-07-28T02:08:45.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-efc6473a-cd2d-4a4e-bd3e-61080f4783f7"
+  },
+  "item": [
+    {
+      "name": "stocks",
+      "item": [
+        {
+          "name": "candles",
+          "item": [
+            {
+              "name": "{resolution}",
+              "item": [
+                {
+                  "name": "{symbol}",
+                  "item": [
+                    {
+                      "name": "Stock candles",
+                      "id": "47658723-3cbc-4292-829f-5b2aa5eb9446",
+                      "protocolProfileBehavior": {
+                        "disableBodyPruning": true
+                      },
+                      "request": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/stocks/candles/:resolution/:symbol/?from=<string>&to=<string>",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "stocks",
+                            "candles",
+                            ":resolution",
+                            ":symbol",
+                            ""
+                          ],
+                          "query": [
+                            {
+                              "description": "The leftmost (earliest) date of the date range.",
+                              "key": "from",
+                              "value": "<string>"
+                            },
+                            {
+                              "description": "The rightmost (latest) date of the date range.",
+                              "key": "to",
+                              "value": "<string>"
+                            }
+                          ],
+                          "variable": [
+                            {
+                              "id": "8394e729-5a60-4eee-a117-399353697bf9",
+                              "key": "resolution",
+                              "value": "<string>",
+                              "description": "(Required) Candle resolution such as D (daily), W, M, or a minute/hour value."
+                            },
+                            {
+                              "id": "5f1ebc5c-1fdc-4c22-9fde-0741d4a51080",
+                              "key": "symbol",
+                              "value": "<string>",
+                              "description": "(Required) The company's ticker symbol."
+                            }
+                          ]
+                        },
+                        "description": "Retrieve open, high, low, close, and volume (OHLCV) candlestick data for a stock over a given date range at the requested resolution (e.g. daily, hourly, or minute intervals)."
+                      },
+                      "response": [
+                        {
+                          "id": "a093a0c2-2052-4c92-95b0-8f77e4b6f7df",
+                          "name": "OHLCV candle series.",
+                          "originalRequest": {
+                            "method": "GET",
+                            "header": [
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: bearer",
+                                "key": "Authorization",
+                                "value": "Bearer <token>"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/stocks/candles/:resolution/:symbol/?from=<string>&to=<string>",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "stocks",
+                                "candles",
+                                ":resolution",
+                                ":symbol",
+                                ""
+                              ],
+                              "query": [
+                                {
+                                  "description": "The leftmost (earliest) date of the date range.",
+                                  "key": "from",
+                                  "value": "<string>"
+                                },
+                                {
+                                  "description": "The rightmost (latest) date of the date range.",
+                                  "key": "to",
+                                  "value": "<string>"
+                                }
+                              ],
+                              "variable": [
+                                {
+                                  "key": "resolution"
+                                },
+                                {
+                                  "key": "symbol"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "OK",
+                          "code": 200,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"s\": \"<string>\",\n  \"t\": [\n    \"<integer>\",\n    \"<integer>\"\n  ],\n  \"o\": [\n    \"<number>\",\n    \"<number>\"\n  ],\n  \"h\": [\n    \"<number>\",\n    \"<number>\"\n  ],\n  \"l\": [\n    \"<number>\",\n    \"<number>\"\n  ],\n  \"c\": [\n    \"<number>\",\n    \"<number>\"\n  ],\n  \"v\": [\n    \"<integer>\",\n    \"<integer>\"\n  ]\n}",
+                          "createdAt": "2026-07-28T02:08:45.000Z",
+                          "updatedAt": "2026-07-28T02:08:45.000Z",
+                          "uid": "35240-a093a0c2-2052-4c92-95b0-8f77e4b6f7df"
+                        },
+                        {
+                          "id": "ec2613b8-0761-4978-9dbb-8e3cd3876962",
+                          "name": "Cached OHLCV candle series (treat as success).",
+                          "originalRequest": {
+                            "method": "GET",
+                            "header": [
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: bearer",
+                                "key": "Authorization",
+                                "value": "Bearer <token>"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/stocks/candles/:resolution/:symbol/?from=<string>&to=<string>",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "stocks",
+                                "candles",
+                                ":resolution",
+                                ":symbol",
+                                ""
+                              ],
+                              "query": [
+                                {
+                                  "description": "The leftmost (earliest) date of the date range.",
+                                  "key": "from",
+                                  "value": "<string>"
+                                },
+                                {
+                                  "description": "The rightmost (latest) date of the date range.",
+                                  "key": "to",
+                                  "value": "<string>"
+                                }
+                              ],
+                              "variable": [
+                                {
+                                  "key": "resolution"
+                                },
+                                {
+                                  "key": "symbol"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "Non-Authoritative Information (since HTTP/1.1)",
+                          "code": 203,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"s\": \"<string>\",\n  \"t\": [\n    \"<integer>\",\n    \"<integer>\"\n  ],\n  \"o\": [\n    \"<number>\",\n    \"<number>\"\n  ],\n  \"h\": [\n    \"<number>\",\n    \"<number>\"\n  ],\n  \"l\": [\n    \"<number>\",\n    \"<number>\"\n  ],\n  \"c\": [\n    \"<number>\",\n    \"<number>\"\n  ],\n  \"v\": [\n    \"<integer>\",\n    \"<integer>\"\n  ]\n}",
+                          "createdAt": "2026-07-28T02:08:45.000Z",
+                          "updatedAt": "2026-07-28T02:08:45.000Z",
+                          "uid": "35240-ec2613b8-0761-4978-9dbb-8e3cd3876962"
+                        },
+                        {
+                          "id": "500084fc-428b-449d-8436-129fa9e16ffb",
+                          "name": "Authentication failed or the token is missing or invalid.",
+                          "originalRequest": {
+                            "method": "GET",
+                            "header": [
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: bearer",
+                                "key": "Authorization",
+                                "value": "Bearer <token>"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/stocks/candles/:resolution/:symbol/?from=<string>&to=<string>",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "stocks",
+                                "candles",
+                                ":resolution",
+                                ":symbol",
+                                ""
+                              ],
+                              "query": [
+                                {
+                                  "description": "The leftmost (earliest) date of the date range.",
+                                  "key": "from",
+                                  "value": "<string>"
+                                },
+                                {
+                                  "description": "The rightmost (latest) date of the date range.",
+                                  "key": "to",
+                                  "value": "<string>"
+                                }
+                              ],
+                              "variable": [
+                                {
+                                  "key": "resolution"
+                                },
+                                {
+                                  "key": "symbol"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "Unauthorized",
+                          "code": 401,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"s\": \"<string>\",\n  \"errmsg\": \"<string>\"\n}",
+                          "createdAt": "2026-07-28T02:08:45.000Z",
+                          "updatedAt": "2026-07-28T02:08:45.000Z",
+                          "uid": "35240-500084fc-428b-449d-8436-129fa9e16ffb"
+                        },
+                        {
+                          "id": "7d44be8c-54e8-47fe-bfce-78a1172f2907",
+                          "name": "Credit allocation or simultaneous-request limit exceeded.",
+                          "originalRequest": {
+                            "method": "GET",
+                            "header": [
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: bearer",
+                                "key": "Authorization",
+                                "value": "Bearer <token>"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/stocks/candles/:resolution/:symbol/?from=<string>&to=<string>",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "stocks",
+                                "candles",
+                                ":resolution",
+                                ":symbol",
+                                ""
+                              ],
+                              "query": [
+                                {
+                                  "description": "The leftmost (earliest) date of the date range.",
+                                  "key": "from",
+                                  "value": "<string>"
+                                },
+                                {
+                                  "description": "The rightmost (latest) date of the date range.",
+                                  "key": "to",
+                                  "value": "<string>"
+                                }
+                              ],
+                              "variable": [
+                                {
+                                  "key": "resolution"
+                                },
+                                {
+                                  "key": "symbol"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "Too Many Requests",
+                          "code": 429,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"s\": \"<string>\",\n  \"errmsg\": \"<string>\"\n}",
+                          "createdAt": "2026-07-28T02:08:45.000Z",
+                          "updatedAt": "2026-07-28T02:08:45.000Z",
+                          "uid": "35240-7d44be8c-54e8-47fe-bfce-78a1172f2907"
+                        }
+                      ],
+                      "createdAt": "2026-07-28T02:08:45.000Z",
+                      "updatedAt": "2026-07-28T02:08:45.000Z",
+                      "uid": "35240-47658723-3cbc-4292-829f-5b2aa5eb9446"
+                    }
+                  ],
+                  "id": "5086e459-5113-4014-99de-f0c4e60171da",
+                  "createdAt": "2026-07-28T02:08:45.000Z",
+                  "updatedAt": "2026-07-28T02:08:45.000Z",
+                  "uid": "35240-5086e459-5113-4014-99de-f0c4e60171da"
+                }
+              ],
+              "id": "28949c39-97a5-41d7-b0f0-44f150bb787f",
+              "createdAt": "2026-07-28T02:08:45.000Z",
+              "updatedAt": "2026-07-28T02:08:45.000Z",
+              "uid": "35240-28949c39-97a5-41d7-b0f0-44f150bb787f"
+            }
+          ],
+          "id": "fdc6fa04-ef64-4e5e-80d4-97616c2ec329",
+          "createdAt": "2026-07-28T02:08:45.000Z",
+          "updatedAt": "2026-07-28T02:08:45.000Z",
+          "uid": "35240-fdc6fa04-ef64-4e5e-80d4-97616c2ec329"
+        },
+        {
+          "name": "quotes",
+          "item": [
+            {
+              "name": "{symbol}",
+              "item": [
+                {
+                  "name": "Stock quote",
+                  "id": "6863f150-ab99-4131-bfe7-27fdbc300001",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/stocks/quotes/:symbol/",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "stocks",
+                        "quotes",
+                        ":symbol",
+                        ""
+                      ],
+                      "variable": [
+                        {
+                          "id": "ed2bf9af-1575-42f9-88a8-2dde34230e9b",
+                          "key": "symbol",
+                          "value": "<string>",
+                          "description": "(Required) The company's ticker symbol."
+                        }
+                      ]
+                    },
+                    "description": "Fetch a real-time or historical quote for a single stock symbol, including last price, bid, ask, volume, and change."
+                  },
+                  "response": [
+                    {
+                      "id": "b93c2d59-220b-4baa-ac5f-ef30d3e083c9",
+                      "name": "A quote for the requested symbol.",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/stocks/quotes/:symbol/",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "stocks",
+                            "quotes",
+                            ":symbol",
+                            ""
+                          ],
+                          "variable": [
+                            {
+                              "key": "symbol"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"s\": \"<string>\",\n  \"symbol\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"last\": [\n    \"<number>\",\n    \"<number>\"\n  ],\n  \"bid\": [\n    \"<number>\",\n    \"<number>\"\n  ],\n  \"ask\": [\n    \"<number>\",\n    \"<number>\"\n  ],\n  \"volume\": [\n    \"<integer>\",\n    \"<integer>\"\n  ],\n  \"updated\": [\n    \"<integer>\",\n    \"<integer>\"\n  ]\n}",
+                      "createdAt": "2026-07-28T02:08:45.000Z",
+                      "updatedAt": "2026-07-28T02:08:45.000Z",
+                      "uid": "35240-b93c2d59-220b-4baa-ac5f-ef30d3e083c9"
+                    },
+                    {
+                      "id": "ad498771-20c8-4a07-8db6-f98cfa244527",
+                      "name": "Cached quote (treat as success).",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/stocks/quotes/:symbol/",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "stocks",
+                            "quotes",
+                            ":symbol",
+                            ""
+                          ],
+                          "variable": [
+                            {
+                              "key": "symbol"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Non-Authoritative Information (since HTTP/1.1)",
+                      "code": 203,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"s\": \"<string>\",\n  \"symbol\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"last\": [\n    \"<number>\",\n    \"<number>\"\n  ],\n  \"bid\": [\n    \"<number>\",\n    \"<number>\"\n  ],\n  \"ask\": [\n    \"<number>\",\n    \"<number>\"\n  ],\n  \"volume\": [\n    \"<integer>\",\n    \"<integer>\"\n  ],\n  \"updated\": [\n    \"<integer>\",\n    \"<integer>\"\n  ]\n}",
+                      "createdAt": "2026-07-28T02:08:45.000Z",
+                      "updatedAt": "2026-07-28T02:08:45.000Z",
+                      "uid": "35240-ad498771-20c8-4a07-8db6-f98cfa244527"
+                    },
+                    {
+                      "id": "1058b3c3-8828-4d27-8d0f-6fa03a3e0be6",
+                      "name": "Authentication failed or the token is missing or invalid.",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/stocks/quotes/:symbol/",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "stocks",
+                            "quotes",
+                            ":symbol",
+                            ""
+                          ],
+                          "variable": [
+                            {
+                              "key": "symbol"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Unauthorized",
+                      "code": 401,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"s\": \"<string>\",\n  \"errmsg\": \"<string>\"\n}",
+                      "createdAt": "2026-07-28T02:08:45.000Z",
+                      "updatedAt": "2026-07-28T02:08:45.000Z",
+                      "uid": "35240-1058b3c3-8828-4d27-8d0f-6fa03a3e0be6"
+                    },
+                    {
+                      "id": "e489a9ae-cdee-4901-b5b5-24930f43d9da",
+                      "name": "Credit allocation or simultaneous-request limit exceeded.",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/stocks/quotes/:symbol/",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "stocks",
+                            "quotes",
+                            ":symbol",
+                            ""
+                          ],
+                          "variable": [
+                            {
+                              "key": "symbol"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Too Many Requests",
+                      "code": 429,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"s\": \"<string>\",\n  \"errmsg\": \"<string>\"\n}",
+                      "createdAt": "2026-07-28T02:08:45.000Z",
+                      "updatedAt": "2026-07-28T02:08:45.000Z",
+                      "uid": "35240-e489a9ae-cdee-4901-b5b5-24930f43d9da"
+                    }
+                  ],
+                  "createdAt": "2026-07-28T02:08:45.000Z",
+                  "updatedAt": "2026-07-28T02:08:45.000Z",
+                  "uid": "35240-6863f150-ab99-4131-bfe7-27fdbc300001"
+                }
+              ],
+              "id": "260ac285-d616-482d-aee9-745bcc765187",
+              "createdAt": "2026-07-28T02:08:45.000Z",
+              "updatedAt": "2026-07-28T02:08:45.000Z",
+              "uid": "35240-260ac285-d616-482d-aee9-745bcc765187"
+            }
+          ],
+          "id": "ae260a11-fc9b-4f1f-98f0-a0194e88917d",
+          "createdAt": "2026-07-28T02:08:45.000Z",
+          "updatedAt": "2026-07-28T02:08:45.000Z",
+          "uid": "35240-ae260a11-fc9b-4f1f-98f0-a0194e88917d"
+        },
+        {
+          "name": "bulkquotes",
+          "item": [
+            {
+              "name": "Bulk stock quotes",
+              "id": "f8afbc06-05c1-4cbf-99a8-9539e5abd6c3",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/stocks/bulkquotes/?symbols=<string>",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "stocks",
+                    "bulkquotes",
+                    ""
+                  ],
+                  "query": [
+                    {
+                      "description": "(Required) Comma-separated list of ticker symbols.",
+                      "key": "symbols",
+                      "value": "<string>"
+                    }
+                  ]
+                },
+                "description": "Fetch real-time quotes for many stock symbols in a single request. Each symbol included in the response consumes credits."
+              },
+              "response": [
+                {
+                  "id": "78e993ae-1929-4701-95cf-9bded249e273",
+                  "name": "Quotes for the requested symbols.",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/stocks/bulkquotes/?symbols=<string>",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "stocks",
+                        "bulkquotes",
+                        ""
+                      ],
+                      "query": [
+                        {
+                          "description": "(Required) Comma-separated list of ticker symbols.",
+                          "key": "symbols",
+                          "value": "<string>"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"s\": \"<string>\",\n  \"symbol\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"last\": [\n    \"<number>\",\n    \"<number>\"\n  ],\n  \"bid\": [\n    \"<number>\",\n    \"<number>\"\n  ],\n  \"ask\": [\n    \"<number>\",\n    \"<number>\"\n  ],\n  \"volume\": [\n    \"<integer>\",\n    \"<integer>\"\n  ],\n  \"updated\": [\n    \"<integer>\",\n    \"<integer>\"\n  ]\n}",
+                  "createdAt": "2026-07-28T02:08:45.000Z",
+                  "updatedAt": "2026-07-28T02:08:45.000Z",
+                  "uid": "35240-78e993ae-1929-4701-95cf-9bded249e273"
+                },
+                {
+                  "id": "687803de-506d-4a5d-b1dd-8c9f659c838c",
+                  "name": "Cached bulk quotes (treat as success).",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/stocks/bulkquotes/?symbols=<string>",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "stocks",
+                        "bulkquotes",
+                        ""
+                      ],
+                      "query": [
+                        {
+                          "description": "(Required) Comma-separated list of ticker symbols.",
+                          "key": "symbols",
+                          "value": "<string>"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Non-Authoritative Information (since HTTP/1.1)",
+                  "code": 203,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"s\": \"<string>\",\n  \"symbol\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"last\": [\n    \"<number>\",\n    \"<number>\"\n  ],\n  \"bid\": [\n    \"<number>\",\n    \"<number>\"\n  ],\n  \"ask\": [\n    \"<number>\",\n    \"<number>\"\n  ],\n  \"volume\": [\n    \"<integer>\",\n    \"<integer>\"\n  ],\n  \"updated\": [\n    \"<integer>\",\n    \"<integer>\"\n  ]\n}",
+                  "createdAt": "2026-07-28T02:08:45.000Z",
+                  "updatedAt": "2026-07-28T02:08:45.000Z",
+                  "uid": "35240-687803de-506d-4a5d-b1dd-8c9f659c838c"
+                },
+                {
+                  "id": "19cc818b-1428-4ef7-9c67-4010cf5795c5",
+                  "name": "Authentication failed or the token is missing or invalid.",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/stocks/bulkquotes/?symbols=<string>",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "stocks",
+                        "bulkquotes",
+                        ""
+                      ],
+                      "query": [
+                        {
+                          "description": "(Required) Comma-separated list of ticker symbols.",
+                          "key": "symbols",
+                          "value": "<string>"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Unauthorized",
+                  "code": 401,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"s\": \"<string>\",\n  \"errmsg\": \"<string>\"\n}",
+                  "createdAt": "2026-07-28T02:08:45.000Z",
+                  "updatedAt": "2026-07-28T02:08:45.000Z",
+                  "uid": "35240-19cc818b-1428-4ef7-9c67-4010cf5795c5"
+                },
+                {
+                  "id": "a068d4f0-7fbd-4912-be94-bdcdc5cd4afd",
+                  "name": "Credit allocation or simultaneous-request limit exceeded.",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/stocks/bulkquotes/?symbols=<string>",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "stocks",
+                        "bulkquotes",
+                        ""
+                      ],
+                      "query": [
+                        {
+                          "description": "(Required) Comma-separated list of ticker symbols.",
+                          "key": "symbols",
+                          "value": "<string>"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Too Many Requests",
+                  "code": 429,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"s\": \"<string>\",\n  \"errmsg\": \"<string>\"\n}",
+                  "createdAt": "2026-07-28T02:08:45.000Z",
+                  "updatedAt": "2026-07-28T02:08:45.000Z",
+                  "uid": "35240-a068d4f0-7fbd-4912-be94-bdcdc5cd4afd"
+                }
+              ],
+              "createdAt": "2026-07-28T02:08:45.000Z",
+              "updatedAt": "2026-07-28T02:08:45.000Z",
+              "uid": "35240-f8afbc06-05c1-4cbf-99a8-9539e5abd6c3"
+            }
+          ],
+          "id": "2cf310e6-f527-4a41-aaaf-ce91597fbb4e",
+          "createdAt": "2026-07-28T02:08:45.000Z",
+          "updatedAt": "2026-07-28T02:08:45.000Z",
+          "uid": "35240-2cf310e6-f527-4a41-aaaf-ce91597fbb4e"
+        },
+        {
+          "name": "bulkcandles",
+          "item": [
+            {
+              "name": "{resolution}",
+              "item": [
+                {
+                  "name": "Bulk stock candles",
+                  "id": "4bbd2d41-8d34-42be-860d-b24230744009",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/stocks/bulkcandles/:resolution/?symbols=<string>",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "stocks",
+                        "bulkcandles",
+                        ":resolution",
+                        ""
+                      ],
+                      "query": [
+                        {
+                          "description": "(Required) Comma-separated list of ticker symbols.",
+                          "key": "symbols",
+                          "value": "<string>"
+                        }
+                      ],
+                      "variable": [
+                        {
+                          "id": "bab76fa8-f917-44c0-aa0b-2451319c0e64",
+                          "key": "resolution",
+                          "value": "<string>",
+                          "description": "(Required) Candle resolution such as D (daily)."
+                        }
+                      ]
+                    },
+                    "description": "Fetch candlestick data for many stock symbols at once for a single date at the requested resolution. Each symbol in the response consumes credits."
+                  },
+                  "response": [
+                    {
+                      "id": "732851f4-330c-4f63-a034-98fad7fbfd8b",
+                      "name": "Candles for the requested symbols.",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/stocks/bulkcandles/:resolution/?symbols=<string>",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "stocks",
+                            "bulkcandles",
+                            ":resolution",
+                            ""
+                          ],
+                          "query": [
+                            {
+                              "description": "(Required) Comma-separated list of ticker symbols.",
+                              "key": "symbols",
+                              "value": "<string>"
+                            }
+                          ],
+                          "variable": [
+                            {
+                              "key": "resolution"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"s\": \"<string>\",\n  \"t\": [\n    \"<integer>\",\n    \"<integer>\"\n  ],\n  \"o\": [\n    \"<number>\",\n    \"<number>\"\n  ],\n  \"h\": [\n    \"<number>\",\n    \"<number>\"\n  ],\n  \"l\": [\n    \"<number>\",\n    \"<number>\"\n  ],\n  \"c\": [\n    \"<number>\",\n    \"<number>\"\n  ],\n  \"v\": [\n    \"<integer>\",\n    \"<integer>\"\n  ]\n}",
+                      "createdAt": "2026-07-28T02:08:45.000Z",
+                      "updatedAt": "2026-07-28T02:08:45.000Z",
+                      "uid": "35240-732851f4-330c-4f63-a034-98fad7fbfd8b"
+                    },
+                    {
+                      "id": "db333061-8fac-4d3a-b41f-190338707975",
+                      "name": "Cached bulk candles (treat as success).",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/stocks/bulkcandles/:resolution/?symbols=<string>",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "stocks",
+                            "bulkcandles",
+                            ":resolution",
+                            ""
+                          ],
+                          "query": [
+                            {
+                              "description": "(Required) Comma-separated list of ticker symbols.",
+                              "key": "symbols",
+                              "value": "<string>"
+                            }
+                          ],
+                          "variable": [
+                            {
+                              "key": "resolution"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Non-Authoritative Information (since HTTP/1.1)",
+                      "code": 203,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"s\": \"<string>\",\n  \"t\": [\n    \"<integer>\",\n    \"<integer>\"\n  ],\n  \"o\": [\n    \"<number>\",\n    \"<number>\"\n  ],\n  \"h\": [\n    \"<number>\",\n    \"<number>\"\n  ],\n  \"l\": [\n    \"<number>\",\n    \"<number>\"\n  ],\n  \"c\": [\n    \"<number>\",\n    \"<number>\"\n  ],\n  \"v\": [\n    \"<integer>\",\n    \"<integer>\"\n  ]\n}",
+                      "createdAt": "2026-07-28T02:08:45.000Z",
+                      "updatedAt": "2026-07-28T02:08:45.000Z",
+                      "uid": "35240-db333061-8fac-4d3a-b41f-190338707975"
+                    },
+                    {
+                      "id": "bfa03ad6-c095-40de-a880-30584804a1fe",
+                      "name": "Authentication failed or the token is missing or invalid.",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/stocks/bulkcandles/:resolution/?symbols=<string>",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "stocks",
+                            "bulkcandles",
+                            ":resolution",
+                            ""
+                          ],
+                          "query": [
+                            {
+                              "description": "(Required) Comma-separated list of ticker symbols.",
+                              "key": "symbols",
+                              "value": "<string>"
+                            }
+                          ],
+                          "variable": [
+                            {
+                              "key": "resolution"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Unauthorized",
+                      "code": 401,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"s\": \"<string>\",\n  \"errmsg\": \"<string>\"\n}",
+                      "createdAt": "2026-07-28T02:08:45.000Z",
+                      "updatedAt": "2026-07-28T02:08:45.000Z",
+                      "uid": "35240-bfa03ad6-c095-40de-a880-30584804a1fe"
+                    },
+                    {
+                      "id": "6815dd70-7406-4f5e-9db5-f235818cb9fa",
+                      "name": "Credit allocation or simultaneous-request limit exceeded.",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/stocks/bulkcandles/:resolution/?symbols=<string>",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "stocks",
+                            "bulkcandles",
+                            ":resolution",
+                            ""
+                          ],
+                          "query": [
+                            {
+                              "description": "(Required) Comma-separated list of ticker symbols.",
+                              "key": "symbols",
+                              "value": "<string>"
+                            }
+                          ],
+                          "variable": [
+                            {
+                              "key": "resolution"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Too Many Requests",
+                      "code": 429,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"s\": \"<string>\",\n  \"errmsg\": \"<string>\"\n}",
+                      "createdAt": "2026-07-28T02:08:45.000Z",
+                      "updatedAt": "2026-07-28T02:08:45.000Z",
+                      "uid": "35240-6815dd70-7406-4f5e-9db5-f235818cb9fa"
+                    }
+                  ],
+                  "createdAt": "2026-07-28T02:08:45.000Z",
+                  "updatedAt": "2026-07-28T02:08:45.000Z",
+                  "uid": "35240-4bbd2d41-8d34-42be-860d-b24230744009"
+                }
+              ],
+              "id": "808cb866-677e-4bf7-9b79-fcfe85ee63aa",
+              "createdAt": "2026-07-28T02:08:45.000Z",
+              "updatedAt": "2026-07-28T02:08:45.000Z",
+              "uid": "35240-808cb866-677e-4bf7-9b79-fcfe85ee63aa"
+            }
+          ],
+          "id": "ea3e68ba-9bce-4a80-b30d-a9e9473cf7ad",
+          "createdAt": "2026-07-28T02:08:45.000Z",
+          "updatedAt": "2026-07-28T02:08:45.000Z",
+          "uid": "35240-ea3e68ba-9bce-4a80-b30d-a9e9473cf7ad"
+        },
+        {
+          "name": "earnings",
+          "item": [
+            {
+              "name": "{symbol}",
+              "item": [
+                {
+                  "name": "Stock earnings",
+                  "id": "0841fa35-6266-49ff-8693-37de9fc254dc",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/stocks/earnings/:symbol/",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "stocks",
+                        "earnings",
+                        ":symbol",
+                        ""
+                      ],
+                      "variable": [
+                        {
+                          "id": "26222101-9e05-4fad-a828-782c8d52e672",
+                          "key": "symbol",
+                          "value": "<string>",
+                          "description": "(Required) The company's ticker symbol."
+                        }
+                      ]
+                    },
+                    "description": "Retrieve reported and estimated earnings data (EPS, report date, fiscal period) for a stock symbol."
+                  },
+                  "response": [
+                    {
+                      "id": "9c36e292-6979-47c2-a439-8b3f5039a54b",
+                      "name": "Earnings data for the requested symbol.",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/stocks/earnings/:symbol/",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "stocks",
+                            "earnings",
+                            ":symbol",
+                            ""
+                          ],
+                          "variable": [
+                            {
+                              "key": "symbol"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"s\": \"<string>\"\n}",
+                      "createdAt": "2026-07-28T02:08:45.000Z",
+                      "updatedAt": "2026-07-28T02:08:45.000Z",
+                      "uid": "35240-9c36e292-6979-47c2-a439-8b3f5039a54b"
+                    },
+                    {
+                      "id": "657b846f-ac23-4fac-b11c-8cebb68be1b3",
+                      "name": "Cached earnings data (treat as success).",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/stocks/earnings/:symbol/",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "stocks",
+                            "earnings",
+                            ":symbol",
+                            ""
+                          ],
+                          "variable": [
+                            {
+                              "key": "symbol"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Non-Authoritative Information (since HTTP/1.1)",
+                      "code": 203,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"s\": \"<string>\"\n}",
+                      "createdAt": "2026-07-28T02:08:45.000Z",
+                      "updatedAt": "2026-07-28T02:08:45.000Z",
+                      "uid": "35240-657b846f-ac23-4fac-b11c-8cebb68be1b3"
+                    },
+                    {
+                      "id": "3f665ef9-cd14-4d6d-8ed1-8beba7acaa7e",
+                      "name": "Authentication failed or the token is missing or invalid.",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/stocks/earnings/:symbol/",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "stocks",
+                            "earnings",
+                            ":symbol",
+                            ""
+                          ],
+                          "variable": [
+                            {
+                              "key": "symbol"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Unauthorized",
+                      "code": 401,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"s\": \"<string>\",\n  \"errmsg\": \"<string>\"\n}",
+                      "createdAt": "2026-07-28T02:08:45.000Z",
+                      "updatedAt": "2026-07-28T02:08:45.000Z",
+                      "uid": "35240-3f665ef9-cd14-4d6d-8ed1-8beba7acaa7e"
+                    },
+                    {
+                      "id": "8499c1b9-aa2b-4237-afbd-2ec3aa8d51ae",
+                      "name": "Credit allocation or simultaneous-request limit exceeded.",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/stocks/earnings/:symbol/",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "stocks",
+                            "earnings",
+                            ":symbol",
+                            ""
+                          ],
+                          "variable": [
+                            {
+                              "key": "symbol"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Too Many Requests",
+                      "code": 429,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"s\": \"<string>\",\n  \"errmsg\": \"<string>\"\n}",
+                      "createdAt": "2026-07-28T02:08:45.000Z",
+                      "updatedAt": "2026-07-28T02:08:45.000Z",
+                      "uid": "35240-8499c1b9-aa2b-4237-afbd-2ec3aa8d51ae"
+                    }
+                  ],
+                  "createdAt": "2026-07-28T02:08:45.000Z",
+                  "updatedAt": "2026-07-28T02:08:45.000Z",
+                  "uid": "35240-0841fa35-6266-49ff-8693-37de9fc254dc"
+                }
+              ],
+              "id": "4af53a06-bbc8-49eb-96cb-568bb518d774",
+              "createdAt": "2026-07-28T02:08:45.000Z",
+              "updatedAt": "2026-07-28T02:08:45.000Z",
+              "uid": "35240-4af53a06-bbc8-49eb-96cb-568bb518d774"
+            }
+          ],
+          "id": "1822cb08-31c1-40b2-8f51-34d14129ec83",
+          "createdAt": "2026-07-28T02:08:45.000Z",
+          "updatedAt": "2026-07-28T02:08:45.000Z",
+          "uid": "35240-1822cb08-31c1-40b2-8f51-34d14129ec83"
+        },
+        {
+          "name": "news",
+          "item": [
+            {
+              "name": "{symbol}",
+              "item": [
+                {
+                  "name": "Stock news",
+                  "id": "2c0ea4a1-8996-4ac1-aaf5-e853002797b9",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/stocks/news/:symbol/",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "stocks",
+                        "news",
+                        ":symbol",
+                        ""
+                      ],
+                      "variable": [
+                        {
+                          "id": "d8296a28-217f-443d-a041-f1587b91002f",
+                          "key": "symbol",
+                          "value": "<string>",
+                          "description": "(Required) The company's ticker symbol."
+                        }
+                      ]
+                    },
+                    "description": "Retrieve news headlines and article links related to a stock symbol."
+                  },
+                  "response": [
+                    {
+                      "id": "226a8320-4871-4d0f-b290-23654ddb91bd",
+                      "name": "News items for the requested symbol.",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/stocks/news/:symbol/",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "stocks",
+                            "news",
+                            ":symbol",
+                            ""
+                          ],
+                          "variable": [
+                            {
+                              "key": "symbol"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"s\": \"<string>\"\n}",
+                      "createdAt": "2026-07-28T02:08:45.000Z",
+                      "updatedAt": "2026-07-28T02:08:45.000Z",
+                      "uid": "35240-226a8320-4871-4d0f-b290-23654ddb91bd"
+                    },
+                    {
+                      "id": "3ae8fccc-667a-4d93-bb10-3785ad37c8f5",
+                      "name": "Cached news items (treat as success).",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/stocks/news/:symbol/",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "stocks",
+                            "news",
+                            ":symbol",
+                            ""
+                          ],
+                          "variable": [
+                            {
+                              "key": "symbol"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Non-Authoritative Information (since HTTP/1.1)",
+                      "code": 203,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"s\": \"<string>\"\n}",
+                      "createdAt": "2026-07-28T02:08:45.000Z",
+                      "updatedAt": "2026-07-28T02:08:45.000Z",
+                      "uid": "35240-3ae8fccc-667a-4d93-bb10-3785ad37c8f5"
+                    },
+                    {
+                      "id": "dfdaf4e1-1785-4993-873d-cedfe869111c",
+                      "name": "Authentication failed or the token is missing or invalid.",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/stocks/news/:symbol/",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "stocks",
+                            "news",
+                            ":symbol",
+                            ""
+                          ],
+                          "variable": [
+                            {
+                              "key": "symbol"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Unauthorized",
+                      "code": 401,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"s\": \"<string>\",\n  \"errmsg\": \"<string>\"\n}",
+                      "createdAt": "2026-07-28T02:08:45.000Z",
+                      "updatedAt": "2026-07-28T02:08:45.000Z",
+                      "uid": "35240-dfdaf4e1-1785-4993-873d-cedfe869111c"
+                    },
+                    {
+                      "id": "f1e0f94d-0452-4a4c-b320-92da88956210",
+                      "name": "Credit allocation or simultaneous-request limit exceeded.",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/stocks/news/:symbol/",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "stocks",
+                            "news",
+                            ":symbol",
+                            ""
+                          ],
+                          "variable": [
+                            {
+                              "key": "symbol"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Too Many Requests",
+                      "code": 429,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"s\": \"<string>\",\n  \"errmsg\": \"<string>\"\n}",
+                      "createdAt": "2026-07-28T02:08:45.000Z",
+                      "updatedAt": "2026-07-28T02:08:45.000Z",
+                      "uid": "35240-f1e0f94d-0452-4a4c-b320-92da88956210"
+                    }
+                  ],
+                  "createdAt": "2026-07-28T02:08:45.000Z",
+                  "updatedAt": "2026-07-28T02:08:45.000Z",
+                  "uid": "35240-2c0ea4a1-8996-4ac1-aaf5-e853002797b9"
+                }
+              ],
+              "id": "925644c5-51b0-4815-8c29-bcd7d128e6fe",
+              "createdAt": "2026-07-28T02:08:45.000Z",
+              "updatedAt": "2026-07-28T02:08:45.000Z",
+              "uid": "35240-925644c5-51b0-4815-8c29-bcd7d128e6fe"
+            }
+          ],
+          "id": "836340d3-b99e-40d6-b0bd-9651d4fb5d86",
+          "createdAt": "2026-07-28T02:08:45.000Z",
+          "updatedAt": "2026-07-28T02:08:45.000Z",
+          "uid": "35240-836340d3-b99e-40d6-b0bd-9651d4fb5d86"
+        }
+      ],
+      "id": "b177d85a-fb86-4583-a483-0cd8597edef3",
+      "createdAt": "2026-07-28T02:08:45.000Z",
+      "updatedAt": "2026-07-28T02:08:45.000Z",
+      "uid": "35240-b177d85a-fb86-4583-a483-0cd8597edef3"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}",
+        "type": "string"
+      }
+    ]
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://api.marketdata.app/v1"
+    }
+  ]
+}

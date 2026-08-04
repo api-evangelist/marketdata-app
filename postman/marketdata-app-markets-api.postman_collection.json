@@ -1,0 +1,367 @@
+{
+  "info": {
+    "_postman_id": "7ad388aa-a5b6-400f-a714-0837c04e0483",
+    "name": "Market Data Indices Markets API",
+    "description": "The Market Data API delivers real-time and historical U.S. stock, options, and index market data over a simple REST interface. All endpoints are served from https://api.marketdata.app/v1 and return JSON (or CSV) responses. Most endpoints require only a ticker symbol as a path parameter. Requests are authenticated with a Bearer token generated in the Market Data dashboard. Coverage spans stock candles and quotes (single and bulk), corporate earnings and news, full options chains with per-contract quotes, expirations, strikes and OCC symbol lookup, index candles and quotes, and market open/closed status. Note that Market Data may return HTTP 203 Non-Authoritative Information (instead of 200 OK) when a response is served from its caching tier; clients must treat 203 as success.\n\nContact Support:\n Name: Market Data",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-07-28T02:08:39.000Z",
+    "updatedAt": "2026-07-28T02:08:39.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-7ad388aa-a5b6-400f-a714-0837c04e0483"
+  },
+  "item": [
+    {
+      "name": "markets",
+      "item": [
+        {
+          "name": "status",
+          "item": [
+            {
+              "name": "Market status",
+              "id": "ca8cc4eb-eb1e-47f2-a0d8-22829d2f66c1",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/markets/status/?country=<string>&date=<string>&from=<string>&to=<string>",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "markets",
+                    "status",
+                    ""
+                  ],
+                  "query": [
+                    {
+                      "description": "ISO country code for the market to check. Defaults to US.",
+                      "key": "country",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "A single date to check.",
+                      "key": "date",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "The leftmost (earliest) date of the date range.",
+                      "key": "from",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "The rightmost (latest) date of the date range.",
+                      "key": "to",
+                      "value": "<string>"
+                    }
+                  ]
+                },
+                "description": "Return whether the market is open or closed for a given date or date range. Responds with \"open\" for trading days and \"closed\" for weekends or market holidays. With no parameters, returns the current day's status for the United States market."
+              },
+              "response": [
+                {
+                  "id": "6903fece-cb6a-4ec4-819a-98508efa46f2",
+                  "name": "Market open/closed status.",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/markets/status/?country=<string>&date=<string>&from=<string>&to=<string>",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "markets",
+                        "status",
+                        ""
+                      ],
+                      "query": [
+                        {
+                          "description": "ISO country code for the market to check. Defaults to US.",
+                          "key": "country",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "A single date to check.",
+                          "key": "date",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "The leftmost (earliest) date of the date range.",
+                          "key": "from",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "The rightmost (latest) date of the date range.",
+                          "key": "to",
+                          "value": "<string>"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"s\": \"<string>\",\n  \"date\": [\n    \"<integer>\",\n    \"<integer>\"\n  ],\n  \"status\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                  "createdAt": "2026-07-28T02:08:39.000Z",
+                  "updatedAt": "2026-07-28T02:08:39.000Z",
+                  "uid": "35240-6903fece-cb6a-4ec4-819a-98508efa46f2"
+                },
+                {
+                  "id": "51fa48a6-620d-4b3b-a9c7-cf113c145a1d",
+                  "name": "Cached market status (treat as success).",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/markets/status/?country=<string>&date=<string>&from=<string>&to=<string>",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "markets",
+                        "status",
+                        ""
+                      ],
+                      "query": [
+                        {
+                          "description": "ISO country code for the market to check. Defaults to US.",
+                          "key": "country",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "A single date to check.",
+                          "key": "date",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "The leftmost (earliest) date of the date range.",
+                          "key": "from",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "The rightmost (latest) date of the date range.",
+                          "key": "to",
+                          "value": "<string>"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Non-Authoritative Information (since HTTP/1.1)",
+                  "code": 203,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"s\": \"<string>\",\n  \"date\": [\n    \"<integer>\",\n    \"<integer>\"\n  ],\n  \"status\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                  "createdAt": "2026-07-28T02:08:39.000Z",
+                  "updatedAt": "2026-07-28T02:08:39.000Z",
+                  "uid": "35240-51fa48a6-620d-4b3b-a9c7-cf113c145a1d"
+                },
+                {
+                  "id": "da2432bd-5f39-4c6a-a617-48bc709ce76e",
+                  "name": "Authentication failed or the token is missing or invalid.",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/markets/status/?country=<string>&date=<string>&from=<string>&to=<string>",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "markets",
+                        "status",
+                        ""
+                      ],
+                      "query": [
+                        {
+                          "description": "ISO country code for the market to check. Defaults to US.",
+                          "key": "country",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "A single date to check.",
+                          "key": "date",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "The leftmost (earliest) date of the date range.",
+                          "key": "from",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "The rightmost (latest) date of the date range.",
+                          "key": "to",
+                          "value": "<string>"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Unauthorized",
+                  "code": 401,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"s\": \"<string>\",\n  \"errmsg\": \"<string>\"\n}",
+                  "createdAt": "2026-07-28T02:08:39.000Z",
+                  "updatedAt": "2026-07-28T02:08:39.000Z",
+                  "uid": "35240-da2432bd-5f39-4c6a-a617-48bc709ce76e"
+                },
+                {
+                  "id": "0b101182-bfd4-410c-ac3b-834ed271190f",
+                  "name": "Credit allocation or simultaneous-request limit exceeded.",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/markets/status/?country=<string>&date=<string>&from=<string>&to=<string>",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "markets",
+                        "status",
+                        ""
+                      ],
+                      "query": [
+                        {
+                          "description": "ISO country code for the market to check. Defaults to US.",
+                          "key": "country",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "A single date to check.",
+                          "key": "date",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "The leftmost (earliest) date of the date range.",
+                          "key": "from",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "The rightmost (latest) date of the date range.",
+                          "key": "to",
+                          "value": "<string>"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Too Many Requests",
+                  "code": 429,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"s\": \"<string>\",\n  \"errmsg\": \"<string>\"\n}",
+                  "createdAt": "2026-07-28T02:08:39.000Z",
+                  "updatedAt": "2026-07-28T02:08:39.000Z",
+                  "uid": "35240-0b101182-bfd4-410c-ac3b-834ed271190f"
+                }
+              ],
+              "createdAt": "2026-07-28T02:08:39.000Z",
+              "updatedAt": "2026-07-28T02:08:39.000Z",
+              "uid": "35240-ca8cc4eb-eb1e-47f2-a0d8-22829d2f66c1"
+            }
+          ],
+          "id": "0e754dc2-e93f-4f00-9fc1-9620b51209c1",
+          "createdAt": "2026-07-28T02:08:39.000Z",
+          "updatedAt": "2026-07-28T02:08:39.000Z",
+          "uid": "35240-0e754dc2-e93f-4f00-9fc1-9620b51209c1"
+        }
+      ],
+      "id": "12a700b9-ac5c-496d-bbd4-4e286b660704",
+      "createdAt": "2026-07-28T02:08:39.000Z",
+      "updatedAt": "2026-07-28T02:08:39.000Z",
+      "uid": "35240-12a700b9-ac5c-496d-bbd4-4e286b660704"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}",
+        "type": "string"
+      }
+    ]
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://api.marketdata.app/v1"
+    }
+  ]
+}

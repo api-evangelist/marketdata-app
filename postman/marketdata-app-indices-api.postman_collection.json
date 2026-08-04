@@ -1,0 +1,651 @@
+{
+  "info": {
+    "_postman_id": "ca293359-28c4-4ee3-a3d5-105cc2abbb28",
+    "name": "Market Data Indices API",
+    "description": "The Market Data API delivers real-time and historical U.S. stock, options, and index market data over a simple REST interface. All endpoints are served from https://api.marketdata.app/v1 and return JSON (or CSV) responses. Most endpoints require only a ticker symbol as a path parameter. Requests are authenticated with a Bearer token generated in the Market Data dashboard. Coverage spans stock candles and quotes (single and bulk), corporate earnings and news, full options chains with per-contract quotes, expirations, strikes and OCC symbol lookup, index candles and quotes, and market open/closed status. Note that Market Data may return HTTP 203 Non-Authoritative Information (instead of 200 OK) when a response is served from its caching tier; clients must treat 203 as success.\n\nContact Support:\n Name: Market Data",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-07-28T02:08:37.000Z",
+    "updatedAt": "2026-07-28T02:08:37.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-ca293359-28c4-4ee3-a3d5-105cc2abbb28"
+  },
+  "item": [
+    {
+      "name": "indices",
+      "item": [
+        {
+          "name": "candles",
+          "item": [
+            {
+              "name": "{resolution}",
+              "item": [
+                {
+                  "name": "{symbol}",
+                  "item": [
+                    {
+                      "name": "Index candles",
+                      "id": "4dd44e70-69bf-44ef-a0d4-2517b3ec8662",
+                      "protocolProfileBehavior": {
+                        "disableBodyPruning": true
+                      },
+                      "request": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/indices/candles/:resolution/:symbol/?from=<string>&to=<string>",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "indices",
+                            "candles",
+                            ":resolution",
+                            ":symbol",
+                            ""
+                          ],
+                          "query": [
+                            {
+                              "description": "The leftmost (earliest) date of the date range.",
+                              "key": "from",
+                              "value": "<string>"
+                            },
+                            {
+                              "description": "The rightmost (latest) date of the date range.",
+                              "key": "to",
+                              "value": "<string>"
+                            }
+                          ],
+                          "variable": [
+                            {
+                              "id": "f6e55ce7-fca4-4fbb-aa97-2419faf18315",
+                              "key": "resolution",
+                              "value": "<string>",
+                              "description": "(Required) Candle resolution such as D (daily)."
+                            },
+                            {
+                              "id": "508ff463-e11a-4635-8eef-348fb5e9fd43",
+                              "key": "symbol",
+                              "value": "<string>",
+                              "description": "(Required) The index symbol, e.g. VIX or SPX."
+                            }
+                          ]
+                        },
+                        "description": "Retrieve OHLC candlestick data for an index over a date range at the requested resolution."
+                      },
+                      "response": [
+                        {
+                          "id": "c8056082-79cf-4f6f-b05e-ba1c69298202",
+                          "name": "OHLC candle series for the index.",
+                          "originalRequest": {
+                            "method": "GET",
+                            "header": [
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: bearer",
+                                "key": "Authorization",
+                                "value": "Bearer <token>"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/indices/candles/:resolution/:symbol/?from=<string>&to=<string>",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "indices",
+                                "candles",
+                                ":resolution",
+                                ":symbol",
+                                ""
+                              ],
+                              "query": [
+                                {
+                                  "description": "The leftmost (earliest) date of the date range.",
+                                  "key": "from",
+                                  "value": "<string>"
+                                },
+                                {
+                                  "description": "The rightmost (latest) date of the date range.",
+                                  "key": "to",
+                                  "value": "<string>"
+                                }
+                              ],
+                              "variable": [
+                                {
+                                  "key": "resolution"
+                                },
+                                {
+                                  "key": "symbol"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "OK",
+                          "code": 200,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"s\": \"<string>\",\n  \"t\": [\n    \"<integer>\",\n    \"<integer>\"\n  ],\n  \"o\": [\n    \"<number>\",\n    \"<number>\"\n  ],\n  \"h\": [\n    \"<number>\",\n    \"<number>\"\n  ],\n  \"l\": [\n    \"<number>\",\n    \"<number>\"\n  ],\n  \"c\": [\n    \"<number>\",\n    \"<number>\"\n  ],\n  \"v\": [\n    \"<integer>\",\n    \"<integer>\"\n  ]\n}",
+                          "createdAt": "2026-07-28T02:08:38.000Z",
+                          "updatedAt": "2026-07-28T02:08:38.000Z",
+                          "uid": "35240-c8056082-79cf-4f6f-b05e-ba1c69298202"
+                        },
+                        {
+                          "id": "23ce8d11-c570-426e-b1fe-83862ce557fb",
+                          "name": "Cached index candles (treat as success).",
+                          "originalRequest": {
+                            "method": "GET",
+                            "header": [
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: bearer",
+                                "key": "Authorization",
+                                "value": "Bearer <token>"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/indices/candles/:resolution/:symbol/?from=<string>&to=<string>",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "indices",
+                                "candles",
+                                ":resolution",
+                                ":symbol",
+                                ""
+                              ],
+                              "query": [
+                                {
+                                  "description": "The leftmost (earliest) date of the date range.",
+                                  "key": "from",
+                                  "value": "<string>"
+                                },
+                                {
+                                  "description": "The rightmost (latest) date of the date range.",
+                                  "key": "to",
+                                  "value": "<string>"
+                                }
+                              ],
+                              "variable": [
+                                {
+                                  "key": "resolution"
+                                },
+                                {
+                                  "key": "symbol"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "Non-Authoritative Information (since HTTP/1.1)",
+                          "code": 203,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"s\": \"<string>\",\n  \"t\": [\n    \"<integer>\",\n    \"<integer>\"\n  ],\n  \"o\": [\n    \"<number>\",\n    \"<number>\"\n  ],\n  \"h\": [\n    \"<number>\",\n    \"<number>\"\n  ],\n  \"l\": [\n    \"<number>\",\n    \"<number>\"\n  ],\n  \"c\": [\n    \"<number>\",\n    \"<number>\"\n  ],\n  \"v\": [\n    \"<integer>\",\n    \"<integer>\"\n  ]\n}",
+                          "createdAt": "2026-07-28T02:08:38.000Z",
+                          "updatedAt": "2026-07-28T02:08:38.000Z",
+                          "uid": "35240-23ce8d11-c570-426e-b1fe-83862ce557fb"
+                        },
+                        {
+                          "id": "e6438e51-4774-4683-8af3-2859c7c10728",
+                          "name": "Authentication failed or the token is missing or invalid.",
+                          "originalRequest": {
+                            "method": "GET",
+                            "header": [
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: bearer",
+                                "key": "Authorization",
+                                "value": "Bearer <token>"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/indices/candles/:resolution/:symbol/?from=<string>&to=<string>",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "indices",
+                                "candles",
+                                ":resolution",
+                                ":symbol",
+                                ""
+                              ],
+                              "query": [
+                                {
+                                  "description": "The leftmost (earliest) date of the date range.",
+                                  "key": "from",
+                                  "value": "<string>"
+                                },
+                                {
+                                  "description": "The rightmost (latest) date of the date range.",
+                                  "key": "to",
+                                  "value": "<string>"
+                                }
+                              ],
+                              "variable": [
+                                {
+                                  "key": "resolution"
+                                },
+                                {
+                                  "key": "symbol"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "Unauthorized",
+                          "code": 401,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"s\": \"<string>\",\n  \"errmsg\": \"<string>\"\n}",
+                          "createdAt": "2026-07-28T02:08:38.000Z",
+                          "updatedAt": "2026-07-28T02:08:38.000Z",
+                          "uid": "35240-e6438e51-4774-4683-8af3-2859c7c10728"
+                        },
+                        {
+                          "id": "8e2c3b0e-42a7-4d0f-9002-f7936fee1b64",
+                          "name": "Credit allocation or simultaneous-request limit exceeded.",
+                          "originalRequest": {
+                            "method": "GET",
+                            "header": [
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: bearer",
+                                "key": "Authorization",
+                                "value": "Bearer <token>"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/indices/candles/:resolution/:symbol/?from=<string>&to=<string>",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "indices",
+                                "candles",
+                                ":resolution",
+                                ":symbol",
+                                ""
+                              ],
+                              "query": [
+                                {
+                                  "description": "The leftmost (earliest) date of the date range.",
+                                  "key": "from",
+                                  "value": "<string>"
+                                },
+                                {
+                                  "description": "The rightmost (latest) date of the date range.",
+                                  "key": "to",
+                                  "value": "<string>"
+                                }
+                              ],
+                              "variable": [
+                                {
+                                  "key": "resolution"
+                                },
+                                {
+                                  "key": "symbol"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "Too Many Requests",
+                          "code": 429,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"s\": \"<string>\",\n  \"errmsg\": \"<string>\"\n}",
+                          "createdAt": "2026-07-28T02:08:38.000Z",
+                          "updatedAt": "2026-07-28T02:08:38.000Z",
+                          "uid": "35240-8e2c3b0e-42a7-4d0f-9002-f7936fee1b64"
+                        }
+                      ],
+                      "createdAt": "2026-07-28T02:08:38.000Z",
+                      "updatedAt": "2026-07-28T02:08:38.000Z",
+                      "uid": "35240-4dd44e70-69bf-44ef-a0d4-2517b3ec8662"
+                    }
+                  ],
+                  "id": "38872487-fdbc-40e1-aeb2-0b149d928a06",
+                  "createdAt": "2026-07-28T02:08:38.000Z",
+                  "updatedAt": "2026-07-28T02:08:38.000Z",
+                  "uid": "35240-38872487-fdbc-40e1-aeb2-0b149d928a06"
+                }
+              ],
+              "id": "7d5151cc-c5ca-4cb2-a579-9a9cc2793578",
+              "createdAt": "2026-07-28T02:08:38.000Z",
+              "updatedAt": "2026-07-28T02:08:38.000Z",
+              "uid": "35240-7d5151cc-c5ca-4cb2-a579-9a9cc2793578"
+            }
+          ],
+          "id": "a3453b74-4117-40a7-8f38-0162ae6c8ae7",
+          "createdAt": "2026-07-28T02:08:38.000Z",
+          "updatedAt": "2026-07-28T02:08:38.000Z",
+          "uid": "35240-a3453b74-4117-40a7-8f38-0162ae6c8ae7"
+        },
+        {
+          "name": "quotes",
+          "item": [
+            {
+              "name": "{symbol}",
+              "item": [
+                {
+                  "name": "Index quote",
+                  "id": "34c92de3-b3e4-4b47-ab5a-f24792653a8f",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/indices/quotes/:symbol/",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "indices",
+                        "quotes",
+                        ":symbol",
+                        ""
+                      ],
+                      "variable": [
+                        {
+                          "id": "c22cf160-42eb-4da7-80b7-cb53cf16fe9f",
+                          "key": "symbol",
+                          "value": "<string>",
+                          "description": "(Required) The index symbol, e.g. VIX or SPX."
+                        }
+                      ]
+                    },
+                    "description": "Fetch a real-time or historical quote for a single index symbol, including last value and change."
+                  },
+                  "response": [
+                    {
+                      "id": "e96ee8a1-e46e-4e50-a327-e1cb3414253f",
+                      "name": "A quote for the requested index.",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/indices/quotes/:symbol/",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "indices",
+                            "quotes",
+                            ":symbol",
+                            ""
+                          ],
+                          "variable": [
+                            {
+                              "key": "symbol"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"s\": \"<string>\",\n  \"symbol\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"last\": [\n    \"<number>\",\n    \"<number>\"\n  ],\n  \"bid\": [\n    \"<number>\",\n    \"<number>\"\n  ],\n  \"ask\": [\n    \"<number>\",\n    \"<number>\"\n  ],\n  \"volume\": [\n    \"<integer>\",\n    \"<integer>\"\n  ],\n  \"updated\": [\n    \"<integer>\",\n    \"<integer>\"\n  ]\n}",
+                      "createdAt": "2026-07-28T02:08:38.000Z",
+                      "updatedAt": "2026-07-28T02:08:38.000Z",
+                      "uid": "35240-e96ee8a1-e46e-4e50-a327-e1cb3414253f"
+                    },
+                    {
+                      "id": "a1284ced-ff06-4ecc-9d27-15775230069c",
+                      "name": "Cached index quote (treat as success).",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/indices/quotes/:symbol/",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "indices",
+                            "quotes",
+                            ":symbol",
+                            ""
+                          ],
+                          "variable": [
+                            {
+                              "key": "symbol"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Non-Authoritative Information (since HTTP/1.1)",
+                      "code": 203,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"s\": \"<string>\",\n  \"symbol\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"last\": [\n    \"<number>\",\n    \"<number>\"\n  ],\n  \"bid\": [\n    \"<number>\",\n    \"<number>\"\n  ],\n  \"ask\": [\n    \"<number>\",\n    \"<number>\"\n  ],\n  \"volume\": [\n    \"<integer>\",\n    \"<integer>\"\n  ],\n  \"updated\": [\n    \"<integer>\",\n    \"<integer>\"\n  ]\n}",
+                      "createdAt": "2026-07-28T02:08:38.000Z",
+                      "updatedAt": "2026-07-28T02:08:38.000Z",
+                      "uid": "35240-a1284ced-ff06-4ecc-9d27-15775230069c"
+                    },
+                    {
+                      "id": "7faae2f2-2a81-4b75-b5af-ff15b423c53c",
+                      "name": "Authentication failed or the token is missing or invalid.",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/indices/quotes/:symbol/",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "indices",
+                            "quotes",
+                            ":symbol",
+                            ""
+                          ],
+                          "variable": [
+                            {
+                              "key": "symbol"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Unauthorized",
+                      "code": 401,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"s\": \"<string>\",\n  \"errmsg\": \"<string>\"\n}",
+                      "createdAt": "2026-07-28T02:08:38.000Z",
+                      "updatedAt": "2026-07-28T02:08:38.000Z",
+                      "uid": "35240-7faae2f2-2a81-4b75-b5af-ff15b423c53c"
+                    },
+                    {
+                      "id": "d438b8f6-5d5b-462e-8549-b7ac7bc6e6da",
+                      "name": "Credit allocation or simultaneous-request limit exceeded.",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/indices/quotes/:symbol/",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "indices",
+                            "quotes",
+                            ":symbol",
+                            ""
+                          ],
+                          "variable": [
+                            {
+                              "key": "symbol"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Too Many Requests",
+                      "code": 429,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"s\": \"<string>\",\n  \"errmsg\": \"<string>\"\n}",
+                      "createdAt": "2026-07-28T02:08:38.000Z",
+                      "updatedAt": "2026-07-28T02:08:38.000Z",
+                      "uid": "35240-d438b8f6-5d5b-462e-8549-b7ac7bc6e6da"
+                    }
+                  ],
+                  "createdAt": "2026-07-28T02:08:38.000Z",
+                  "updatedAt": "2026-07-28T02:08:38.000Z",
+                  "uid": "35240-34c92de3-b3e4-4b47-ab5a-f24792653a8f"
+                }
+              ],
+              "id": "ffc452a1-aa94-4018-a27b-e8d56ef86558",
+              "createdAt": "2026-07-28T02:08:38.000Z",
+              "updatedAt": "2026-07-28T02:08:38.000Z",
+              "uid": "35240-ffc452a1-aa94-4018-a27b-e8d56ef86558"
+            }
+          ],
+          "id": "a491dc7e-b6d5-42f1-9efc-2feed0f97566",
+          "createdAt": "2026-07-28T02:08:38.000Z",
+          "updatedAt": "2026-07-28T02:08:38.000Z",
+          "uid": "35240-a491dc7e-b6d5-42f1-9efc-2feed0f97566"
+        }
+      ],
+      "id": "a2e0be54-e589-493a-ad72-9c306339b725",
+      "createdAt": "2026-07-28T02:08:38.000Z",
+      "updatedAt": "2026-07-28T02:08:38.000Z",
+      "uid": "35240-a2e0be54-e589-493a-ad72-9c306339b725"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}",
+        "type": "string"
+      }
+    ]
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://api.marketdata.app/v1"
+    }
+  ]
+}

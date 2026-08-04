@@ -1,0 +1,1434 @@
+{
+  "info": {
+    "_postman_id": "78c555fa-ed0f-4919-9abd-5c7aabaa9130",
+    "name": "Market Data Indices Options API",
+    "description": "The Market Data API delivers real-time and historical U.S. stock, options, and index market data over a simple REST interface. All endpoints are served from https://api.marketdata.app/v1 and return JSON (or CSV) responses. Most endpoints require only a ticker symbol as a path parameter. Requests are authenticated with a Bearer token generated in the Market Data dashboard. Coverage spans stock candles and quotes (single and bulk), corporate earnings and news, full options chains with per-contract quotes, expirations, strikes and OCC symbol lookup, index candles and quotes, and market open/closed status. Note that Market Data may return HTTP 203 Non-Authoritative Information (instead of 200 OK) when a response is served from its caching tier; clients must treat 203 as success.\n\nContact Support:\n Name: Market Data",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-07-28T02:08:44.000Z",
+    "updatedAt": "2026-07-28T02:08:44.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-78c555fa-ed0f-4919-9abd-5c7aabaa9130"
+  },
+  "item": [
+    {
+      "name": "options",
+      "item": [
+        {
+          "name": "expirations",
+          "item": [
+            {
+              "name": "{underlyingSymbol}",
+              "item": [
+                {
+                  "name": "Option expirations",
+                  "id": "8d7e6049-c9e8-480d-bdf9-0f1b3b0d1164",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/options/expirations/:underlyingSymbol/",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "options",
+                        "expirations",
+                        ":underlyingSymbol",
+                        ""
+                      ],
+                      "variable": [
+                        {
+                          "id": "49e71871-b096-449a-8ae1-6d72f3ab487c",
+                          "key": "underlyingSymbol",
+                          "value": "<string>",
+                          "description": "(Required) The underlying ticker symbol for the options chain."
+                        }
+                      ]
+                    },
+                    "description": "Get a list of current or historical option expiration dates for an underlying symbol. With no optional parameters, returns all expiration dates in the option chain."
+                  },
+                  "response": [
+                    {
+                      "id": "f0f2a220-a2d3-4d54-a8f3-348881b8bf91",
+                      "name": "Expiration dates for the underlying.",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/options/expirations/:underlyingSymbol/",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "options",
+                            "expirations",
+                            ":underlyingSymbol",
+                            ""
+                          ],
+                          "variable": [
+                            {
+                              "key": "underlyingSymbol"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"s\": \"<string>\"\n}",
+                      "createdAt": "2026-07-28T02:08:44.000Z",
+                      "updatedAt": "2026-07-28T02:08:44.000Z",
+                      "uid": "35240-f0f2a220-a2d3-4d54-a8f3-348881b8bf91"
+                    },
+                    {
+                      "id": "8c88b57f-b20f-493b-b48f-23e7c5bffb97",
+                      "name": "Cached expiration dates (treat as success).",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/options/expirations/:underlyingSymbol/",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "options",
+                            "expirations",
+                            ":underlyingSymbol",
+                            ""
+                          ],
+                          "variable": [
+                            {
+                              "key": "underlyingSymbol"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Non-Authoritative Information (since HTTP/1.1)",
+                      "code": 203,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"s\": \"<string>\"\n}",
+                      "createdAt": "2026-07-28T02:08:44.000Z",
+                      "updatedAt": "2026-07-28T02:08:44.000Z",
+                      "uid": "35240-8c88b57f-b20f-493b-b48f-23e7c5bffb97"
+                    },
+                    {
+                      "id": "4dec8960-fc52-471f-9cf9-4b5daa3ac0ba",
+                      "name": "Authentication failed or the token is missing or invalid.",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/options/expirations/:underlyingSymbol/",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "options",
+                            "expirations",
+                            ":underlyingSymbol",
+                            ""
+                          ],
+                          "variable": [
+                            {
+                              "key": "underlyingSymbol"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Unauthorized",
+                      "code": 401,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"s\": \"<string>\",\n  \"errmsg\": \"<string>\"\n}",
+                      "createdAt": "2026-07-28T02:08:44.000Z",
+                      "updatedAt": "2026-07-28T02:08:44.000Z",
+                      "uid": "35240-4dec8960-fc52-471f-9cf9-4b5daa3ac0ba"
+                    },
+                    {
+                      "id": "fa44c632-2ff9-435c-ba85-3cc787071b6a",
+                      "name": "Credit allocation or simultaneous-request limit exceeded.",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/options/expirations/:underlyingSymbol/",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "options",
+                            "expirations",
+                            ":underlyingSymbol",
+                            ""
+                          ],
+                          "variable": [
+                            {
+                              "key": "underlyingSymbol"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Too Many Requests",
+                      "code": 429,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"s\": \"<string>\",\n  \"errmsg\": \"<string>\"\n}",
+                      "createdAt": "2026-07-28T02:08:44.000Z",
+                      "updatedAt": "2026-07-28T02:08:44.000Z",
+                      "uid": "35240-fa44c632-2ff9-435c-ba85-3cc787071b6a"
+                    }
+                  ],
+                  "createdAt": "2026-07-28T02:08:44.000Z",
+                  "updatedAt": "2026-07-28T02:08:44.000Z",
+                  "uid": "35240-8d7e6049-c9e8-480d-bdf9-0f1b3b0d1164"
+                }
+              ],
+              "id": "6a545a89-a19a-4abd-944b-ba5dc5366087",
+              "createdAt": "2026-07-28T02:08:44.000Z",
+              "updatedAt": "2026-07-28T02:08:44.000Z",
+              "uid": "35240-6a545a89-a19a-4abd-944b-ba5dc5366087"
+            }
+          ],
+          "id": "158d271c-5129-4aec-a02e-4a4693276d16",
+          "createdAt": "2026-07-28T02:08:44.000Z",
+          "updatedAt": "2026-07-28T02:08:44.000Z",
+          "uid": "35240-158d271c-5129-4aec-a02e-4a4693276d16"
+        },
+        {
+          "name": "lookup",
+          "item": [
+            {
+              "name": "{userInput}",
+              "item": [
+                {
+                  "name": "Option symbol lookup",
+                  "id": "abb99597-c71e-454b-9b4c-f31cf28b3bb5",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/options/lookup/:userInput/",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "options",
+                        "lookup",
+                        ":userInput",
+                        ""
+                      ],
+                      "variable": [
+                        {
+                          "id": "cc665155-745c-4d1d-8308-b40d44e9fb07",
+                          "key": "userInput",
+                          "value": "<string>",
+                          "description": "(Required) Human-readable option description, e.g. \"AAPL 7/28/23 $200 Call\"."
+                        }
+                      ]
+                    },
+                    "description": "Convert a human-readable string containing a stock symbol, strike, expiration date, and option side (put or call) into a valid OCC option symbol."
+                  },
+                  "response": [
+                    {
+                      "id": "1a84c868-f340-4e0a-acaf-b51decf9e3fd",
+                      "name": "The resolved OCC option symbol.",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/options/lookup/:userInput/",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "options",
+                            "lookup",
+                            ":userInput",
+                            ""
+                          ],
+                          "variable": [
+                            {
+                              "key": "userInput"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"s\": \"<string>\"\n}",
+                      "createdAt": "2026-07-28T02:08:44.000Z",
+                      "updatedAt": "2026-07-28T02:08:44.000Z",
+                      "uid": "35240-1a84c868-f340-4e0a-acaf-b51decf9e3fd"
+                    },
+                    {
+                      "id": "1105a6b7-0064-4475-8fde-2f17004e8462",
+                      "name": "Cached lookup result (treat as success).",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/options/lookup/:userInput/",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "options",
+                            "lookup",
+                            ":userInput",
+                            ""
+                          ],
+                          "variable": [
+                            {
+                              "key": "userInput"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Non-Authoritative Information (since HTTP/1.1)",
+                      "code": 203,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"s\": \"<string>\"\n}",
+                      "createdAt": "2026-07-28T02:08:44.000Z",
+                      "updatedAt": "2026-07-28T02:08:44.000Z",
+                      "uid": "35240-1105a6b7-0064-4475-8fde-2f17004e8462"
+                    },
+                    {
+                      "id": "746b44b6-cd0e-4997-a8e1-c45f78790105",
+                      "name": "Authentication failed or the token is missing or invalid.",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/options/lookup/:userInput/",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "options",
+                            "lookup",
+                            ":userInput",
+                            ""
+                          ],
+                          "variable": [
+                            {
+                              "key": "userInput"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Unauthorized",
+                      "code": 401,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"s\": \"<string>\",\n  \"errmsg\": \"<string>\"\n}",
+                      "createdAt": "2026-07-28T02:08:44.000Z",
+                      "updatedAt": "2026-07-28T02:08:44.000Z",
+                      "uid": "35240-746b44b6-cd0e-4997-a8e1-c45f78790105"
+                    },
+                    {
+                      "id": "8cc2264f-9c5e-4645-83b0-cab10a5047be",
+                      "name": "Credit allocation or simultaneous-request limit exceeded.",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/options/lookup/:userInput/",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "options",
+                            "lookup",
+                            ":userInput",
+                            ""
+                          ],
+                          "variable": [
+                            {
+                              "key": "userInput"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Too Many Requests",
+                      "code": 429,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"s\": \"<string>\",\n  \"errmsg\": \"<string>\"\n}",
+                      "createdAt": "2026-07-28T02:08:44.000Z",
+                      "updatedAt": "2026-07-28T02:08:44.000Z",
+                      "uid": "35240-8cc2264f-9c5e-4645-83b0-cab10a5047be"
+                    }
+                  ],
+                  "createdAt": "2026-07-28T02:08:44.000Z",
+                  "updatedAt": "2026-07-28T02:08:44.000Z",
+                  "uid": "35240-abb99597-c71e-454b-9b4c-f31cf28b3bb5"
+                }
+              ],
+              "id": "fe22fdff-990c-40ae-a415-2b6af2cf2e17",
+              "createdAt": "2026-07-28T02:08:44.000Z",
+              "updatedAt": "2026-07-28T02:08:44.000Z",
+              "uid": "35240-fe22fdff-990c-40ae-a415-2b6af2cf2e17"
+            }
+          ],
+          "id": "c3df9033-9046-4434-8857-571d1be7727d",
+          "createdAt": "2026-07-28T02:08:44.000Z",
+          "updatedAt": "2026-07-28T02:08:44.000Z",
+          "uid": "35240-c3df9033-9046-4434-8857-571d1be7727d"
+        },
+        {
+          "name": "strikes",
+          "item": [
+            {
+              "name": "{underlyingSymbol}",
+              "item": [
+                {
+                  "name": "Option strikes",
+                  "id": "37f17f19-911d-40cb-a1b2-0045cf63159c",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/options/strikes/:underlyingSymbol/?expiration=<string>",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "options",
+                        "strikes",
+                        ":underlyingSymbol",
+                        ""
+                      ],
+                      "query": [
+                        {
+                          "description": "Limit strikes to a single expiration date.",
+                          "key": "expiration",
+                          "value": "<string>"
+                        }
+                      ],
+                      "variable": [
+                        {
+                          "id": "8e4f977c-e826-4e56-aa3a-c9d1db2ea0a9",
+                          "key": "underlyingSymbol",
+                          "value": "<string>",
+                          "description": "(Required) The underlying ticker symbol for the options chain."
+                        }
+                      ]
+                    },
+                    "description": "Get a list of current or historical option strike prices for an underlying symbol. With no optional parameters, returns the strikes for every expiration in the chain."
+                  },
+                  "response": [
+                    {
+                      "id": "325906a1-9aa2-4cf6-a5c0-c8cfbd1f1b4d",
+                      "name": "Strike prices for the underlying.",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/options/strikes/:underlyingSymbol/?expiration=<string>",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "options",
+                            "strikes",
+                            ":underlyingSymbol",
+                            ""
+                          ],
+                          "query": [
+                            {
+                              "description": "Limit strikes to a single expiration date.",
+                              "key": "expiration",
+                              "value": "<string>"
+                            }
+                          ],
+                          "variable": [
+                            {
+                              "key": "underlyingSymbol"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"s\": \"<string>\"\n}",
+                      "createdAt": "2026-07-28T02:08:44.000Z",
+                      "updatedAt": "2026-07-28T02:08:44.000Z",
+                      "uid": "35240-325906a1-9aa2-4cf6-a5c0-c8cfbd1f1b4d"
+                    },
+                    {
+                      "id": "3b95eb7c-d5ac-4364-8c01-7eb3557c600e",
+                      "name": "Cached strike prices (treat as success).",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/options/strikes/:underlyingSymbol/?expiration=<string>",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "options",
+                            "strikes",
+                            ":underlyingSymbol",
+                            ""
+                          ],
+                          "query": [
+                            {
+                              "description": "Limit strikes to a single expiration date.",
+                              "key": "expiration",
+                              "value": "<string>"
+                            }
+                          ],
+                          "variable": [
+                            {
+                              "key": "underlyingSymbol"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Non-Authoritative Information (since HTTP/1.1)",
+                      "code": 203,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"s\": \"<string>\"\n}",
+                      "createdAt": "2026-07-28T02:08:44.000Z",
+                      "updatedAt": "2026-07-28T02:08:44.000Z",
+                      "uid": "35240-3b95eb7c-d5ac-4364-8c01-7eb3557c600e"
+                    },
+                    {
+                      "id": "d09c944e-d7c3-4eb7-9a92-304b53cd3c05",
+                      "name": "Authentication failed or the token is missing or invalid.",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/options/strikes/:underlyingSymbol/?expiration=<string>",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "options",
+                            "strikes",
+                            ":underlyingSymbol",
+                            ""
+                          ],
+                          "query": [
+                            {
+                              "description": "Limit strikes to a single expiration date.",
+                              "key": "expiration",
+                              "value": "<string>"
+                            }
+                          ],
+                          "variable": [
+                            {
+                              "key": "underlyingSymbol"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Unauthorized",
+                      "code": 401,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"s\": \"<string>\",\n  \"errmsg\": \"<string>\"\n}",
+                      "createdAt": "2026-07-28T02:08:44.000Z",
+                      "updatedAt": "2026-07-28T02:08:44.000Z",
+                      "uid": "35240-d09c944e-d7c3-4eb7-9a92-304b53cd3c05"
+                    },
+                    {
+                      "id": "ad4ad7fa-3dbe-4e0f-b23f-9fdabb56adf5",
+                      "name": "Credit allocation or simultaneous-request limit exceeded.",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/options/strikes/:underlyingSymbol/?expiration=<string>",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "options",
+                            "strikes",
+                            ":underlyingSymbol",
+                            ""
+                          ],
+                          "query": [
+                            {
+                              "description": "Limit strikes to a single expiration date.",
+                              "key": "expiration",
+                              "value": "<string>"
+                            }
+                          ],
+                          "variable": [
+                            {
+                              "key": "underlyingSymbol"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Too Many Requests",
+                      "code": 429,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"s\": \"<string>\",\n  \"errmsg\": \"<string>\"\n}",
+                      "createdAt": "2026-07-28T02:08:44.000Z",
+                      "updatedAt": "2026-07-28T02:08:44.000Z",
+                      "uid": "35240-ad4ad7fa-3dbe-4e0f-b23f-9fdabb56adf5"
+                    }
+                  ],
+                  "createdAt": "2026-07-28T02:08:44.000Z",
+                  "updatedAt": "2026-07-28T02:08:44.000Z",
+                  "uid": "35240-37f17f19-911d-40cb-a1b2-0045cf63159c"
+                }
+              ],
+              "id": "104871ba-f1ee-4042-828a-6033c6d54b58",
+              "createdAt": "2026-07-28T02:08:44.000Z",
+              "updatedAt": "2026-07-28T02:08:44.000Z",
+              "uid": "35240-104871ba-f1ee-4042-828a-6033c6d54b58"
+            }
+          ],
+          "id": "15ce1bcc-e98e-4189-84b0-221105b2e2c4",
+          "createdAt": "2026-07-28T02:08:44.000Z",
+          "updatedAt": "2026-07-28T02:08:44.000Z",
+          "uid": "35240-15ce1bcc-e98e-4189-84b0-221105b2e2c4"
+        },
+        {
+          "name": "chain",
+          "item": [
+            {
+              "name": "{underlyingSymbol}",
+              "item": [
+                {
+                  "name": "Option chain",
+                  "id": "850194d2-39cf-4582-b99c-6a32e10fb023",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/options/chain/:underlyingSymbol/?expiration=<string>&side=put",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "options",
+                        "chain",
+                        ":underlyingSymbol",
+                        ""
+                      ],
+                      "query": [
+                        {
+                          "description": "Filter the chain to a single expiration date.",
+                          "key": "expiration",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Filter to call or put contracts.",
+                          "key": "side",
+                          "value": "put"
+                        }
+                      ],
+                      "variable": [
+                        {
+                          "id": "568b0dc1-8e54-43c0-8a71-09d8e25cb26a",
+                          "key": "underlyingSymbol",
+                          "value": "<string>",
+                          "description": "(Required) The underlying ticker symbol for the options chain."
+                        }
+                      ]
+                    },
+                    "description": "Get a current or historical end-of-day option chain for an underlying ticker symbol, with extensive optional filtering (expiration, strike range, side, moneyness, delta, and more). Each option symbol included in the response consumes credits, so large chains such as SPX can be expensive."
+                  },
+                  "response": [
+                    {
+                      "id": "dc601b43-f027-4ff8-8b34-f0096ffc9778",
+                      "name": "The option chain for the underlying.",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/options/chain/:underlyingSymbol/?expiration=<string>&side=put",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "options",
+                            "chain",
+                            ":underlyingSymbol",
+                            ""
+                          ],
+                          "query": [
+                            {
+                              "description": "Filter the chain to a single expiration date.",
+                              "key": "expiration",
+                              "value": "<string>"
+                            },
+                            {
+                              "description": "Filter to call or put contracts.",
+                              "key": "side",
+                              "value": "put"
+                            }
+                          ],
+                          "variable": [
+                            {
+                              "key": "underlyingSymbol"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"s\": \"<string>\",\n  \"optionSymbol\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"underlying\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"expiration\": [\n    \"<integer>\",\n    \"<integer>\"\n  ],\n  \"side\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"strike\": [\n    \"<number>\",\n    \"<number>\"\n  ],\n  \"bid\": [\n    \"<number>\",\n    \"<number>\"\n  ],\n  \"ask\": [\n    \"<number>\",\n    \"<number>\"\n  ],\n  \"last\": [\n    \"<number>\",\n    \"<number>\"\n  ],\n  \"openInterest\": [\n    \"<integer>\",\n    \"<integer>\"\n  ],\n  \"iv\": [\n    \"<number>\",\n    \"<number>\"\n  ],\n  \"delta\": [\n    \"<number>\",\n    \"<number>\"\n  ]\n}",
+                      "createdAt": "2026-07-28T02:08:44.000Z",
+                      "updatedAt": "2026-07-28T02:08:44.000Z",
+                      "uid": "35240-dc601b43-f027-4ff8-8b34-f0096ffc9778"
+                    },
+                    {
+                      "id": "006735b4-89ba-424d-85df-da8e7d4ee81a",
+                      "name": "Cached option chain (treat as success).",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/options/chain/:underlyingSymbol/?expiration=<string>&side=put",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "options",
+                            "chain",
+                            ":underlyingSymbol",
+                            ""
+                          ],
+                          "query": [
+                            {
+                              "description": "Filter the chain to a single expiration date.",
+                              "key": "expiration",
+                              "value": "<string>"
+                            },
+                            {
+                              "description": "Filter to call or put contracts.",
+                              "key": "side",
+                              "value": "put"
+                            }
+                          ],
+                          "variable": [
+                            {
+                              "key": "underlyingSymbol"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Non-Authoritative Information (since HTTP/1.1)",
+                      "code": 203,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"s\": \"<string>\",\n  \"optionSymbol\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"underlying\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"expiration\": [\n    \"<integer>\",\n    \"<integer>\"\n  ],\n  \"side\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"strike\": [\n    \"<number>\",\n    \"<number>\"\n  ],\n  \"bid\": [\n    \"<number>\",\n    \"<number>\"\n  ],\n  \"ask\": [\n    \"<number>\",\n    \"<number>\"\n  ],\n  \"last\": [\n    \"<number>\",\n    \"<number>\"\n  ],\n  \"openInterest\": [\n    \"<integer>\",\n    \"<integer>\"\n  ],\n  \"iv\": [\n    \"<number>\",\n    \"<number>\"\n  ],\n  \"delta\": [\n    \"<number>\",\n    \"<number>\"\n  ]\n}",
+                      "createdAt": "2026-07-28T02:08:44.000Z",
+                      "updatedAt": "2026-07-28T02:08:44.000Z",
+                      "uid": "35240-006735b4-89ba-424d-85df-da8e7d4ee81a"
+                    },
+                    {
+                      "id": "1039accd-6968-4da4-8ff5-a58225f82de7",
+                      "name": "Authentication failed or the token is missing or invalid.",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/options/chain/:underlyingSymbol/?expiration=<string>&side=put",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "options",
+                            "chain",
+                            ":underlyingSymbol",
+                            ""
+                          ],
+                          "query": [
+                            {
+                              "description": "Filter the chain to a single expiration date.",
+                              "key": "expiration",
+                              "value": "<string>"
+                            },
+                            {
+                              "description": "Filter to call or put contracts.",
+                              "key": "side",
+                              "value": "put"
+                            }
+                          ],
+                          "variable": [
+                            {
+                              "key": "underlyingSymbol"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Unauthorized",
+                      "code": 401,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"s\": \"<string>\",\n  \"errmsg\": \"<string>\"\n}",
+                      "createdAt": "2026-07-28T02:08:44.000Z",
+                      "updatedAt": "2026-07-28T02:08:44.000Z",
+                      "uid": "35240-1039accd-6968-4da4-8ff5-a58225f82de7"
+                    },
+                    {
+                      "id": "76f94187-18d1-4c54-a23b-083a826183c8",
+                      "name": "Credit allocation or simultaneous-request limit exceeded.",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/options/chain/:underlyingSymbol/?expiration=<string>&side=put",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "options",
+                            "chain",
+                            ":underlyingSymbol",
+                            ""
+                          ],
+                          "query": [
+                            {
+                              "description": "Filter the chain to a single expiration date.",
+                              "key": "expiration",
+                              "value": "<string>"
+                            },
+                            {
+                              "description": "Filter to call or put contracts.",
+                              "key": "side",
+                              "value": "put"
+                            }
+                          ],
+                          "variable": [
+                            {
+                              "key": "underlyingSymbol"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Too Many Requests",
+                      "code": 429,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"s\": \"<string>\",\n  \"errmsg\": \"<string>\"\n}",
+                      "createdAt": "2026-07-28T02:08:44.000Z",
+                      "updatedAt": "2026-07-28T02:08:44.000Z",
+                      "uid": "35240-76f94187-18d1-4c54-a23b-083a826183c8"
+                    }
+                  ],
+                  "createdAt": "2026-07-28T02:08:44.000Z",
+                  "updatedAt": "2026-07-28T02:08:44.000Z",
+                  "uid": "35240-850194d2-39cf-4582-b99c-6a32e10fb023"
+                }
+              ],
+              "id": "017b16d7-ee6c-4004-8713-f4598ea5c8e4",
+              "createdAt": "2026-07-28T02:08:44.000Z",
+              "updatedAt": "2026-07-28T02:08:44.000Z",
+              "uid": "35240-017b16d7-ee6c-4004-8713-f4598ea5c8e4"
+            }
+          ],
+          "id": "5c9f52ee-e176-4f45-9411-8a08a2e8297a",
+          "createdAt": "2026-07-28T02:08:44.000Z",
+          "updatedAt": "2026-07-28T02:08:44.000Z",
+          "uid": "35240-5c9f52ee-e176-4f45-9411-8a08a2e8297a"
+        },
+        {
+          "name": "quotes",
+          "item": [
+            {
+              "name": "{optionSymbol}",
+              "item": [
+                {
+                  "name": "Option quote",
+                  "id": "a304aa72-b835-4835-88d6-99899562b34b",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/options/quotes/:optionSymbol/",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "options",
+                        "quotes",
+                        ":optionSymbol",
+                        ""
+                      ],
+                      "variable": [
+                        {
+                          "id": "583b5791-dddf-45f6-9572-2e3ddcd169c6",
+                          "key": "optionSymbol",
+                          "value": "<string>",
+                          "description": "(Required) The OCC option symbol, e.g. AAPL230728C00200000."
+                        }
+                      ]
+                    },
+                    "description": "Get a real-time or historical (end-of-day) quote for a single option contract identified by its OCC option symbol, including bid, ask, last, volume, open interest, and Greeks."
+                  },
+                  "response": [
+                    {
+                      "id": "d269a83c-ab20-4ae1-b95c-2f1f78123401",
+                      "name": "Quote for the requested option contract.",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/options/quotes/:optionSymbol/",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "options",
+                            "quotes",
+                            ":optionSymbol",
+                            ""
+                          ],
+                          "variable": [
+                            {
+                              "key": "optionSymbol"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"s\": \"<string>\",\n  \"optionSymbol\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"underlying\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"expiration\": [\n    \"<integer>\",\n    \"<integer>\"\n  ],\n  \"side\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"strike\": [\n    \"<number>\",\n    \"<number>\"\n  ],\n  \"bid\": [\n    \"<number>\",\n    \"<number>\"\n  ],\n  \"ask\": [\n    \"<number>\",\n    \"<number>\"\n  ],\n  \"last\": [\n    \"<number>\",\n    \"<number>\"\n  ],\n  \"openInterest\": [\n    \"<integer>\",\n    \"<integer>\"\n  ],\n  \"iv\": [\n    \"<number>\",\n    \"<number>\"\n  ],\n  \"delta\": [\n    \"<number>\",\n    \"<number>\"\n  ]\n}",
+                      "createdAt": "2026-07-28T02:08:44.000Z",
+                      "updatedAt": "2026-07-28T02:08:44.000Z",
+                      "uid": "35240-d269a83c-ab20-4ae1-b95c-2f1f78123401"
+                    },
+                    {
+                      "id": "4e07df55-061d-43c6-a119-f1561edc7eb7",
+                      "name": "Cached option quote (treat as success).",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/options/quotes/:optionSymbol/",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "options",
+                            "quotes",
+                            ":optionSymbol",
+                            ""
+                          ],
+                          "variable": [
+                            {
+                              "key": "optionSymbol"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Non-Authoritative Information (since HTTP/1.1)",
+                      "code": 203,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"s\": \"<string>\",\n  \"optionSymbol\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"underlying\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"expiration\": [\n    \"<integer>\",\n    \"<integer>\"\n  ],\n  \"side\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"strike\": [\n    \"<number>\",\n    \"<number>\"\n  ],\n  \"bid\": [\n    \"<number>\",\n    \"<number>\"\n  ],\n  \"ask\": [\n    \"<number>\",\n    \"<number>\"\n  ],\n  \"last\": [\n    \"<number>\",\n    \"<number>\"\n  ],\n  \"openInterest\": [\n    \"<integer>\",\n    \"<integer>\"\n  ],\n  \"iv\": [\n    \"<number>\",\n    \"<number>\"\n  ],\n  \"delta\": [\n    \"<number>\",\n    \"<number>\"\n  ]\n}",
+                      "createdAt": "2026-07-28T02:08:44.000Z",
+                      "updatedAt": "2026-07-28T02:08:44.000Z",
+                      "uid": "35240-4e07df55-061d-43c6-a119-f1561edc7eb7"
+                    },
+                    {
+                      "id": "2c688c8b-16b0-4cf8-acd2-7025a6377711",
+                      "name": "Authentication failed or the token is missing or invalid.",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/options/quotes/:optionSymbol/",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "options",
+                            "quotes",
+                            ":optionSymbol",
+                            ""
+                          ],
+                          "variable": [
+                            {
+                              "key": "optionSymbol"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Unauthorized",
+                      "code": 401,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"s\": \"<string>\",\n  \"errmsg\": \"<string>\"\n}",
+                      "createdAt": "2026-07-28T02:08:44.000Z",
+                      "updatedAt": "2026-07-28T02:08:44.000Z",
+                      "uid": "35240-2c688c8b-16b0-4cf8-acd2-7025a6377711"
+                    },
+                    {
+                      "id": "b920b01a-0aec-465c-ab63-5f30af3e5ad8",
+                      "name": "Credit allocation or simultaneous-request limit exceeded.",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/options/quotes/:optionSymbol/",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "options",
+                            "quotes",
+                            ":optionSymbol",
+                            ""
+                          ],
+                          "variable": [
+                            {
+                              "key": "optionSymbol"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Too Many Requests",
+                      "code": 429,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"s\": \"<string>\",\n  \"errmsg\": \"<string>\"\n}",
+                      "createdAt": "2026-07-28T02:08:44.000Z",
+                      "updatedAt": "2026-07-28T02:08:44.000Z",
+                      "uid": "35240-b920b01a-0aec-465c-ab63-5f30af3e5ad8"
+                    }
+                  ],
+                  "createdAt": "2026-07-28T02:08:44.000Z",
+                  "updatedAt": "2026-07-28T02:08:44.000Z",
+                  "uid": "35240-a304aa72-b835-4835-88d6-99899562b34b"
+                }
+              ],
+              "id": "7c2c3f31-e088-43fe-bb21-7b935d3017d5",
+              "createdAt": "2026-07-28T02:08:44.000Z",
+              "updatedAt": "2026-07-28T02:08:44.000Z",
+              "uid": "35240-7c2c3f31-e088-43fe-bb21-7b935d3017d5"
+            }
+          ],
+          "id": "70b8d5a3-b937-418a-8f6b-e7c769970162",
+          "createdAt": "2026-07-28T02:08:44.000Z",
+          "updatedAt": "2026-07-28T02:08:44.000Z",
+          "uid": "35240-70b8d5a3-b937-418a-8f6b-e7c769970162"
+        }
+      ],
+      "id": "6464d389-006a-43de-9efb-188545c62ff8",
+      "createdAt": "2026-07-28T02:08:44.000Z",
+      "updatedAt": "2026-07-28T02:08:44.000Z",
+      "uid": "35240-6464d389-006a-43de-9efb-188545c62ff8"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}",
+        "type": "string"
+      }
+    ]
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://api.marketdata.app/v1"
+    }
+  ]
+}
