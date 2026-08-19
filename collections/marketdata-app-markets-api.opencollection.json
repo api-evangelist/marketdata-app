@@ -1,0 +1,61 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Market Data Indices Markets API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Markets",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Market status",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.marketdata.app/v1/markets/status/",
+            "params": [
+              {
+                "name": "country",
+                "value": "",
+                "type": "query",
+                "description": "ISO country code for the market to check. Defaults to US."
+              },
+              {
+                "name": "date",
+                "value": "",
+                "type": "query",
+                "description": "A single date to check."
+              },
+              {
+                "name": "from",
+                "value": "",
+                "type": "query",
+                "description": "The leftmost (earliest) date of the date range."
+              },
+              {
+                "name": "to",
+                "value": "",
+                "type": "query",
+                "description": "The rightmost (latest) date of the date range."
+              }
+            ]
+          },
+          "docs": "Return whether the market is open or closed for a given date or date range. Responds with \"open\" for trading days and \"closed\" for weekends or market holidays. With no parameters, returns the current day's status for the United States market."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

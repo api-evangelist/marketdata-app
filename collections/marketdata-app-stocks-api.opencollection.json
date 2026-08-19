@@ -1,0 +1,162 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Market Data Indices Stocks API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Stocks",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Stock candles",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.marketdata.app/v1/stocks/candles/:resolution/:symbol/",
+            "params": [
+              {
+                "name": "resolution",
+                "value": "",
+                "type": "path",
+                "description": "Candle resolution such as D (daily), W, M, or a minute/hour value."
+              },
+              {
+                "name": "symbol",
+                "value": "",
+                "type": "path",
+                "description": "The company's ticker symbol."
+              },
+              {
+                "name": "from",
+                "value": "",
+                "type": "query",
+                "description": "The leftmost (earliest) date of the date range."
+              },
+              {
+                "name": "to",
+                "value": "",
+                "type": "query",
+                "description": "The rightmost (latest) date of the date range."
+              }
+            ]
+          },
+          "docs": "Retrieve open, high, low, close, and volume (OHLCV) candlestick data for a stock over a given date range at the requested resolution (e.g. daily, hourly, or minute intervals)."
+        },
+        {
+          "info": {
+            "name": "Stock quote",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.marketdata.app/v1/stocks/quotes/:symbol/",
+            "params": [
+              {
+                "name": "symbol",
+                "value": "",
+                "type": "path",
+                "description": "The company's ticker symbol."
+              }
+            ]
+          },
+          "docs": "Fetch a real-time or historical quote for a single stock symbol, including last price, bid, ask, volume, and change."
+        },
+        {
+          "info": {
+            "name": "Bulk stock quotes",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.marketdata.app/v1/stocks/bulkquotes/",
+            "params": [
+              {
+                "name": "symbols",
+                "value": "",
+                "type": "query",
+                "description": "Comma-separated list of ticker symbols."
+              }
+            ]
+          },
+          "docs": "Fetch real-time quotes for many stock symbols in a single request. Each symbol included in the response consumes credits."
+        },
+        {
+          "info": {
+            "name": "Bulk stock candles",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.marketdata.app/v1/stocks/bulkcandles/:resolution/",
+            "params": [
+              {
+                "name": "resolution",
+                "value": "",
+                "type": "path",
+                "description": "Candle resolution such as D (daily)."
+              },
+              {
+                "name": "symbols",
+                "value": "",
+                "type": "query",
+                "description": "Comma-separated list of ticker symbols."
+              }
+            ]
+          },
+          "docs": "Fetch candlestick data for many stock symbols at once for a single date at the requested resolution. Each symbol in the response consumes credits."
+        },
+        {
+          "info": {
+            "name": "Stock earnings",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.marketdata.app/v1/stocks/earnings/:symbol/",
+            "params": [
+              {
+                "name": "symbol",
+                "value": "",
+                "type": "path",
+                "description": "The company's ticker symbol."
+              }
+            ]
+          },
+          "docs": "Retrieve reported and estimated earnings data (EPS, report date, fiscal period) for a stock symbol."
+        },
+        {
+          "info": {
+            "name": "Stock news",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.marketdata.app/v1/stocks/news/:symbol/",
+            "params": [
+              {
+                "name": "symbol",
+                "value": "",
+                "type": "path",
+                "description": "The company's ticker symbol."
+              }
+            ]
+          },
+          "docs": "Retrieve news headlines and article links related to a stock symbol."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

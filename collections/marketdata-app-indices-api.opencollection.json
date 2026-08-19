@@ -1,0 +1,80 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Market Data Indices API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Indices",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Index candles",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.marketdata.app/v1/indices/candles/:resolution/:symbol/",
+            "params": [
+              {
+                "name": "resolution",
+                "value": "",
+                "type": "path",
+                "description": "Candle resolution such as D (daily)."
+              },
+              {
+                "name": "symbol",
+                "value": "",
+                "type": "path",
+                "description": "The index symbol, e.g. VIX or SPX."
+              },
+              {
+                "name": "from",
+                "value": "",
+                "type": "query",
+                "description": "The leftmost (earliest) date of the date range."
+              },
+              {
+                "name": "to",
+                "value": "",
+                "type": "query",
+                "description": "The rightmost (latest) date of the date range."
+              }
+            ]
+          },
+          "docs": "Retrieve OHLC candlestick data for an index over a date range at the requested resolution."
+        },
+        {
+          "info": {
+            "name": "Index quote",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.marketdata.app/v1/indices/quotes/:symbol/",
+            "params": [
+              {
+                "name": "symbol",
+                "value": "",
+                "type": "path",
+                "description": "The index symbol, e.g. VIX or SPX."
+              }
+            ]
+          },
+          "docs": "Fetch a real-time or historical quote for a single index symbol, including last value and change."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

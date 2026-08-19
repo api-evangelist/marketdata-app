@@ -1,0 +1,137 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Market Data Indices Options API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Options",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Option expirations",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.marketdata.app/v1/options/expirations/:underlyingSymbol/",
+            "params": [
+              {
+                "name": "underlyingSymbol",
+                "value": "",
+                "type": "path",
+                "description": "The underlying ticker symbol for the options chain."
+              }
+            ]
+          },
+          "docs": "Get a list of current or historical option expiration dates for an underlying symbol. With no optional parameters, returns all expiration dates in the option chain."
+        },
+        {
+          "info": {
+            "name": "Option symbol lookup",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.marketdata.app/v1/options/lookup/:userInput/",
+            "params": [
+              {
+                "name": "userInput",
+                "value": "",
+                "type": "path",
+                "description": "Human-readable option description, e.g. \"AAPL 7/28/23 $200 Call\"."
+              }
+            ]
+          },
+          "docs": "Convert a human-readable string containing a stock symbol, strike, expiration date, and option side (put or call) into a valid OCC option symbol."
+        },
+        {
+          "info": {
+            "name": "Option strikes",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.marketdata.app/v1/options/strikes/:underlyingSymbol/",
+            "params": [
+              {
+                "name": "underlyingSymbol",
+                "value": "",
+                "type": "path",
+                "description": "The underlying ticker symbol for the options chain."
+              },
+              {
+                "name": "expiration",
+                "value": "",
+                "type": "query",
+                "description": "Limit strikes to a single expiration date."
+              }
+            ]
+          },
+          "docs": "Get a list of current or historical option strike prices for an underlying symbol. With no optional parameters, returns the strikes for every expiration in the chain."
+        },
+        {
+          "info": {
+            "name": "Option chain",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.marketdata.app/v1/options/chain/:underlyingSymbol/",
+            "params": [
+              {
+                "name": "underlyingSymbol",
+                "value": "",
+                "type": "path",
+                "description": "The underlying ticker symbol for the options chain."
+              },
+              {
+                "name": "expiration",
+                "value": "",
+                "type": "query",
+                "description": "Filter the chain to a single expiration date."
+              },
+              {
+                "name": "side",
+                "value": "",
+                "type": "query",
+                "description": "Filter to call or put contracts."
+              }
+            ]
+          },
+          "docs": "Get a current or historical end-of-day option chain for an underlying ticker symbol, with extensive optional filtering (expiration, strike range, side, moneyness, delta, and more). Each option symbol included in the response consumes credits, so large chains such as SPX can be expensive."
+        },
+        {
+          "info": {
+            "name": "Option quote",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.marketdata.app/v1/options/quotes/:optionSymbol/",
+            "params": [
+              {
+                "name": "optionSymbol",
+                "value": "",
+                "type": "path",
+                "description": "The OCC option symbol, e.g. AAPL230728C00200000."
+              }
+            ]
+          },
+          "docs": "Get a real-time or historical (end-of-day) quote for a single option contract identified by its OCC option symbol, including bid, ask, last, volume, open interest, and Greeks."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

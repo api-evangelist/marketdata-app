@@ -2,58 +2,63 @@ generated: '2026-07-22'
 method: derived
 status: candidate
 source: openapi/marketdata-app-openapi-original.yml
-notes: >-
-  Market Data publishes no official hosted MCP server as of 2026-07-22
-  (mcp.marketdata.app does not resolve; api.marketdata.app/mcp returns 404; no
-  first-party MCP package on npm or in the MarketDataApp GitHub org). This is a
-  candidate tool list derived from the provider-published OpenAPI at
-  https://api.marketdata.app/schema/ - one tool per operation.
+notes: Market Data publishes no official hosted MCP server as of 2026-07-22 (mcp.marketdata.app does not
+  resolve; api.marketdata.app/mcp returns 404; no first-party MCP package on npm or in the MarketDataApp
+  GitHub org). This is a candidate tool list derived from the provider-published OpenAPI at https://api.marketdata.app/schema/
+  - one tool per operation.
 server:
   name: marketdata-app
   transport: http
 tools:
-  - name: get_market_status
-    description: Get market status ("open" or "closed") for a date or range of dates.
-    source_operation: openapi/marketdata-app-openapi-original.yml#v1_markets_status_retrieve
-  - name: get_option_chain
-    description: Get a current or historical option chain for an underlying symbol, with expiration, strike, delta, and liquidity filters.
-    source_operation: openapi/marketdata-app-openapi-original.yml#v1_options_chain_retrieve
-  - name: get_option_expirations
-    description: List option expiration dates for an underlying symbol.
-    source_operation: openapi/marketdata-app-openapi-original.yml#v1_options_expirations_retrieve
-  - name: lookup_option_symbol
-    description: Convert a human-readable option description into an OCC option symbol.
-    source_operation: openapi/marketdata-app-openapi-original.yml#v1_options_lookup_retrieve
-  - name: get_option_quote
-    description: Get a current or historical quote for a single option contract by OCC symbol.
-    source_operation: openapi/marketdata-app-openapi-original.yml#v1_options_quotes_retrieve
-  - name: get_option_strikes
-    description: List option strike prices for an underlying symbol by expiration.
-    source_operation: openapi/marketdata-app-openapi-original.yml#v1_options_strikes_retrieve
-  - name: get_stock_bulk_candles
-    description: Get bulk end-of-day candles for multiple stock symbols at once.
-    source_operation: openapi/marketdata-app-openapi-original.yml#v1_stocks_bulkcandles_retrieve
-  - name: get_stock_bulk_quotes
-    description: Get real-time quotes for multiple stock symbols in a single request.
-    source_operation: openapi/marketdata-app-openapi-original.yml#v1_stocks_bulkquotes_retrieve
-  - name: get_stock_candles
-    description: Get historical OHLCV candles for a stock at a given resolution and date range.
-    source_operation: openapi/marketdata-app-openapi-original.yml#v1_stocks_candles_retrieve
-  - name: get_stock_earnings
-    description: Get earnings data for a stock symbol.
-    source_operation: openapi/marketdata-app-openapi-original.yml#v1_stocks_earnings_retrieve
-  - name: get_stock_news
-    description: Get news for a stock symbol.
-    source_operation: openapi/marketdata-app-openapi-original.yml#v1_stocks_news_retrieve
-  - name: get_stock_prices
-    description: Get current prices for multiple stock symbols.
-    source_operation: openapi/marketdata-app-openapi-original.yml#stocks_prices
-  - name: get_stock_price
-    description: Get the current price for a single stock symbol.
-    source_operation: openapi/marketdata-app-openapi-original.yml#stocks_price_by_symbol
-  - name: get_stock_quotes
-    description: Get real-time quotes for multiple stock symbols.
-    source_operation: openapi/marketdata-app-openapi-original.yml#stocks_quotes
-  - name: get_stock_quote
-    description: Get a real-time quote for a single stock symbol.
-    source_operation: openapi/marketdata-app-openapi-original.yml#stocks_quote_by_symbol
+- name: get_market_status
+  description: Get market status ("open" or "closed") for a date or range of dates.
+  source_operation: openapi/marketdata-app-openapi-original.yml#v1_markets_status_retrieve
+- name: get_option_chain
+  description: Get a current or historical option chain for an underlying symbol, with expiration, strike,
+    delta, and liquidity filters.
+  source_operation: openapi/marketdata-app-openapi-original.yml#v1_options_chain_retrieve
+- name: get_option_expirations
+  description: List option expiration dates for an underlying symbol.
+  source_operation: openapi/marketdata-app-openapi-original.yml#v1_options_expirations_retrieve
+- name: lookup_option_symbol
+  description: Convert a human-readable option description into an OCC option symbol.
+  source_operation: openapi/marketdata-app-openapi-original.yml#v1_options_lookup_retrieve
+- name: get_option_quote
+  description: Get a current or historical quote for a single option contract by OCC symbol.
+  source_operation: openapi/marketdata-app-openapi-original.yml#v1_options_quotes_retrieve
+- name: get_option_strikes
+  description: List option strike prices for an underlying symbol by expiration.
+  source_operation: openapi/marketdata-app-openapi-original.yml#v1_options_strikes_retrieve
+- name: get_stock_bulk_candles
+  description: Get bulk end-of-day candles for multiple stock symbols at once.
+  source_operation: openapi/marketdata-app-openapi-original.yml#v1_stocks_bulkcandles_retrieve
+- name: get_stock_bulk_quotes
+  description: Get real-time quotes for multiple stock symbols in a single request.
+  source_operation: openapi/marketdata-app-openapi-original.yml#v1_stocks_bulkquotes_retrieve
+- name: get_stock_candles
+  description: Get historical OHLCV candles for a stock at a given resolution and date range.
+  source_operation: openapi/marketdata-app-openapi-original.yml#v1_stocks_candles_retrieve
+- name: get_stock_earnings
+  description: Get earnings data for a stock symbol.
+  source_operation: openapi/marketdata-app-openapi-original.yml#v1_stocks_earnings_retrieve
+- name: get_stock_news
+  description: Get news for a stock symbol.
+  source_operation: openapi/marketdata-app-openapi-original.yml#v1_stocks_news_retrieve
+- name: get_stock_prices
+  description: Get current prices for multiple stock symbols.
+  source_operation: openapi/marketdata-app-openapi-original.yml#stocks_prices
+- name: get_stock_price
+  description: Get the current price for a single stock symbol.
+  source_operation: openapi/marketdata-app-openapi-original.yml#stocks_price_by_symbol
+- name: get_stock_quotes
+  description: Get real-time quotes for multiple stock symbols.
+  source_operation: openapi/marketdata-app-openapi-original.yml#stocks_quotes
+- name: get_stock_quote
+  description: Get a real-time quote for a single stock symbol.
+  source_operation: openapi/marketdata-app-openapi-original.yml#stocks_quote_by_symbol
+deployment:
+  mode: none
+  verified: derived
+  tools: 15
+  checked: '2026-08-12'
+  source: catalog MCP census
