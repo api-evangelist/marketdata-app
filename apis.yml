@@ -119,6 +119,16 @@ apis:
     url: collections/marketdata-app.postman_collection.json
   - type: OpenCollection
     url: collections/marketdata-app.opencollection.json
+- aid: marketdata-app:marketdata-app-v1-api
+  name: Market Data V1 API
+  description: The v1 API from Market Data — 15 operation(s) for v1.
+  humanURL: https://www.marketdata.app/docs/api/
+  baseURL: https://api.marketdata.app/v1
+  tags:
+  - v1
+  properties:
+  - type: OpenAPI
+    url: openapi/marketdata-app-v1-api-openapi.yml
 common:
 - type: PostmanWorkspace
   url: https://www.postman.com/kinlaneapi/market-data/overview
