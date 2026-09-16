@@ -1,17 +1,99 @@
-generated: '2026-07-15'
+generated: '2026-09-16'
 method: generated
-source: openapi/marketdata-app-openapi.yml
+source: openapi/marketdata-app-indices-api-openapi.yml, openapi/marketdata-app-markets-api-openapi.yml,
+  openapi/marketdata-app-options-api-openapi.yml, openapi/marketdata-app-stocks-api-openapi.yml,
+  openapi/marketdata-app-v1-api-openapi.yml
 description: Recommended x-agentic-access execution contracts, classified heuristically from
   the OpenAPI. A governance starting point for exposing this API to AI agents — review and bind
   audience per deployment. See research/curity/agentic-governance/.
 summary:
-  operations: 14
+  operations: 29
   by_action_class:
-    connected: 14
+    connected: 29
   by_consequence:
-    read: 14
+    read: 29
   human_in_the_loop_required: 0
 operations:
+- path: /indices/candles/{resolution}/{symbol}/
+  method: get
+  operationId: getIndexCandles
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /indices/quotes/{symbol}/
+  method: get
+  operationId: getIndexQuote
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /markets/status/
+  method: get
+  operationId: getMarketStatus
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /options/expirations/{underlyingSymbol}/
+  method: get
+  operationId: getOptionExpirations
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /options/lookup/{userInput}/
+  method: get
+  operationId: getOptionLookup
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /options/strikes/{underlyingSymbol}/
+  method: get
+  operationId: getOptionStrikes
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /options/chain/{underlyingSymbol}/
+  method: get
+  operationId: getOptionChain
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /options/quotes/{optionSymbol}/
+  method: get
+  operationId: getOptionQuote
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
 - path: /stocks/candles/{resolution}/{symbol}/
   method: get
   operationId: getStockCandles
@@ -72,9 +154,9 @@ operations:
     token:
       max-ttl: 3600
     audit: none
-- path: /options/expirations/{underlyingSymbol}/
+- path: /v1/markets/status/
   method: get
-  operationId: getOptionExpirations
+  operationId: v1_markets_status_retrieve
   x-agentic-access:
     action-class: connected
     consequence: read
@@ -82,9 +164,9 @@ operations:
     token:
       max-ttl: 3600
     audit: none
-- path: /options/lookup/{userInput}/
+- path: /v1/options/chain/{underlying}/
   method: get
-  operationId: getOptionLookup
+  operationId: v1_options_chain_retrieve
   x-agentic-access:
     action-class: connected
     consequence: read
@@ -92,9 +174,9 @@ operations:
     token:
       max-ttl: 3600
     audit: none
-- path: /options/strikes/{underlyingSymbol}/
+- path: /v1/options/expirations/{underlying}/
   method: get
-  operationId: getOptionStrikes
+  operationId: v1_options_expirations_retrieve
   x-agentic-access:
     action-class: connected
     consequence: read
@@ -102,9 +184,9 @@ operations:
     token:
       max-ttl: 3600
     audit: none
-- path: /options/chain/{underlyingSymbol}/
+- path: /v1/options/lookup/{userInput}/
   method: get
-  operationId: getOptionChain
+  operationId: v1_options_lookup_retrieve
   x-agentic-access:
     action-class: connected
     consequence: read
@@ -112,9 +194,9 @@ operations:
     token:
       max-ttl: 3600
     audit: none
-- path: /options/quotes/{optionSymbol}/
+- path: /v1/options/quotes/{optionSymbol}/
   method: get
-  operationId: getOptionQuote
+  operationId: v1_options_quotes_retrieve
   x-agentic-access:
     action-class: connected
     consequence: read
@@ -122,9 +204,9 @@ operations:
     token:
       max-ttl: 3600
     audit: none
-- path: /indices/candles/{resolution}/{symbol}/
+- path: /v1/options/strikes/{underlying}/
   method: get
-  operationId: getIndexCandles
+  operationId: v1_options_strikes_retrieve
   x-agentic-access:
     action-class: connected
     consequence: read
@@ -132,9 +214,9 @@ operations:
     token:
       max-ttl: 3600
     audit: none
-- path: /indices/quotes/{symbol}/
+- path: /v1/stocks/bulkcandles/{resolution}/
   method: get
-  operationId: getIndexQuote
+  operationId: v1_stocks_bulkcandles_retrieve
   x-agentic-access:
     action-class: connected
     consequence: read
@@ -142,9 +224,79 @@ operations:
     token:
       max-ttl: 3600
     audit: none
-- path: /markets/status/
+- path: /v1/stocks/bulkquotes/
   method: get
-  operationId: getMarketStatus
+  operationId: v1_stocks_bulkquotes_retrieve
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /v1/stocks/candles/{resolution}/{symbol}/
+  method: get
+  operationId: v1_stocks_candles_retrieve
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /v1/stocks/earnings/{symbol}/
+  method: get
+  operationId: v1_stocks_earnings_retrieve
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /v1/stocks/news/{symbol}/
+  method: get
+  operationId: v1_stocks_news_retrieve
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /v1/stocks/prices/
+  method: get
+  operationId: stocks_prices
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /v1/stocks/prices/{symbol}/
+  method: get
+  operationId: stocks_price_by_symbol
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /v1/stocks/quotes/
+  method: get
+  operationId: stocks_quotes
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /v1/stocks/quotes/{symbol}/
+  method: get
+  operationId: stocks_quote_by_symbol
   x-agentic-access:
     action-class: connected
     consequence: read
