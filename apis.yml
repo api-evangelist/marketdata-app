@@ -2,18 +2,14 @@ aid: marketdata-app
 url: https://raw.githubusercontent.com/api-evangelist/marketdata-app/refs/heads/main/apis.yml
 name: Market Data
 kind: company
-description: >-
-  Market Data (marketdata.app) is a financial market data provider offering a
-  REST API for real-time and historical U.S. stock, options, and index data.
-  The API (base https://api.marketdata.app/v1, Bearer-token authenticated)
-  covers stock candles and quotes - single and bulk - plus earnings and news;
-  full options chains with per-contract quotes, expirations, strikes, and OCC
-  symbol lookup; index candles and quotes; and market open/closed status.
-  Responses are JSON or CSV and are billed on a daily API-credit model, where
-  multi-symbol responses (bulk quotes, options chains) consume one credit per
-  symbol. A 30-day trial, a Free Forever tier, and paid Starter, Trader, and
-  Prime plans are available. Note that the API may return HTTP 203 from its
-  caching tier and clients must treat it as success.
+description: Market Data (marketdata.app) is a financial market data provider offering a REST API for
+  real-time and historical U.S. stock, options, and index data. The API (base https://api.marketdata.app/v1,
+  Bearer-token authenticated) covers stock candles and quotes - single and bulk - plus earnings and news;
+  full options chains with per-contract quotes, expirations, strikes, and OCC symbol lookup; index candles
+  and quotes; and market open/closed status. Responses are JSON or CSV and are billed on a daily API-credit
+  model, where multi-symbol responses (bulk quotes, options chains) consume one credit per symbol. A 30-day
+  trial, a Free Forever tier, and paid Starter, Trader, and Prime plans are available. Note that the API
+  may return HTTP 203 from its caching tier and clients must treat it as success.
 deliveryModel:
   model: saas
   open_source: false
@@ -50,7 +46,7 @@ tags:
 - Historical Data
 - Quotes
 created: '2026-07-11'
-modified: '2026-07-22'
+modified: '2026-09-16'
 specificationVersion: '0.23'
 apis:
 - aid: marketdata-app:marketdata-app-indices-api
@@ -145,7 +141,7 @@ common:
 - type: PostmanWorkspace
   url: https://www.postman.com/kinlaneapi/market-data/overview
 - type: OpenAPI
-  url: openapi/marketdata-app-openapi-original.yml
+  url: openapi/_original/marketdata-app-openapi-original.yml
 - type: DomainSecurity
   url: security/marketdata-app-domain-security.yml
 - type: AgenticAccess
@@ -160,7 +156,10 @@ common:
   url: well-known/marketdata-app-well-known.yml
 - type: X-MCPServerCandidate
   url: mcp/marketdata-app-mcp.yml
-  note: 'Renamed from MCPServer 2026-09-03 (roadmap#247): the manifest self-describes as status: candidate — a tool list derived from the published API contracts, not an existing server. The scorer already read the manifest and reported mcp_server correctly; the MCPServer type was crediting the artifact-type surfaces with a server that does not exist.'
+  note: 'Renamed from MCPServer 2026-09-03 (roadmap#247): the manifest self-describes as status: candidate
+    — a tool list derived from the published API contracts, not an existing server. The scorer already
+    read the manifest and reported mcp_server correctly; the MCPServer type was crediting the artifact-type
+    surfaces with a server that does not exist.'
 - type: LLMsTxt
   url: llms/marketdata-app-llms.txt
 - type: Conformance
