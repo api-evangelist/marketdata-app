@@ -1,12 +1,11 @@
 {
   "provider": "marketdata-app",
   "sources": [
-    "marketdata-app-indices-api-openapi.yml",
-    "marketdata-app-markets-api-openapi.yml",
-    "marketdata-app-options-api-openapi.yml",
-    "marketdata-app-stocks-api-openapi.yml"
+    "_original/marketdata-app-openapi-original.yml",
+    "_original/marketdata-app-openapi.yml"
   ],
   "outputs": [
+    "marketdata-app-v1-api-openapi.yml",
     "marketdata-app-indices-api-openapi.yml",
     "marketdata-app-markets-api-openapi.yml",
     "marketdata-app-options-api-openapi.yml",
@@ -15,6 +14,18 @@
   "archived": [],
   "errors": [],
   "warnings": [],
-  "notes": [],
-  "skipped": []
+  "notes": [
+    "sourced from openapi/_original/ (2 archived document(s)); previously refined output at the top level was skipped rather than re-split",
+    "marketdata-app-openapi-original.yml: upgraded openapi 3.0.3 -> OpenAPI 3.2.0; renamed 1 component key(s) illegal in 3.x (e.g. Api Authentication)",
+    "marketdata-app-openapi-original.yml: declared missing tag: v1",
+    "marketdata-app-openapi.yml: upgraded openapi 3.0.3 -> OpenAPI 3.2.0",
+    "apis.yml register: already-registered"
+  ],
+  "skipped": [
+    "marketdata-app-indices-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "marketdata-app-markets-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "marketdata-app-options-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "marketdata-app-stocks-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "marketdata-app-v1-api-openapi.yml: previously refined output, superseded by openapi/_original/"
+  ]
 }

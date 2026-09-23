@@ -113,6 +113,8 @@ paths:
                 type: object
                 additionalProperties: {}
           description: ''
+      summary: V1 markets status retrieve
+      x-summary-source: derived
   /v1/options/chain/{underlying}/:
     get:
       operationId: v1_options_chain_retrieve
@@ -417,6 +419,8 @@ paths:
                 type: object
                 additionalProperties: {}
           description: ''
+      summary: V1 options chain retrieve
+      x-summary-source: derived
   /v1/options/expirations/{underlying}/:
     get:
       operationId: v1_options_expirations_retrieve
@@ -512,6 +516,8 @@ paths:
                 type: object
                 additionalProperties: {}
           description: ''
+      summary: V1 options expirations retrieve
+      x-summary-source: derived
   /v1/options/lookup/{userInput}/:
     get:
       operationId: v1_options_lookup_retrieve
@@ -561,6 +567,8 @@ paths:
                 type: object
                 additionalProperties: {}
           description: ''
+      summary: V1 options lookup retrieve
+      x-summary-source: derived
   /v1/options/quotes/{optionSymbol}/:
     get:
       operationId: v1_options_quotes_retrieve
@@ -711,6 +719,8 @@ paths:
                 type: object
                 additionalProperties: {}
           description: ''
+      summary: V1 options quotes retrieve
+      x-summary-source: derived
   /v1/options/strikes/{underlying}/:
     get:
       operationId: v1_options_strikes_retrieve
@@ -817,6 +827,8 @@ paths:
                 type: object
                 additionalProperties: {}
           description: ''
+      summary: V1 options strikes retrieve
+      x-summary-source: derived
   /v1/stocks/bulkcandles/{resolution}/:
     get:
       operationId: v1_stocks_bulkcandles_retrieve
@@ -975,6 +987,8 @@ paths:
                 type: object
                 additionalProperties: {}
           description: ''
+      summary: V1 stocks bulkcandles retrieve
+      x-summary-source: derived
   /v1/stocks/bulkquotes/:
     get:
       operationId: v1_stocks_bulkquotes_retrieve
@@ -1102,6 +1116,8 @@ paths:
                 type: object
                 additionalProperties: {}
           description: ''
+      summary: V1 stocks bulkquotes retrieve
+      x-summary-source: derived
   /v1/stocks/candles/{resolution}/{symbol}/:
     get:
       operationId: v1_stocks_candles_retrieve
@@ -1268,6 +1284,8 @@ paths:
                 type: object
                 additionalProperties: {}
           description: ''
+      summary: V1 stocks candles retrieve
+      x-summary-source: derived
   /v1/stocks/earnings/{symbol}/:
     get:
       operationId: v1_stocks_earnings_retrieve
@@ -1419,6 +1437,8 @@ paths:
                 type: object
                 additionalProperties: {}
           description: ''
+      summary: V1 stocks earnings retrieve
+      x-summary-source: derived
   /v1/stocks/news/{symbol}/:
     get:
       operationId: v1_stocks_news_retrieve
@@ -1533,6 +1553,8 @@ paths:
                 type: object
                 additionalProperties: {}
           description: ''
+      summary: V1 stocks news retrieve
+      x-summary-source: derived
   /v1/stocks/prices/:
     get:
       operationId: stocks_prices
@@ -1629,6 +1651,8 @@ paths:
                 type: object
                 additionalProperties: {}
           description: ''
+      summary: Stocks prices
+      x-summary-source: derived
   /v1/stocks/prices/{symbol}/:
     get:
       operationId: stocks_price_by_symbol
@@ -1715,6 +1739,8 @@ paths:
                 type: object
                 additionalProperties: {}
           description: ''
+      summary: Stocks price by symbol
+      x-summary-source: derived
   /v1/stocks/quotes/:
     get:
       operationId: stocks_quotes
@@ -1840,6 +1866,8 @@ paths:
                 type: object
                 additionalProperties: {}
           description: ''
+      summary: Stocks quotes
+      x-summary-source: derived
   /v1/stocks/quotes/{symbol}/:
     get:
       operationId: stocks_quote_by_symbol
@@ -1943,6 +1971,8 @@ paths:
                 type: object
                 additionalProperties: {}
           description: ''
+      summary: Stocks quote by symbol
+      x-summary-source: derived
 components:
   securitySchemes:
     Api_Authentication:

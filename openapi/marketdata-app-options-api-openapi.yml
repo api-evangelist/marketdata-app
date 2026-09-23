@@ -1,7 +1,7 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
-  title: Market Data Indices Options API
-  description: The Market Data API delivers real-time and historical U.S. stock, options, and index market data over a simple REST interface. All endpoints are served from https://api.marketdata.app/v1 and return JSON (or CSV) responses. Most endpoints require only a ticker symbol as a path parameter. Requests are authenticated with a Bearer token generated in the Market Data dashboard. Coverage spans stock candles and quotes (single and bulk), corporate earnings and news, full options chains with per-contract quotes, expirations, strikes and OCC symbol lookup, index candles and quotes, and market open/closed status. Note that Market Data may return HTTP 203 Non-Authoritative Information (instead of 200 OK) when a response is served from its caching tier; clients must treat 203 as success.
+  title: Market Data Options API
+  description: The Market Data API delivers real-time and historical U.S.
   version: '1.0'
   contact:
     name: Market Data
@@ -194,14 +194,14 @@ paths:
           $ref: '#/components/responses/TooManyRequests'
 components:
   responses:
-    TooManyRequests:
-      description: Credit allocation or simultaneous-request limit exceeded.
+    Unauthorized:
+      description: Authentication failed or the token is missing or invalid.
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/ErrorResponse'
-    Unauthorized:
-      description: Authentication failed or the token is missing or invalid.
+    TooManyRequests:
+      description: Credit allocation or simultaneous-request limit exceeded.
       content:
         application/json:
           schema:
