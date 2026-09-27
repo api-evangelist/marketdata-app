@@ -5,21 +5,43 @@
     "_original/marketdata-app-openapi.yml"
   ],
   "outputs": [
-    "marketdata-app-v1-api-openapi.yml",
-    "marketdata-app-indices-api-openapi.yml",
     "marketdata-app-markets-api-openapi.yml",
     "marketdata-app-options-api-openapi.yml",
-    "marketdata-app-stocks-api-openapi.yml"
+    "marketdata-app-stocks-api-openapi.yml",
+    "marketdata-app-indices-api-openapi.yml"
   ],
-  "archived": [],
+  "archived": [
+    "deleted 1 superseded output(s) from the previous generation"
+  ],
   "errors": [],
   "warnings": [],
   "notes": [
     "sourced from openapi/_original/ (2 archived document(s)); previously refined output at the top level was skipped rather than re-split",
     "marketdata-app-openapi-original.yml: upgraded openapi 3.0.3 -> OpenAPI 3.2.0; renamed 1 component key(s) illegal in 3.x (e.g. Api Authentication)",
-    "marketdata-app-openapi-original.yml: declared missing tag: v1",
+    "marketdata-app-openapi-original.yml: tagged paths GET /v1/markets/status/ -> Markets",
+    "marketdata-app-openapi-original.yml: tagged paths GET /v1/options/chain/{underlying}/ -> Options",
+    "marketdata-app-openapi-original.yml: tagged paths GET /v1/options/expirations/{underlying}/ -> Options",
+    "marketdata-app-openapi-original.yml: tagged paths GET /v1/options/lookup/{userInput}/ -> Options",
+    "marketdata-app-openapi-original.yml: tagged paths GET /v1/options/quotes/{optionSymbol}/ -> Options",
+    "marketdata-app-openapi-original.yml: tagged paths GET /v1/options/strikes/{underlying}/ -> Options",
+    "marketdata-app-openapi-original.yml: tagged paths GET /v1/stocks/bulkcandles/{resolution}/ -> Stocks",
+    "marketdata-app-openapi-original.yml: tagged paths GET /v1/stocks/bulkquotes/ -> Stocks",
+    "marketdata-app-openapi-original.yml: tagged paths GET /v1/stocks/candles/{resolution}/{symbol}/ -> Stocks",
+    "marketdata-app-openapi-original.yml: tagged paths GET /v1/stocks/earnings/{symbol}/ -> Stocks",
+    "marketdata-app-openapi-original.yml: tagged paths GET /v1/stocks/news/{symbol}/ -> Stocks",
+    "marketdata-app-openapi-original.yml: tagged paths GET /v1/stocks/prices/ -> Stocks",
+    "marketdata-app-openapi-original.yml: tagged paths GET /v1/stocks/prices/{symbol}/ -> Stocks",
+    "marketdata-app-openapi-original.yml: tagged paths GET /v1/stocks/quotes/ -> Stocks",
+    "marketdata-app-openapi-original.yml: tagged paths GET /v1/stocks/quotes/{symbol}/ -> Stocks",
+    "marketdata-app-openapi-original.yml: declared missing tag: Markets",
+    "marketdata-app-openapi-original.yml: declared missing tag: Options",
+    "marketdata-app-openapi-original.yml: declared missing tag: Stocks",
     "marketdata-app-openapi.yml: upgraded openapi 3.0.3 -> OpenAPI 3.2.0",
-    "apis.yml register: already-registered"
+    "tag 'Markets' spans 2 source specs (marketdata-app-openapi-original.yml, marketdata-app-openapi.yml): per-path servers applied",
+    "tag 'Options' spans 2 source specs (marketdata-app-openapi-original.yml, marketdata-app-openapi.yml): per-path servers applied",
+    "tag 'Stocks' spans 2 source specs (marketdata-app-openapi-original.yml, marketdata-app-openapi.yml): per-path servers applied",
+    "superseded outputs removed: marketdata-app-v1-api-openapi.yml",
+    "apis.yml register: written (+0 apis, 4 total)"
   ],
   "skipped": [
     "marketdata-app-indices-api-openapi.yml: previously refined output, superseded by openapi/_original/",

@@ -1,21 +1,122 @@
 openapi: 3.2.0
 info:
-  title: Market Data Markets API
-  description: The Market Data API delivers real-time and historical U.S.
-  version: '1.0'
-  contact:
-    name: Market Data
-    url: https://www.marketdata.app
+  title: Marketdata App Markets API
   termsOfService: https://www.marketdata.app/terms/
+  version: '1.0'
+  description: 'Operations tagged Markets across 2 of this provider''s published API definitions: marketdata-app-openapi-original.yml, marketdata-app-openapi.yml. Each path carries the servers of the definition it was published in.'
 servers:
 - url: https://api.marketdata.app/v1
   description: Market Data API v1
-security:
-- bearerAuth: []
 tags:
 - name: Markets
-  description: Reference and status data about the markets covered by Market Data.
 paths:
+  /v1/markets/status/:
+    get:
+      operationId: v1_markets_status_retrieve
+      description: Get market status ("open" or "closed") for a date or range of dates.
+      parameters:
+      - in: query
+        name: format
+        schema:
+          type: string
+          enum:
+          - csv
+          - json
+        description: The format parameter is used to specify the format for your data. We support JSON and CSV formats. The default format is JSON.
+      - in: query
+        name: date
+        schema:
+          type: string
+          format: date
+        description: 'Use to lookup status from a specific trading day. Accepted date inputs: ISO 8601, unix, spreadsheet.'
+      - in: query
+        name: from
+        schema:
+          type: string
+          format: date
+        description: 'Limit the status to dates after from (inclusive). Should be combined with to to create a range. Accepted date inputs: ISO 8601, unix, spreadsheet.'
+      - in: query
+        name: to
+        schema:
+          type: string
+          format: date
+        description: 'Limit the status to dates before to (inclusive). Should be combined with from to create a range. Accepted date inputs: ISO 8601, unix, spreadsheet.'
+      - in: query
+        name: countback
+        schema:
+          type: integer
+        description: Countback will fetch a number of dates before (to the left of) to. If you use from, countback is not required.
+      - in: query
+        name: country
+        schema:
+          type: string
+        description: Use to specify the country of the exchange. Use the two digit ISO 3166 country code. If no country is specified, US exchanges will be assumed.
+      - in: query
+        name: dateformat
+        schema:
+          type: string
+          enum:
+          - spreadsheet
+          - timestamp
+          - unix
+        description: The dateformat parameter allows you specify the format you wish to receive date and time information in.
+      - in: query
+        name: limit
+        schema:
+          type: integer
+        description: The limit parameter allows you to limit the number of results for a particular API call or override an endpoint's default limits to get more data.
+      - in: query
+        name: offset
+        schema:
+          type: integer
+        description: The offset parameter is used together with limit to allow you to implement pagination in your application. Offset will allow you to return values starting at a certain value.
+      - in: query
+        name: headers
+        schema:
+          type: boolean
+        description: The headers parameter is used to turn off headers when using CSV output.
+      - in: query
+        name: columns
+        schema:
+          type: string
+        description: The columns parameter is used to limit the results and only request the columns you need. The most common use of this feature is to embed a single numeric result from one of the end points in a spreadsheet cell.
+      - in: query
+        name: human
+        schema:
+          type: boolean
+        description: Use human-readable attribute names in the JSON or CSV output instead of the standard camelCase attribute names.
+      tags:
+      - Markets
+      security:
+      - Api Authentication: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: {}
+              examples:
+                MarketStatus:
+                  value:
+                    s: ok
+                    date:
+                    - 1706745600
+                    - 1706832000
+                    - 1706918400
+                    status:
+                    - open
+                    - open
+                    - closed
+                  summary: Market Status
+            text/csv:
+              schema:
+                type: object
+                additionalProperties: {}
+          description: ''
+      summary: V1 markets status retrieve
+      x-summary-source: derived
   /markets/status/:
     get:
       operationId: getMarketStatus
@@ -65,16 +166,21 @@ paths:
           $ref: '#/components/responses/Unauthorized'
         '429':
           $ref: '#/components/responses/TooManyRequests'
+      security:
+      - bearerAuth: []
+    servers:
+    - url: https://api.marketdata.app/v1
+      description: Market Data API v1
 components:
   responses:
-    TooManyRequests:
-      description: Credit allocation or simultaneous-request limit exceeded.
+    Unauthorized:
+      description: Authentication failed or the token is missing or invalid.
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/ErrorResponse'
-    Unauthorized:
-      description: Authentication failed or the token is missing or invalid.
+    TooManyRequests:
+      description: Credit allocation or simultaneous-request limit exceeded.
       content:
         application/json:
           schema:
@@ -106,7 +212,14 @@ components:
           type: string
           description: Human-readable error message.
   securitySchemes:
+    Api_Authentication:
+      type: apiKey
+      in: query
+      name: token
     bearerAuth:
       type: http
       scheme: bearer
       description: Bearer token generated in the Market Data dashboard. Passed as Authorization Bearer YOUR_API_TOKEN. A token may also be supplied via the token query parameter.
+x-refined-from:
+- marketdata-app-openapi-original.yml
+- marketdata-app-openapi.yml

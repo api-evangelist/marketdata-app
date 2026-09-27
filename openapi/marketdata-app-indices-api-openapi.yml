@@ -97,20 +97,38 @@ paths:
         '429':
           $ref: '#/components/responses/TooManyRequests'
 components:
-  responses:
-    Unauthorized:
-      description: Authentication failed or the token is missing or invalid.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponse'
-    TooManyRequests:
-      description: Credit allocation or simultaneous-request limit exceeded.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponse'
   schemas:
+    QuoteResponse:
+      type: object
+      description: Column-oriented quote payload.
+      properties:
+        s:
+          type: string
+          description: Status of the response.
+        symbol:
+          type: array
+          items:
+            type: string
+        last:
+          type: array
+          items:
+            type: number
+        bid:
+          type: array
+          items:
+            type: number
+        ask:
+          type: array
+          items:
+            type: number
+        volume:
+          type: array
+          items:
+            type: integer
+        updated:
+          type: array
+          items:
+            type: integer
     CandlesResponse:
       type: object
       description: Column-oriented OHLCV candle series.
@@ -157,37 +175,19 @@ components:
         errmsg:
           type: string
           description: Human-readable error message.
-    QuoteResponse:
-      type: object
-      description: Column-oriented quote payload.
-      properties:
-        s:
-          type: string
-          description: Status of the response.
-        symbol:
-          type: array
-          items:
-            type: string
-        last:
-          type: array
-          items:
-            type: number
-        bid:
-          type: array
-          items:
-            type: number
-        ask:
-          type: array
-          items:
-            type: number
-        volume:
-          type: array
-          items:
-            type: integer
-        updated:
-          type: array
-          items:
-            type: integer
+  responses:
+    Unauthorized:
+      description: Authentication failed or the token is missing or invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    TooManyRequests:
+      description: Credit allocation or simultaneous-request limit exceeded.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
   securitySchemes:
     bearerAuth:
       type: http

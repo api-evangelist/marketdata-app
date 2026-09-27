@@ -1,21 +1,729 @@
 openapi: 3.2.0
 info:
-  title: Market Data Options API
-  description: The Market Data API delivers real-time and historical U.S.
-  version: '1.0'
-  contact:
-    name: Market Data
-    url: https://www.marketdata.app
+  title: Marketdata App Options API
   termsOfService: https://www.marketdata.app/terms/
+  version: '1.0'
+  description: 'Operations tagged Options across 2 of this provider''s published API definitions: marketdata-app-openapi-original.yml, marketdata-app-openapi.yml. Each path carries the servers of the definition it was published in.'
 servers:
 - url: https://api.marketdata.app/v1
   description: Market Data API v1
-security:
-- bearerAuth: []
 tags:
 - name: Options
-  description: Options chains, per-contract quotes, expirations, strikes, and OCC symbol lookup.
 paths:
+  /v1/options/chain/{underlying}/:
+    get:
+      operationId: v1_options_chain_retrieve
+      description: 'Get a current or historical end of day options chain for an underlying ticker symbol.
+
+        Optional parameters allow for extensive filtering of the chain.
+
+        Use the optionSymbol returned from this endpoint to get quotes, greeks, or other information
+
+        using the other endpoints.'
+      parameters:
+      - in: query
+        name: format
+        schema:
+          type: string
+          enum:
+          - csv
+          - json
+        description: The format parameter is used to specify the format for your data. We support JSON and CSV formats. The default format is JSON.
+      - in: path
+        name: underlying
+        schema:
+          type: string
+        description: "The underlying ticker symbol for the options chain you wish to lookup.\n                                                                                        Ticker Formats: (TICKER, TICKER.EX, EXCHANGE:TICKER)\n                                                                                        "
+        required: true
+      - in: query
+        name: date
+        schema:
+          type: string
+          format: date
+        description: 'Use to lookup a historical end of day options chain from a specific trading day. If no date is specified the chain will be the most current chain available during market hours. When the market is closed the chain will be from the last trading day. Accepted date inputs: ISO 8601, unix, spreadsheet.'
+      - in: query
+        name: expiration
+        schema:
+          type: string
+          format: date
+        description: 'Limit the option chain to a specific expiration date. Accepted date inputs: ISO 8601, unix, spreadsheet. If omitted next monthly expiration will be returned.'
+      - in: query
+        name: from
+        schema:
+          type: string
+          format: date
+        description: 'Limit the option chain to expiration dates after from (inclusive). Should be combined with to to create a range. Accepted date inputs: ISO 8601, unix, spreadsheet. If omitted next monthly expiration will be returned.'
+      - in: query
+        name: to
+        schema:
+          type: string
+          format: date
+        description: 'Limit the option chain to expiration dates before to (not inclusive). Should be combined with from to create a range. Accepted date inputs: ISO 8601, unix, spreadsheet. If omitted next monthly expiration will be returned.'
+      - in: query
+        name: month
+        schema:
+          type: integer
+        description: Limit the option chain to options that expire in a specific month (1-12).
+      - in: query
+        name: year
+        schema:
+          type: integer
+        description: Limit the option chain to options that expire in a specific year.
+      - in: query
+        name: weekly
+        schema:
+          type: boolean
+        description: Limit the option chain to weekly expirations by setting weekly to true and omitting the monthly and quarterly parameters. If set to false, no weekly expirations will be returned.
+      - in: query
+        name: monthly
+        schema:
+          type: boolean
+        description: Limit the option chain to standard monthly expirations by setting monthly to true and omitting the weekly and quarterly parameters. If set to false, no monthly expirations will be returned.
+      - in: query
+        name: quarterly
+        schema:
+          type: boolean
+        description: Limit the option chain to quarterly expirations by setting quarterly to true and omitting the weekly and monthly parameters. If set to false, no quarterly expirations will be returned.
+      - in: query
+        name: dte
+        schema:
+          type: integer
+        description: Days to expiry. Limit the option chain to a single expiration date closest to the dte provided. Should not be used together with from and to. Take care before combining with weekly, monthly, quarterly, since that will limit the expirations dte can return. If you are using the date parameter, dte is relative to the date provided.
+      - in: query
+        name: side
+        schema:
+          type: string
+          enum:
+          - call
+          - put
+        description: Limit the option chain to either call or put. If omitted, both sides will be returned.
+      - in: query
+        name: range
+        schema:
+          type: string
+          enum:
+          - all
+          - itm
+          - otm
+        description: 'Limit the option chain to strikes that are in the money, out of the money, or include all. If omitted all options will be returned. Valid inputs: itm, otm, all.'
+      - in: query
+        name: strike
+        schema:
+          type: string
+        description: Limit the option chain to options with the specific strike specified.
+      - in: query
+        name: minOpenInterest
+        schema:
+          type: number
+          format: float
+        description: Limit the option chain to options with an open interest greater than or equal to the number provided. Can be combined with minVolume and minLiquidity to further filter.
+      - in: query
+        name: minVolume
+        schema:
+          type: integer
+        description: Limit the option chain to options with an volume transacted greater than or equal to the number provided.
+      - in: query
+        name: maxBidAskSpread
+        schema:
+          type: number
+          format: float
+        description: Limit the option chain to options with a bid-ask spread less than or equal to the number provided.
+      - in: query
+        name: maxBidAskSpreadPct
+        schema:
+          type: number
+          format: float
+        description: Limit the option chain to options with a bid-ask spread less than or equal to the percent provided (relative to the underlying). For example, a value of 0.5% would exclude all options trading with a bid-ask spread greater than $1.00 in an underlying that trades at $200.
+      - in: query
+        name: nonstandard
+        schema:
+          type: boolean
+        description: Include non-standard contracts by setting nonstandard to true. If set to false, no non-standard options will be returned. If omitted, defaults to false.
+      - in: query
+        name: delta
+        schema:
+          type: string
+        description: Limit the option chain to options with a delta value close to the specified value.
+      - in: query
+        name: strikeLimit
+        schema:
+          type: integer
+        description: Limit the number of strikes returned to the N closest strikes to the at-the-money strike.
+      - in: query
+        name: minBid
+        schema:
+          type: number
+          format: float
+        description: Limit the option chain to options with a bid price greater than or equal to the number provided.
+      - in: query
+        name: maxBid
+        schema:
+          type: number
+          format: float
+        description: Limit the option chain to options with a bid price less than or equal to the number provided.
+      - in: query
+        name: minAsk
+        schema:
+          type: number
+          format: float
+        description: Limit the option chain to options with an ask price greater than or equal to the number provided.
+      - in: query
+        name: maxAsk
+        schema:
+          type: number
+          format: float
+        description: Limit the option chain to options with an ask price less than or equal to the number provided.
+      - in: query
+        name: am
+        schema:
+          type: boolean
+        description: Limit the option chain to AM-settled options by setting am to true. If set to false, no AM-settled options will be returned.
+      - in: query
+        name: pm
+        schema:
+          type: boolean
+        description: Limit the option chain to PM-settled options by setting pm to true. If set to false, no PM-settled options will be returned.
+      - in: query
+        name: dateformat
+        schema:
+          type: string
+          enum:
+          - spreadsheet
+          - timestamp
+          - unix
+        description: The dateformat parameter allows you specify the format you wish to receive date and time information in.
+      - in: query
+        name: limit
+        schema:
+          type: integer
+        description: The limit parameter allows you to limit the number of results for a particular API call or override an endpoint's default limits to get more data.
+      - in: query
+        name: offset
+        schema:
+          type: integer
+        description: The offset parameter is used together with limit to allow you to implement pagination in your application. Offset will allow you to return values starting at a certain value.
+      - in: query
+        name: headers
+        schema:
+          type: boolean
+        description: The headers parameter is used to turn off headers when using CSV output.
+      - in: query
+        name: columns
+        schema:
+          type: string
+        description: The columns parameter is used to limit the results and only request the columns you need. The most common use of this feature is to embed a single numeric result from one of the end points in a spreadsheet cell.
+      - in: query
+        name: human
+        schema:
+          type: boolean
+        description: Use human-readable attribute names in the JSON or CSV output instead of the standard camelCase attribute names.
+      tags:
+      - Options
+      security:
+      - Api Authentication: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: {}
+              examples:
+                OptionChain:
+                  value:
+                    s: ok
+                    optionSymbol:
+                    - AAPL250117C00150000
+                    - AAPL250117P00150000
+                    underlying:
+                    - AAPL
+                    - AAPL
+                    expiration:
+                    - 1737136800
+                    - 1737136800
+                    side:
+                    - call
+                    - put
+                    strike:
+                    - 150
+                    - 150
+                    firstTraded:
+                    - 1663118400
+                    - 1663118400
+                    dte:
+                    - 45
+                    - 45
+                    updated:
+                    - 1705449600
+                    - 1705449600
+                    bid:
+                    - 52.1
+                    - 0.02
+                    bidSize:
+                    - 10
+                    - 50
+                    mid:
+                    - 52.35
+                    - 0.03
+                    ask:
+                    - 52.6
+                    - 0.04
+                    askSize:
+                    - 15
+                    - 100
+                    last:
+                    - 52.3
+                    - 0.03
+                    openInterest:
+                    - 5000
+                    - 12000
+                    volume:
+                    - 1500
+                    - 800
+                    inTheMoney:
+                    - true
+                    - false
+                    intrinsicValue:
+                    - 50.22
+                    - 0
+                    extrinsicValue:
+                    - 2.13
+                    - 0.03
+                    underlyingPrice:
+                    - 200.22
+                    - 200.22
+                    iv:
+                    - 0.3012
+                    - 0.4521
+                    delta:
+                    - 0.89
+                    - -0.01
+                    gamma:
+                    - 0.012
+                    - 0.005
+                    theta:
+                    - -0.05
+                    - -0.01
+                    vega:
+                    - 0.15
+                    - 0.02
+                  summary: Option Chain
+            text/csv:
+              schema:
+                type: object
+                additionalProperties: {}
+          description: ''
+      summary: V1 options chain retrieve
+      x-summary-source: derived
+  /v1/options/expirations/{underlying}/:
+    get:
+      operationId: v1_options_expirations_retrieve
+      description: 'Get a list of current or historical option expiration dates for an underlying symbol.
+
+        If no optional parameters are used, the endpoint returns the expirations for strike in the
+
+        chain.'
+      parameters:
+      - in: query
+        name: format
+        schema:
+          type: string
+          enum:
+          - csv
+          - json
+        description: The format parameter is used to specify the format for your data. We support JSON and CSV formats. The default format is JSON.
+      - in: path
+        name: underlying
+        schema:
+          type: string
+        description: "The underlying ticker symbol for the options chain you wish to lookup.\n                                                                                        Ticker Formats: (TICKER, TICKER.EX, EXCHANGE:TICKER)\n                                                                                        "
+        required: true
+      - in: query
+        name: strike
+        schema:
+          type: string
+        description: Limit the lookup of expiration dates to the strike provide. This will cause the endpoint to only return expiration dates that include this strike.
+      - in: query
+        name: date
+        schema:
+          type: string
+          format: date
+        description: 'Use to lookup a historical list of expiration dates from a specific previous trading day. If date is omitted the expiration dates will be from the current trading day during market hours or from the last trading day when the market is closed. Accepted date inputs: ISO 8601, unix, spreadsheet.'
+      - in: query
+        name: dateformat
+        schema:
+          type: string
+          enum:
+          - spreadsheet
+          - timestamp
+          - unix
+        description: The dateformat parameter allows you specify the format you wish to receive date and time information in.
+      - in: query
+        name: limit
+        schema:
+          type: integer
+        description: The limit parameter allows you to limit the number of results for a particular API call or override an endpoint's default limits to get more data.
+      - in: query
+        name: offset
+        schema:
+          type: integer
+        description: The offset parameter is used together with limit to allow you to implement pagination in your application. Offset will allow you to return values starting at a certain value.
+      - in: query
+        name: headers
+        schema:
+          type: boolean
+        description: The headers parameter is used to turn off headers when using CSV output.
+      - in: query
+        name: columns
+        schema:
+          type: string
+        description: The columns parameter is used to limit the results and only request the columns you need. The most common use of this feature is to embed a single numeric result from one of the end points in a spreadsheet cell.
+      - in: query
+        name: human
+        schema:
+          type: boolean
+        description: Use human-readable attribute names in the JSON or CSV output instead of the standard camelCase attribute names.
+      tags:
+      - Options
+      security:
+      - Api Authentication: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: {}
+              examples:
+                OptionExpirations:
+                  value:
+                    s: ok
+                    expirations:
+                    - '2025-01-17'
+                    - '2025-02-21'
+                    - '2025-03-21'
+                    updated: 1705449600
+                  summary: Option Expirations
+            text/csv:
+              schema:
+                type: object
+                additionalProperties: {}
+          description: ''
+      summary: V1 options expirations retrieve
+      x-summary-source: derived
+  /v1/options/lookup/{userInput}/:
+    get:
+      operationId: v1_options_lookup_retrieve
+      description: 'Generate a properly formatted OCC option symbol based on the user''s human-readable
+
+        description of an option.
+
+        This endpoint converts text such as "AAPL 7/26/23 $200 Call" to OCC option symbol
+
+        format: AAPL230726C00200000.
+
+        The user input must be URL-encoded.'
+      parameters:
+      - in: query
+        name: format
+        schema:
+          type: string
+          enum:
+          - csv
+          - json
+      - in: path
+        name: userInput
+        schema:
+          type: string
+        description: The human-readable string input that contains (1) stock symbol (2) strike (3) expiration date (4) option side (i.e. put or call). This endpoint will translate the user's input into a valid OCC option symbol.
+        required: true
+      tags:
+      - Options
+      security:
+      - Api Authentication: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: {}
+              examples:
+                OptionLookup:
+                  value:
+                    s: ok
+                    optionSymbol: AAPL250117C00150000
+                  summary: Option Lookup
+            text/csv:
+              schema:
+                type: object
+                additionalProperties: {}
+          description: ''
+      summary: V1 options lookup retrieve
+      x-summary-source: derived
+  /v1/options/quotes/{optionSymbol}/:
+    get:
+      operationId: v1_options_quotes_retrieve
+      description: 'Get a current or historical end of day quote for a single or multiple options contracts.
+
+        Separate multiple options symbols with a comma.'
+      parameters:
+      - in: query
+        name: format
+        schema:
+          type: string
+          enum:
+          - csv
+          - json
+        description: The format parameter is used to specify the format for your data. We support JSON and CSV formats. The default format is JSON.
+      - in: path
+        name: optionSymbol
+        schema:
+          type: string
+        description: The option symbol (as defined by the OCC) for the option you wish to lookup. Use the current OCC option symbol format, even for historic options that quoted before the format change in 2010.
+        required: true
+      - in: query
+        name: date
+        schema:
+          type: string
+          format: date
+        description: 'Use to lookup a historical end of day quote from a specific trading day. If no date is specified the quote will be the most current price available during market hours. When the market is closed the quote will be from the last trading day. Accepted date inputs: ISO 8601, unix, spreadsheet.'
+      - in: query
+        name: from
+        schema:
+          type: string
+          format: date
+        description: 'Use to lookup a series of end of day quotes. From is the oldest (leftmost) date to return (inclusive). If from/to is not specified the quote will be the most current price available during market hours. When the market is closed the quote will be from the last trading day. Accepted date inputs: ISO 8601, unix, spreadsheet.'
+      - in: query
+        name: to
+        schema:
+          type: string
+          format: date
+        description: 'Use to lookup a series of end of day quotes. To is the newest (rightmost) date to return (exclusive). If from/to is not specified the quote will be the most current price available during market hours. When the market is closed the quote will be from the last trading day. Accepted date inputs: ISO 8601, unix, spreadsheet.'
+      - in: query
+        name: countback
+        schema:
+          type: integer
+        description: Countback will fetch a number of quotes before (to the left of) to. If you use from, countback is not required.
+      - in: query
+        name: dateformat
+        schema:
+          type: string
+          enum:
+          - spreadsheet
+          - timestamp
+          - unix
+        description: The dateformat parameter allows you specify the format you wish to receive date and time information in.
+      - in: query
+        name: limit
+        schema:
+          type: integer
+        description: The limit parameter allows you to limit the number of results for a particular API call or override an endpoint's default limits to get more data.
+      - in: query
+        name: offset
+        schema:
+          type: integer
+        description: The offset parameter is used together with limit to allow you to implement pagination in your application. Offset will allow you to return values starting at a certain value.
+      - in: query
+        name: headers
+        schema:
+          type: boolean
+        description: The headers parameter is used to turn off headers when using CSV output.
+      - in: query
+        name: columns
+        schema:
+          type: string
+        description: The columns parameter is used to limit the results and only request the columns you need. The most common use of this feature is to embed a single numeric result from one of the end points in a spreadsheet cell.
+      - in: query
+        name: human
+        schema:
+          type: boolean
+        description: Use human-readable attribute names in the JSON or CSV output instead of the standard camelCase attribute names.
+      tags:
+      - Options
+      security:
+      - Api Authentication: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: {}
+              examples:
+                OptionQuote:
+                  value:
+                    s: ok
+                    optionSymbol:
+                    - AAPL250117C00150000
+                    underlying:
+                    - AAPL
+                    expiration:
+                    - 1737136800
+                    side:
+                    - call
+                    strike:
+                    - 150
+                    firstTraded:
+                    - 1663118400
+                    dte:
+                    - 45
+                    updated:
+                    - 1705449600
+                    bid:
+                    - 52.1
+                    bidSize:
+                    - 10
+                    mid:
+                    - 52.35
+                    ask:
+                    - 52.6
+                    askSize:
+                    - 15
+                    last:
+                    - 52.3
+                    openInterest:
+                    - 5000
+                    volume:
+                    - 1500
+                    inTheMoney:
+                    - true
+                    intrinsicValue:
+                    - 50.22
+                    extrinsicValue:
+                    - 2.13
+                    underlyingPrice:
+                    - 200.22
+                    iv:
+                    - 0.3012
+                    delta:
+                    - 0.89
+                    gamma:
+                    - 0.012
+                    theta:
+                    - -0.05
+                    vega:
+                    - 0.15
+                  summary: Option Quote
+            text/csv:
+              schema:
+                type: object
+                additionalProperties: {}
+          description: ''
+      summary: V1 options quotes retrieve
+      x-summary-source: derived
+  /v1/options/strikes/{underlying}/:
+    get:
+      operationId: v1_options_strikes_retrieve
+      description: 'Get a list of current or historical options strikes for an underlying symbol.
+
+        If no optional parameters are used, the endpoint returns the strikes for every expiration in
+
+        the chain.'
+      parameters:
+      - in: query
+        name: format
+        schema:
+          type: string
+          enum:
+          - csv
+          - json
+        description: The format parameter is used to specify the format for your data. We support JSON and CSV formats. The default format is JSON.
+      - in: path
+        name: underlying
+        schema:
+          type: string
+        description: "The underlying ticker symbol for the options chain you wish to lookup.\n                                                                                        Ticker Formats: (TICKER, TICKER.EX, EXCHANGE:TICKER)\n                                                                                       "
+        required: true
+      - in: query
+        name: date
+        schema:
+          type: string
+          format: date
+        description: 'Use to lookup a historical list of strikes from a specific previous trading day. If date is omitted the strikes will be from the current trading day during market hours or from the last trading day when the market is closed. Accepted date inputs: ISO 8601, unix, spreadsheet.'
+      - in: query
+        name: expiration
+        schema:
+          type: string
+          format: date
+        description: 'imit the lookup of strikes to options that expire on a specific expiration date. Accepted date inputs: ISO 8601, unix, spreadsheet.'
+      - in: query
+        name: dateformat
+        schema:
+          type: string
+          enum:
+          - spreadsheet
+          - timestamp
+          - unix
+        description: The dateformat parameter allows you specify the format you wish to receive date and time information in.
+      - in: query
+        name: limit
+        schema:
+          type: integer
+        description: The limit parameter allows you to limit the number of results for a particular API call or override an endpoint's default limits to get more data.
+      - in: query
+        name: offset
+        schema:
+          type: integer
+        description: The offset parameter is used together with limit to allow you to implement pagination in your application. Offset will allow you to return values starting at a certain value.
+      - in: query
+        name: headers
+        schema:
+          type: boolean
+        description: The headers parameter is used to turn off headers when using CSV output.
+      - in: query
+        name: columns
+        schema:
+          type: string
+        description: The columns parameter is used to limit the results and only request the columns you need. The most common use of this feature is to embed a single numeric result from one of the end points in a spreadsheet cell.
+      - in: query
+        name: human
+        schema:
+          type: boolean
+        description: Use human-readable attribute names in the JSON or CSV output instead of the standard camelCase attribute names.
+      tags:
+      - Options
+      security:
+      - Api Authentication: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: {}
+              examples:
+                OptionStrikes:
+                  value:
+                    s: ok
+                    updated: 1705449600
+                    '2025-01-17':
+                    - 140
+                    - 145
+                    - 150
+                    - 155
+                    - 160
+                    '2025-02-21':
+                    - 135
+                    - 140
+                    - 145
+                    - 150
+                    - 155
+                    - 160
+                    - 165
+                  summary: Option Strikes
+            text/csv:
+              schema:
+                type: object
+                additionalProperties: {}
+          description: ''
+      summary: V1 options strikes retrieve
+      x-summary-source: derived
   /options/expirations/{underlyingSymbol}/:
     get:
       operationId: getOptionExpirations
@@ -47,6 +755,11 @@ paths:
           $ref: '#/components/responses/Unauthorized'
         '429':
           $ref: '#/components/responses/TooManyRequests'
+      security:
+      - bearerAuth: []
+    servers:
+    - url: https://api.marketdata.app/v1
+      description: Market Data API v1
   /options/lookup/{userInput}/:
     get:
       operationId: getOptionLookup
@@ -78,6 +791,11 @@ paths:
           $ref: '#/components/responses/Unauthorized'
         '429':
           $ref: '#/components/responses/TooManyRequests'
+      security:
+      - bearerAuth: []
+    servers:
+    - url: https://api.marketdata.app/v1
+      description: Market Data API v1
   /options/strikes/{underlyingSymbol}/:
     get:
       operationId: getOptionStrikes
@@ -115,6 +833,11 @@ paths:
           $ref: '#/components/responses/Unauthorized'
         '429':
           $ref: '#/components/responses/TooManyRequests'
+      security:
+      - bearerAuth: []
+    servers:
+    - url: https://api.marketdata.app/v1
+      description: Market Data API v1
   /options/chain/{underlyingSymbol}/:
     get:
       operationId: getOptionChain
@@ -161,6 +884,11 @@ paths:
           $ref: '#/components/responses/Unauthorized'
         '429':
           $ref: '#/components/responses/TooManyRequests'
+      security:
+      - bearerAuth: []
+    servers:
+    - url: https://api.marketdata.app/v1
+      description: Market Data API v1
   /options/quotes/{optionSymbol}/:
     get:
       operationId: getOptionQuote
@@ -192,6 +920,11 @@ paths:
           $ref: '#/components/responses/Unauthorized'
         '429':
           $ref: '#/components/responses/TooManyRequests'
+      security:
+      - bearerAuth: []
+    servers:
+    - url: https://api.marketdata.app/v1
+      description: Market Data API v1
 components:
   responses:
     Unauthorized:
@@ -207,6 +940,15 @@ components:
           schema:
             $ref: '#/components/schemas/ErrorResponse'
   schemas:
+    ErrorResponse:
+      type: object
+      properties:
+        s:
+          type: string
+          description: Always error for failed requests.
+        errmsg:
+          type: string
+          description: Human-readable error message.
     OptionQuoteResponse:
       type: object
       description: Column-oriented option contract quote payload.
@@ -258,15 +1000,6 @@ components:
           type: array
           items:
             type: number
-    ErrorResponse:
-      type: object
-      properties:
-        s:
-          type: string
-          description: Always error for failed requests.
-        errmsg:
-          type: string
-          description: Human-readable error message.
     GenericResponse:
       type: object
       description: Generic column-oriented Market Data response keyed by status flag s.
@@ -275,7 +1008,14 @@ components:
           type: string
           description: Status of the response - ok, no_data, or error.
   securitySchemes:
+    Api_Authentication:
+      type: apiKey
+      in: query
+      name: token
     bearerAuth:
       type: http
       scheme: bearer
       description: Bearer token generated in the Market Data dashboard. Passed as Authorization Bearer YOUR_API_TOKEN. A token may also be supplied via the token query parameter.
+x-refined-from:
+- marketdata-app-openapi-original.yml
+- marketdata-app-openapi.yml

@@ -1,21 +1,1159 @@
 openapi: 3.2.0
 info:
-  title: Market Data Stocks API
-  description: The Market Data API delivers real-time and historical U.S.
-  version: '1.0'
-  contact:
-    name: Market Data
-    url: https://www.marketdata.app
+  title: Marketdata App Stocks API
   termsOfService: https://www.marketdata.app/terms/
+  version: '1.0'
+  description: 'Operations tagged Stocks across 2 of this provider''s published API definitions: marketdata-app-openapi-original.yml, marketdata-app-openapi.yml. Each path carries the servers of the definition it was published in.'
 servers:
 - url: https://api.marketdata.app/v1
   description: Market Data API v1
-security:
-- bearerAuth: []
 tags:
 - name: Stocks
-  description: Real-time and historical stock candles, quotes, bulk data, earnings, and news.
 paths:
+  /v1/stocks/bulkcandles/{resolution}/:
+    get:
+      operationId: v1_stocks_bulkcandles_retrieve
+      description: Get bulk candles for stocks. This endpoint returns daily candle data for multiple stocks.
+      parameters:
+      - in: query
+        name: format
+        schema:
+          type: string
+          enum:
+          - csv
+          - json
+        description: The format parameter is used to specify the format for your data. We support JSON and CSV formats. The default format is JSON.
+      - in: path
+        name: resolution
+        schema:
+          type: string
+        description: "The duration of each candle.\n                                                                                        Minutely Resolutions: (1, 3, 5, 15, 30, 45, ...)\n                                                                                        Hourly Resolutions: (H, 1H, 2H, ...)\n                                                                                        Daily Resolutions: (D, 1D, 2D, ...)\n                                                                                        Weekly Resolutions: (W, 1W, 2W, ...)\n                                                                                        Monthly Resolutions: (M, 1M, 2M, ...)\n                                                                                        Yearly Resolutions:(Y, 1Y, 2Y, ...)')"
+        required: true
+      - in: path
+        name: symbol
+        schema:
+          type: string
+        description: "The company's ticker symbol. If no exchange is specified, by default a US exchange will be assumed. You may embed the exchange in the ticker symbol using the Yahoo Finance or TradingView formats.\n                                                                                    Ticker Formats: (TICKER, TICKER.EX, EXCHANGE:TICKER)\n                                                                                    "
+        required: true
+      - in: query
+        name: date
+        schema:
+          type: string
+          format: date
+        description: 'Use to lookup historical candles from a specific trading day. Accepted date inputs: ISO 8601, unix, spreadsheet.'
+      - in: query
+        name: from
+        schema:
+          type: string
+          format: date
+        description: 'The leftmost candle on a chart (inclusive). If you use countback, to is not required. Accepted timestamp inputs: ISO 8601, unix, spreadsheet.'
+      - in: query
+        name: to
+        schema:
+          type: string
+          format: date
+        description: 'The rightmost candle on a chart (not inclusive). Accepted timestamp inputs: ISO 8601, unix, spreadsheet.'
+      - in: query
+        name: countback
+        schema:
+          type: integer
+        description: Countback will fetch a number of candles before (to the left of) to If you use from, countback is not required.
+      - in: query
+        name: exchange
+        schema:
+          type: string
+        description: Use to specify the exchange of the ticker. This is useful when you need to specify stock that quotes on several exchanges with the same symbol. You may specify the exchange using the EXCHANGE ACRONYM, MIC CODE, or two digit YAHOO FINANCE EXCHANGE CODE. If no exchange is specified symbols will be matched to US exchanges first.
+      - in: query
+        name: extended
+        schema:
+          type: boolean
+        description: Include extended hours trading sessions when returning intraday candles. Daily resolutions never return extended hours candles. The default is false
+      - in: query
+        name: country
+        schema:
+          type: string
+        description: Use to specify the country of the exchange (not the country of the company) in conjunction with the symbol argument. This argument is useful when you know the ticker symbol and the country of the exchange, but not the exchange code. Use the two digit ISO 3166 country code. If no country is specified, US exchanges will be assumed.
+      - in: query
+        name: adjustsplits
+        schema:
+          type: boolean
+        description: "Adjust historical data for for historical splits and reverse splits. Market Data uses the CRSP methodology for adjustment.\n                                                                                    Daily candles default: true.\n                                                                                    Intraday candles default: false.\n                                                                                    Only three price views are supported (raw, split-only, fully adjusted). See adjustdividends for the rejected combinations."
+      - in: query
+        name: adjustdividends
+        schema:
+          type: boolean
+        description: "Adjust candles for dividends. Market Data uses the CRSP methodology for adjustment.\n                                                                                    Daily candles default: true.\n                                                                                    Intraday candles default: false.\n                                                                                    Requires adjustsplits=true: dividend-only adjustment is not supported. On daily candles, adjustsplits=false with adjustdividends=true (including the default-resolved case where adjustsplits=false is passed alone) returns HTTP 400. On intraday candles, adjustdividends=true is not supported and returns HTTP 400."
+      - in: query
+        name: dateformat
+        schema:
+          type: string
+          enum:
+          - spreadsheet
+          - timestamp
+          - unix
+        description: The dateformat parameter allows you specify the format you wish to receive date and time information in.
+      - in: query
+        name: limit
+        schema:
+          type: integer
+        description: The limit parameter allows you to limit the number of results for a particular API call or override an endpoint's default limits to get more data.
+      - in: query
+        name: offset
+        schema:
+          type: integer
+        description: The offset parameter is used together with limit to allow you to implement pagination in your application. Offset will allow you to return values starting at a certain value.
+      - in: query
+        name: headers
+        schema:
+          type: boolean
+        description: The headers parameter is used to turn off headers when using CSV output.
+      - in: query
+        name: columns
+        schema:
+          type: string
+        description: The columns parameter is used to limit the results and only request the columns you need. The most common use of this feature is to embed a single numeric result from one of the end points in a spreadsheet cell.
+      - in: query
+        name: human
+        schema:
+          type: boolean
+        description: Use human-readable attribute names in the JSON or CSV output instead of the standard camelCase attribute names.
+      tags:
+      - Stocks
+      security:
+      - Api Authentication: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: {}
+              examples:
+                BulkStockCandles:
+                  value:
+                    s: ok
+                    symbol:
+                    - AAPL
+                    - MSFT
+                    - GOOG
+                    o:
+                    - 220.1
+                    - 413.5
+                    - 174.8
+                    h:
+                    - 222.3
+                    - 416.0
+                    - 176.2
+                    l:
+                    - 219.5
+                    - 412.0
+                    - 173.9
+                    c:
+                    - 221.5
+                    - 415.1
+                    - 175.2
+                    v:
+                    - 58240000
+                    - 22150000
+                    - 18430000
+                    t:
+                    - 1705449600
+                    - 1705449600
+                    - 1705449600
+                  summary: Bulk Stock Candles
+                  description: Returns daily candle data for multiple symbols. Each symbol has one candle for the same date.
+            text/csv:
+              schema:
+                type: object
+                additionalProperties: {}
+          description: ''
+      summary: V1 stocks bulkcandles retrieve
+      x-summary-source: derived
+  /v1/stocks/bulkquotes/:
+    get:
+      operationId: v1_stocks_bulkquotes_retrieve
+      description: 'Get bulk quote data for stocks. This endpoint returns bulk real time quote data for multiple
+
+        stocks.'
+      parameters:
+      - in: query
+        name: format
+        schema:
+          type: string
+          enum:
+          - csv
+          - json
+        description: The format parameter is used to specify the format for your data. We support JSON and CSV formats. The default format is JSON.
+      - in: query
+        name: symbols
+        schema:
+          type: string
+        description: "The ticker symbols separated by commas. If no exchange is specified, by default a US exchange will be assumed. You may embed the exchange in the ticker symbol using the Yahoo Finance or TradingView formats.\n                                                                                    Ticker Formats: (TICKER, TICKER.EX, EXCHANGE:TICKER)\n                                                                                    "
+        required: true
+      - in: query
+        name: extended
+        schema:
+          type: boolean
+        description: Whether to include extended session prices, defaults to True.
+      - in: query
+        name: dateformat
+        schema:
+          type: string
+          enum:
+          - spreadsheet
+          - timestamp
+          - unix
+        description: The dateformat parameter allows you specify the format you wish to receive date and time information in.
+      - in: query
+        name: limit
+        schema:
+          type: integer
+        description: The limit parameter allows you to limit the number of results for a particular API call or override an endpoint's default limits to get more data.
+      - in: query
+        name: offset
+        schema:
+          type: integer
+        description: The offset parameter is used together with limit to allow you to implement pagination in your application. Offset will allow you to return values starting at a certain value.
+      - in: query
+        name: headers
+        schema:
+          type: boolean
+        description: The headers parameter is used to turn off headers when using CSV output.
+      - in: query
+        name: columns
+        schema:
+          type: string
+        description: The columns parameter is used to limit the results and only request the columns you need. The most common use of this feature is to embed a single numeric result from one of the end points in a spreadsheet cell.
+      - in: query
+        name: human
+        schema:
+          type: boolean
+        description: Use human-readable attribute names in the JSON or CSV output instead of the standard camelCase attribute names.
+      tags:
+      - Stocks
+      security:
+      - Api Authentication: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: {}
+              examples:
+                BulkStockQuotes:
+                  value:
+                    s: ok
+                    symbol:
+                    - AAPL
+                    - MSFT
+                    - GOOG
+                    ask:
+                    - 221.55
+                    - 415.2
+                    - 175.3
+                    askSize:
+                    - 200
+                    - 100
+                    - 150
+                    bid:
+                    - 221.5
+                    - 415.05
+                    - 175.15
+                    bidSize:
+                    - 300
+                    - 150
+                    - 200
+                    mid:
+                    - 221.525
+                    - 415.125
+                    - 175.225
+                    last:
+                    - 221.52
+                    - 415.1
+                    - 175.2
+                    change:
+                    - 1.38
+                    - -2.4
+                    - 0.95
+                    changepct:
+                    - 0.0063
+                    - -0.0057
+                    - 0.0055
+                    volume:
+                    - 58240000
+                    - 22150000
+                    - 18430000
+                    updated:
+                    - 1705449600
+                    - 1705449600
+                    - 1705449600
+                  summary: Bulk Stock Quotes
+                  description: Returns real-time quotes for multiple symbols in a single request.
+            text/csv:
+              schema:
+                type: object
+                additionalProperties: {}
+          description: ''
+      summary: V1 stocks bulkquotes retrieve
+      x-summary-source: derived
+  /v1/stocks/candles/{resolution}/{symbol}/:
+    get:
+      operationId: v1_stocks_candles_retrieve
+      description: Get historical price candles for a stock.
+      parameters:
+      - in: query
+        name: format
+        schema:
+          type: string
+          enum:
+          - csv
+          - json
+        description: The format parameter is used to specify the format for your data. We support JSON and CSV formats. The default format is JSON.
+      - in: path
+        name: resolution
+        schema:
+          type: string
+        description: "The duration of each candle.\n                                                                                        Minutely Resolutions: (1, 3, 5, 15, 30, 45, ...)\n                                                                                        Hourly Resolutions: (H, 1H, 2H, ...)\n                                                                                        Daily Resolutions: (D, 1D, 2D, ...)\n                                                                                        Weekly Resolutions: (W, 1W, 2W, ...)\n                                                                                        Monthly Resolutions: (M, 1M, 2M, ...)\n                                                                                        Yearly Resolutions:(Y, 1Y, 2Y, ...)')"
+        required: true
+      - in: path
+        name: symbol
+        schema:
+          type: string
+        description: "The company's ticker symbol. If no exchange is specified, by default a US exchange will be assumed. You may embed the exchange in the ticker symbol using the Yahoo Finance or TradingView formats.\n                                                                                    Ticker Formats: (TICKER, TICKER.EX, EXCHANGE:TICKER)\n                                                                                    "
+        required: true
+      - in: query
+        name: date
+        schema:
+          type: string
+          format: date
+        description: 'Use to lookup historical candles from a specific trading day. Accepted date inputs: ISO 8601, unix, spreadsheet.'
+      - in: query
+        name: from
+        schema:
+          type: string
+          format: date
+        description: 'The leftmost candle on a chart (inclusive). If you use countback, to is not required. Accepted timestamp inputs: ISO 8601, unix, spreadsheet.'
+      - in: query
+        name: to
+        schema:
+          type: string
+          format: date
+        description: 'The rightmost candle on a chart (not inclusive). Accepted timestamp inputs: ISO 8601, unix, spreadsheet.'
+      - in: query
+        name: countback
+        schema:
+          type: integer
+        description: Countback will fetch a number of candles before (to the left of) to If you use from, countback is not required.
+      - in: query
+        name: exchange
+        schema:
+          type: string
+        description: Use to specify the exchange of the ticker. This is useful when you need to specify stock that quotes on several exchanges with the same symbol. You may specify the exchange using the EXCHANGE ACRONYM, MIC CODE, or two digit YAHOO FINANCE EXCHANGE CODE. If no exchange is specified symbols will be matched to US exchanges first.
+      - in: query
+        name: extended
+        schema:
+          type: boolean
+        description: Include extended hours trading sessions when returning intraday candles. Daily resolutions never return extended hours candles. The default is false
+      - in: query
+        name: country
+        schema:
+          type: string
+        description: Use to specify the country of the exchange (not the country of the company) in conjunction with the symbol argument. This argument is useful when you know the ticker symbol and the country of the exchange, but not the exchange code. Use the two digit ISO 3166 country code. If no country is specified, US exchanges will be assumed.
+      - in: query
+        name: adjustsplits
+        schema:
+          type: boolean
+        description: "Adjust historical data for for historical splits and reverse splits. Market Data uses the CRSP methodology for adjustment.\n                                                                                    Daily candles default: true.\n                                                                                    Intraday candles default: false.\n                                                                                    Only three price views are supported (raw, split-only, fully adjusted). See adjustdividends for the rejected combinations."
+      - in: query
+        name: adjustdividends
+        schema:
+          type: boolean
+        description: "Adjust candles for dividends. Market Data uses the CRSP methodology for adjustment.\n                                                                                    Daily candles default: true.\n                                                                                    Intraday candles default: false.\n                                                                                    Requires adjustsplits=true: dividend-only adjustment is not supported. On daily candles, adjustsplits=false with adjustdividends=true (including the default-resolved case where adjustsplits=false is passed alone) returns HTTP 400. On intraday candles, adjustdividends=true is not supported and returns HTTP 400."
+      - in: query
+        name: dateformat
+        schema:
+          type: string
+          enum:
+          - spreadsheet
+          - timestamp
+          - unix
+        description: The dateformat parameter allows you specify the format you wish to receive date and time information in.
+      - in: query
+        name: limit
+        schema:
+          type: integer
+        description: The limit parameter allows you to limit the number of results for a particular API call or override an endpoint's default limits to get more data.
+      - in: query
+        name: offset
+        schema:
+          type: integer
+        description: The offset parameter is used together with limit to allow you to implement pagination in your application. Offset will allow you to return values starting at a certain value.
+      - in: query
+        name: headers
+        schema:
+          type: boolean
+        description: The headers parameter is used to turn off headers when using CSV output.
+      - in: query
+        name: columns
+        schema:
+          type: string
+        description: The columns parameter is used to limit the results and only request the columns you need. The most common use of this feature is to embed a single numeric result from one of the end points in a spreadsheet cell.
+      - in: query
+        name: human
+        schema:
+          type: boolean
+        description: Use human-readable attribute names in the JSON or CSV output instead of the standard camelCase attribute names.
+      tags:
+      - Stocks
+      security:
+      - Api Authentication: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: {}
+              examples:
+                StockCandles:
+                  value:
+                    s: ok
+                    c:
+                    - 217.83
+                    - 219.68
+                    - 218.24
+                    - 220.91
+                    - 222.5
+                    h:
+                    - 218.55
+                    - 220.12
+                    - 219.85
+                    - 221.34
+                    - 223.08
+                    l:
+                    - 215.78
+                    - 217.32
+                    - 216.09
+                    - 218.45
+                    - 220.15
+                    o:
+                    - 216.5
+                    - 218.0
+                    - 219.4
+                    - 218.7
+                    - 221.0
+                    t:
+                    - 1705276800
+                    - 1705363200
+                    - 1705449600
+                    - 1705536000
+                    - 1705622400
+                    v:
+                    - 62130000
+                    - 58240000
+                    - 53890000
+                    - 61450000
+                    - 55780000
+                  summary: Stock Candles
+                  description: Returns OHLCV time-series candles for a single symbol.
+            text/csv:
+              schema:
+                type: object
+                additionalProperties: {}
+          description: ''
+      summary: V1 stocks candles retrieve
+      x-summary-source: derived
+  /v1/stocks/earnings/{symbol}/:
+    get:
+      operationId: v1_stocks_earnings_retrieve
+      description: Get historical earnings per share data or a future earnings calendar for a stock.
+      parameters:
+      - in: query
+        name: format
+        schema:
+          type: string
+          enum:
+          - csv
+          - json
+        description: The format parameter is used to specify the format for your data. We support JSON and CSV formats. The default format is JSON.
+      - in: path
+        name: symbol
+        schema:
+          type: string
+        description: "The company's ticker symbol. If no exchange is specified, by default a US exchange will be assumed. You may embed the exchange in the ticker symbol using the Yahoo Finance or TradingView formats.\n                                                                                    Ticker Formats: (TICKER, TICKER.EX, EXCHANGE:TICKER)\n                                                                                    "
+        required: true
+      - in: query
+        name: date
+        schema:
+          type: string
+          format: date
+        description: 'Retrieve a specific earnings report by date. Accepted timestamp inputs: ISO 8601, unix, spreadsheet.'
+      - in: query
+        name: from
+        schema:
+          type: string
+          format: date
+        description: 'The earliest earnings report to include in the output. If you use countback, from is not required. Accepted timestamp inputs: ISO 8601, unix, spreadsheet.'
+      - in: query
+        name: to
+        schema:
+          type: string
+          format: date
+        description: 'The latest earnings report to include in the output. Accepted timestamp inputs: ISO 8601, unix, spreadsheet.'
+      - in: query
+        name: countback
+        schema:
+          type: integer
+        description: Countback will fetch a specific number of earnings reports before to. If you use from, countback is not required.
+      - in: query
+        name: report
+        schema:
+          type: string
+        description: 'Retrieve a specific earnings report by date and quarter. Example: 2023-Q4. This allows you to retrieve a 4th qurater value without knowing the company''s specific fiscal year.'
+      - in: query
+        name: dateformat
+        schema:
+          type: string
+          enum:
+          - spreadsheet
+          - timestamp
+          - unix
+        description: The dateformat parameter allows you specify the format you wish to receive date and time information in.
+      - in: query
+        name: limit
+        schema:
+          type: integer
+        description: The limit parameter allows you to limit the number of results for a particular API call or override an endpoint's default limits to get more data.
+      - in: query
+        name: offset
+        schema:
+          type: integer
+        description: The offset parameter is used together with limit to allow you to implement pagination in your application. Offset will allow you to return values starting at a certain value.
+      - in: query
+        name: headers
+        schema:
+          type: boolean
+        description: The headers parameter is used to turn off headers when using CSV output.
+      - in: query
+        name: columns
+        schema:
+          type: string
+        description: The columns parameter is used to limit the results and only request the columns you need. The most common use of this feature is to embed a single numeric result from one of the end points in a spreadsheet cell.
+      - in: query
+        name: human
+        schema:
+          type: boolean
+        description: Use human-readable attribute names in the JSON or CSV output instead of the standard camelCase attribute names.
+      tags:
+      - Stocks
+      security:
+      - Api Authentication: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: {}
+              examples:
+                StockEarnings:
+                  value:
+                    s: ok
+                    symbol:
+                    - AAPL
+                    - AAPL
+                    - AAPL
+                    fiscalYear:
+                    - 2024
+                    - 2024
+                    - 2024
+                    fiscalQuarter:
+                    - 3
+                    - 2
+                    - 1
+                    date:
+                    - 1706659200
+                    - 1698883200
+                    - 1690848000
+                    reportDate:
+                    - 1706832000
+                    - 1699056000
+                    - 1691020800
+                    reportTime:
+                    - after close
+                    - after close
+                    - after close
+                    currency:
+                    - USD
+                    - USD
+                    - USD
+                    reportedEPS:
+                    - 2.18
+                    - 1.46
+                    - 1.52
+                    estimatedEPS:
+                    - 2.1
+                    - 1.39
+                    - 1.43
+                    surpriseEPS:
+                    - 0.08
+                    - 0.07
+                    - 0.09
+                    surpriseEPSpct:
+                    - 3.81
+                    - 5.04
+                    - 6.29
+                    updated:
+                    - 1706832000
+                    - 1699056000
+                    - 1691020800
+                  summary: Stock Earnings
+            text/csv:
+              schema:
+                type: object
+                additionalProperties: {}
+          description: ''
+      summary: V1 stocks earnings retrieve
+      x-summary-source: derived
+  /v1/stocks/news/{symbol}/:
+    get:
+      operationId: v1_stocks_news_retrieve
+      description: Get news for a stock.
+      parameters:
+      - in: query
+        name: format
+        schema:
+          type: string
+          enum:
+          - csv
+          - json
+        description: The format parameter is used to specify the format for your data. We support JSON and CSV formats. The default format is JSON.
+      - in: path
+        name: symbol
+        schema:
+          type: string
+        description: "The company's ticker symbol. If no exchange is specified, by default a US exchange will be assumed. You may embed the exchange in the ticker symbol using the Yahoo Finance or TradingView formats.\n                                                                                    Ticker Formats: (TICKER, TICKER.EX, EXCHANGE:TICKER)\n                                                                                    "
+        required: true
+      - in: query
+        name: date
+        schema:
+          type: string
+          format: date
+        description: 'Retrieve news by date. Accepted timestamp inputs: ISO 8601, unix, spreadsheet.'
+      - in: query
+        name: from
+        schema:
+          type: string
+          format: date
+        description: 'The earliest news to include in the output. If you use countback, from is not required. Accepted timestamp inputs: ISO 8601, unix, spreadsheet.'
+      - in: query
+        name: to
+        schema:
+          type: string
+          format: date
+        description: 'The latest news to include in the output. Accepted timestamp inputs: ISO 8601, unix, spreadsheet.'
+      - in: query
+        name: countback
+        schema:
+          type: integer
+        description: Countback will fetch a specific number of news before to. If you use from, countback is not required.
+      - in: query
+        name: dateformat
+        schema:
+          type: string
+          enum:
+          - spreadsheet
+          - timestamp
+          - unix
+        description: The dateformat parameter allows you specify the format you wish to receive date and time information in.
+      - in: query
+        name: limit
+        schema:
+          type: integer
+        description: The limit parameter allows you to limit the number of results for a particular API call or override an endpoint's default limits to get more data.
+      - in: query
+        name: offset
+        schema:
+          type: integer
+        description: The offset parameter is used together with limit to allow you to implement pagination in your application. Offset will allow you to return values starting at a certain value.
+      - in: query
+        name: headers
+        schema:
+          type: boolean
+        description: The headers parameter is used to turn off headers when using CSV output.
+      - in: query
+        name: columns
+        schema:
+          type: string
+        description: The columns parameter is used to limit the results and only request the columns you need. The most common use of this feature is to embed a single numeric result from one of the end points in a spreadsheet cell.
+      - in: query
+        name: human
+        schema:
+          type: boolean
+        description: Use human-readable attribute names in the JSON or CSV output instead of the standard camelCase attribute names.
+      tags:
+      - Stocks
+      security:
+      - Api Authentication: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: {}
+              examples:
+                StockNews:
+                  value:
+                    s: ok
+                    symbol:
+                    - AAPL
+                    - AAPL
+                    headline:
+                    - Apple Reports Record Q4 Revenue
+                    - Apple Announces New Product Line
+                    content:
+                    - Apple Inc. reported record revenue for the fourth quarter...
+                    - Apple unveiled its latest product offerings today...
+                    source:
+                    - https://www.bloomberg.com/news/articles/2024-01-15/apple-record-q4
+                    - https://www.reuters.com/technology/apple-new-product-line-2024-01-14
+                    publicationDate:
+                    - 1705449600
+                    - 1705363200
+                    updated: 1705449600
+                  summary: Stock News
+            text/csv:
+              schema:
+                type: object
+                additionalProperties: {}
+          description: ''
+      summary: V1 stocks news retrieve
+      x-summary-source: derived
+  /v1/stocks/prices/:
+    get:
+      operationId: stocks_prices
+      description: Get last price for a stock.
+      parameters:
+      - in: query
+        name: format
+        schema:
+          type: string
+          enum:
+          - csv
+          - json
+        description: The format parameter is used to specify the format for your data. We support JSON and CSV formats. The default format is JSON.
+      - in: query
+        name: symbols
+        schema:
+          type: string
+        description: "The ticker symbols separated by commas. If no exchange is specified, by default a US exchange will be assumed. You may embed the exchange in the ticker symbol using the Yahoo Finance or TradingView formats.\n                                                                                    Ticker Formats: (TICKER, TICKER.EX, EXCHANGE:TICKER)\n                                                                                    "
+        required: true
+      - in: query
+        name: dateformat
+        schema:
+          type: string
+          enum:
+          - spreadsheet
+          - timestamp
+          - unix
+        description: The dateformat parameter allows you specify the format you wish to receive date and time information in.
+      - in: query
+        name: limit
+        schema:
+          type: integer
+        description: The limit parameter allows you to limit the number of results for a particular API call or override an endpoint's default limits to get more data.
+      - in: query
+        name: offset
+        schema:
+          type: integer
+        description: The offset parameter is used together with limit to allow you to implement pagination in your application. Offset will allow you to return values starting at a certain value.
+      - in: query
+        name: headers
+        schema:
+          type: boolean
+        description: The headers parameter is used to turn off headers when using CSV output.
+      - in: query
+        name: columns
+        schema:
+          type: string
+        description: The columns parameter is used to limit the results and only request the columns you need. The most common use of this feature is to embed a single numeric result from one of the end points in a spreadsheet cell.
+      - in: query
+        name: human
+        schema:
+          type: boolean
+        description: Use human-readable attribute names in the JSON or CSV output instead of the standard camelCase attribute names.
+      tags:
+      - Stocks
+      security:
+      - Api Authentication: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: {}
+              examples:
+                StockPrices:
+                  value:
+                    s: ok
+                    symbol:
+                    - AAPL
+                    - MSFT
+                    - GOOG
+                    mid:
+                    - 221.525
+                    - 415.125
+                    - 175.225
+                    change:
+                    - 1.38
+                    - -2.4
+                    - 0.95
+                    changepct:
+                    - 0.0063
+                    - -0.0057
+                    - 0.0055
+                    updated:
+                    - 1705449600
+                    - 1705449600
+                    - 1705449600
+                  summary: Stock Prices
+                  description: Returns last prices for multiple symbols.
+            text/csv:
+              schema:
+                type: object
+                additionalProperties: {}
+          description: ''
+      summary: Stocks prices
+      x-summary-source: derived
+  /v1/stocks/prices/{symbol}/:
+    get:
+      operationId: stocks_price_by_symbol
+      description: Get last price for a stock.
+      parameters:
+      - in: query
+        name: format
+        schema:
+          type: string
+          enum:
+          - csv
+          - json
+        description: The format parameter is used to specify the format for your data. We support JSON and CSV formats. The default format is JSON.
+      - in: path
+        name: symbol
+        schema:
+          type: string
+        description: "The company's ticker symbol. If no exchange is specified, by default a US exchange will be assumed. You may embed the exchange in the ticker symbol using the Yahoo Finance or TradingView formats.\n                                                                                    Ticker Formats: (TICKER, TICKER.EX, EXCHANGE:TICKER)\n                                                                                    "
+        required: true
+      - in: query
+        name: dateformat
+        schema:
+          type: string
+          enum:
+          - spreadsheet
+          - timestamp
+          - unix
+        description: The dateformat parameter allows you specify the format you wish to receive date and time information in.
+      - in: query
+        name: limit
+        schema:
+          type: integer
+        description: The limit parameter allows you to limit the number of results for a particular API call or override an endpoint's default limits to get more data.
+      - in: query
+        name: offset
+        schema:
+          type: integer
+        description: The offset parameter is used together with limit to allow you to implement pagination in your application. Offset will allow you to return values starting at a certain value.
+      - in: query
+        name: headers
+        schema:
+          type: boolean
+        description: The headers parameter is used to turn off headers when using CSV output.
+      - in: query
+        name: columns
+        schema:
+          type: string
+        description: The columns parameter is used to limit the results and only request the columns you need. The most common use of this feature is to embed a single numeric result from one of the end points in a spreadsheet cell.
+      - in: query
+        name: human
+        schema:
+          type: boolean
+        description: Use human-readable attribute names in the JSON or CSV output instead of the standard camelCase attribute names.
+      tags:
+      - Stocks
+      security:
+      - Api Authentication: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: {}
+              examples:
+                StockPrice:
+                  value:
+                    s: ok
+                    symbol:
+                    - AAPL
+                    mid:
+                    - 221.525
+                    change:
+                    - 1.38
+                    changepct:
+                    - 0.0063
+                    updated:
+                    - 1705449600
+                  summary: Stock Price
+                  description: Returns the last price for a single symbol.
+            text/csv:
+              schema:
+                type: object
+                additionalProperties: {}
+          description: ''
+      summary: Stocks price by symbol
+      x-summary-source: derived
+  /v1/stocks/quotes/:
+    get:
+      operationId: stocks_quotes
+      description: Get last quote for a stock.
+      parameters:
+      - in: query
+        name: format
+        schema:
+          type: string
+          enum:
+          - csv
+          - json
+        description: The format parameter is used to specify the format for your data. We support JSON and CSV formats. The default format is JSON.
+      - in: query
+        name: symbols
+        schema:
+          type: string
+        description: "The ticker symbols separated by commas. If no exchange is specified, by default a US exchange will be assumed. You may embed the exchange in the ticker symbol using the Yahoo Finance or TradingView formats.\n                                                                                    Ticker Formats: (TICKER, TICKER.EX, EXCHANGE:TICKER)\n                                                                                    "
+        required: true
+      - in: query
+        name: extended
+        schema:
+          type: boolean
+        description: Whether to include extended session prices, defaults to True.
+      - in: query
+        name: dateformat
+        schema:
+          type: string
+          enum:
+          - spreadsheet
+          - timestamp
+          - unix
+        description: The dateformat parameter allows you specify the format you wish to receive date and time information in.
+      - in: query
+        name: limit
+        schema:
+          type: integer
+        description: The limit parameter allows you to limit the number of results for a particular API call or override an endpoint's default limits to get more data.
+      - in: query
+        name: offset
+        schema:
+          type: integer
+        description: The offset parameter is used together with limit to allow you to implement pagination in your application. Offset will allow you to return values starting at a certain value.
+      - in: query
+        name: headers
+        schema:
+          type: boolean
+        description: The headers parameter is used to turn off headers when using CSV output.
+      - in: query
+        name: columns
+        schema:
+          type: string
+        description: The columns parameter is used to limit the results and only request the columns you need. The most common use of this feature is to embed a single numeric result from one of the end points in a spreadsheet cell.
+      - in: query
+        name: human
+        schema:
+          type: boolean
+        description: Use human-readable attribute names in the JSON or CSV output instead of the standard camelCase attribute names.
+      tags:
+      - Stocks
+      security:
+      - Api Authentication: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: {}
+              examples:
+                StockQuotes:
+                  value:
+                    s: ok
+                    symbol:
+                    - AAPL
+                    - MSFT
+                    - GOOG
+                    ask:
+                    - 221.55
+                    - 415.2
+                    - 175.3
+                    askSize:
+                    - 200
+                    - 100
+                    - 150
+                    bid:
+                    - 221.5
+                    - 415.05
+                    - 175.15
+                    bidSize:
+                    - 300
+                    - 150
+                    - 200
+                    mid:
+                    - 221.525
+                    - 415.125
+                    - 175.225
+                    last:
+                    - 221.52
+                    - 415.1
+                    - 175.2
+                    change:
+                    - 1.38
+                    - -2.4
+                    - 0.95
+                    changepct:
+                    - 0.0063
+                    - -0.0057
+                    - 0.0055
+                    volume:
+                    - 58240000
+                    - 22150000
+                    - 18430000
+                    updated:
+                    - 1705449600
+                    - 1705449600
+                    - 1705449600
+                  summary: Stock Quotes
+                  description: Returns real-time quotes for multiple symbols.
+            text/csv:
+              schema:
+                type: object
+                additionalProperties: {}
+          description: ''
+      summary: Stocks quotes
+      x-summary-source: derived
+  /v1/stocks/quotes/{symbol}/:
+    get:
+      operationId: stocks_quote_by_symbol
+      description: Get last quote for a stock.
+      parameters:
+      - in: query
+        name: format
+        schema:
+          type: string
+          enum:
+          - csv
+          - json
+        description: The format parameter is used to specify the format for your data. We support JSON and CSV formats. The default format is JSON.
+      - in: path
+        name: symbol
+        schema:
+          type: string
+        description: "The company's ticker symbol. If no exchange is specified, by default a US exchange will be assumed. You may embed the exchange in the ticker symbol using the Yahoo Finance or TradingView formats.\n                                                                                    Ticker Formats: (TICKER, TICKER.EX, EXCHANGE:TICKER)\n                                                                                    "
+        required: true
+      - in: query
+        name: extended
+        schema:
+          type: boolean
+        description: Whether to include extended session prices, defaults to True.
+      - in: query
+        name: dateformat
+        schema:
+          type: string
+          enum:
+          - spreadsheet
+          - timestamp
+          - unix
+        description: The dateformat parameter allows you specify the format you wish to receive date and time information in.
+      - in: query
+        name: limit
+        schema:
+          type: integer
+        description: The limit parameter allows you to limit the number of results for a particular API call or override an endpoint's default limits to get more data.
+      - in: query
+        name: offset
+        schema:
+          type: integer
+        description: The offset parameter is used together with limit to allow you to implement pagination in your application. Offset will allow you to return values starting at a certain value.
+      - in: query
+        name: headers
+        schema:
+          type: boolean
+        description: The headers parameter is used to turn off headers when using CSV output.
+      - in: query
+        name: columns
+        schema:
+          type: string
+        description: The columns parameter is used to limit the results and only request the columns you need. The most common use of this feature is to embed a single numeric result from one of the end points in a spreadsheet cell.
+      - in: query
+        name: human
+        schema:
+          type: boolean
+        description: Use human-readable attribute names in the JSON or CSV output instead of the standard camelCase attribute names.
+      tags:
+      - Stocks
+      security:
+      - Api Authentication: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: {}
+              examples:
+                StockQuote:
+                  value:
+                    s: ok
+                    symbol:
+                    - AAPL
+                    ask:
+                    - 221.55
+                    askSize:
+                    - 200
+                    bid:
+                    - 221.5
+                    bidSize:
+                    - 300
+                    mid:
+                    - 221.525
+                    last:
+                    - 221.52
+                    change:
+                    - 1.38
+                    changepct:
+                    - 0.0063
+                    volume:
+                    - 58240000
+                    updated:
+                    - 1705449600
+                  summary: Stock Quote
+                  description: Returns a real-time quote for a single symbol.
+            text/csv:
+              schema:
+                type: object
+                additionalProperties: {}
+          description: ''
+      summary: Stocks quote by symbol
+      x-summary-source: derived
   /stocks/candles/{resolution}/{symbol}/:
     get:
       operationId: getStockCandles
@@ -65,6 +1203,11 @@ paths:
           $ref: '#/components/responses/Unauthorized'
         '429':
           $ref: '#/components/responses/TooManyRequests'
+      security:
+      - bearerAuth: []
+    servers:
+    - url: https://api.marketdata.app/v1
+      description: Market Data API v1
   /stocks/quotes/{symbol}/:
     get:
       operationId: getStockQuote
@@ -96,6 +1239,11 @@ paths:
           $ref: '#/components/responses/Unauthorized'
         '429':
           $ref: '#/components/responses/TooManyRequests'
+      security:
+      - bearerAuth: []
+    servers:
+    - url: https://api.marketdata.app/v1
+      description: Market Data API v1
   /stocks/bulkquotes/:
     get:
       operationId: getStockBulkQuotes
@@ -127,6 +1275,11 @@ paths:
           $ref: '#/components/responses/Unauthorized'
         '429':
           $ref: '#/components/responses/TooManyRequests'
+      security:
+      - bearerAuth: []
+    servers:
+    - url: https://api.marketdata.app/v1
+      description: Market Data API v1
   /stocks/bulkcandles/{resolution}/:
     get:
       operationId: getStockBulkCandles
@@ -164,6 +1317,11 @@ paths:
           $ref: '#/components/responses/Unauthorized'
         '429':
           $ref: '#/components/responses/TooManyRequests'
+      security:
+      - bearerAuth: []
+    servers:
+    - url: https://api.marketdata.app/v1
+      description: Market Data API v1
   /stocks/earnings/{symbol}/:
     get:
       operationId: getStockEarnings
@@ -195,6 +1353,11 @@ paths:
           $ref: '#/components/responses/Unauthorized'
         '429':
           $ref: '#/components/responses/TooManyRequests'
+      security:
+      - bearerAuth: []
+    servers:
+    - url: https://api.marketdata.app/v1
+      description: Market Data API v1
   /stocks/news/{symbol}/:
     get:
       operationId: getStockNews
@@ -226,21 +1389,44 @@ paths:
           $ref: '#/components/responses/Unauthorized'
         '429':
           $ref: '#/components/responses/TooManyRequests'
+      security:
+      - bearerAuth: []
+    servers:
+    - url: https://api.marketdata.app/v1
+      description: Market Data API v1
 components:
-  responses:
-    Unauthorized:
-      description: Authentication failed or the token is missing or invalid.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponse'
-    TooManyRequests:
-      description: Credit allocation or simultaneous-request limit exceeded.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponse'
   schemas:
+    QuoteResponse:
+      type: object
+      description: Column-oriented quote payload.
+      properties:
+        s:
+          type: string
+          description: Status of the response.
+        symbol:
+          type: array
+          items:
+            type: string
+        last:
+          type: array
+          items:
+            type: number
+        bid:
+          type: array
+          items:
+            type: number
+        ask:
+          type: array
+          items:
+            type: number
+        volume:
+          type: array
+          items:
+            type: integer
+        updated:
+          type: array
+          items:
+            type: integer
     CandlesResponse:
       type: object
       description: Column-oriented OHLCV candle series.
@@ -287,37 +1473,6 @@ components:
         errmsg:
           type: string
           description: Human-readable error message.
-    QuoteResponse:
-      type: object
-      description: Column-oriented quote payload.
-      properties:
-        s:
-          type: string
-          description: Status of the response.
-        symbol:
-          type: array
-          items:
-            type: string
-        last:
-          type: array
-          items:
-            type: number
-        bid:
-          type: array
-          items:
-            type: number
-        ask:
-          type: array
-          items:
-            type: number
-        volume:
-          type: array
-          items:
-            type: integer
-        updated:
-          type: array
-          items:
-            type: integer
     GenericResponse:
       type: object
       description: Generic column-oriented Market Data response keyed by status flag s.
@@ -325,8 +1480,28 @@ components:
         s:
           type: string
           description: Status of the response - ok, no_data, or error.
+  responses:
+    Unauthorized:
+      description: Authentication failed or the token is missing or invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    TooManyRequests:
+      description: Credit allocation or simultaneous-request limit exceeded.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
   securitySchemes:
+    Api_Authentication:
+      type: apiKey
+      in: query
+      name: token
     bearerAuth:
       type: http
       scheme: bearer
       description: Bearer token generated in the Market Data dashboard. Passed as Authorization Bearer YOUR_API_TOKEN. A token may also be supplied via the token query parameter.
+x-refined-from:
+- marketdata-app-openapi-original.yml
+- marketdata-app-openapi.yml
