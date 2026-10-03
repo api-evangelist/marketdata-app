@@ -940,15 +940,13 @@ components:
           schema:
             $ref: '#/components/schemas/ErrorResponse'
   schemas:
-    ErrorResponse:
+    GenericResponse:
       type: object
+      description: Generic column-oriented Market Data response keyed by status flag s.
       properties:
         s:
           type: string
-          description: Always error for failed requests.
-        errmsg:
-          type: string
-          description: Human-readable error message.
+          description: Status of the response - ok, no_data, or error.
     OptionQuoteResponse:
       type: object
       description: Column-oriented option contract quote payload.
@@ -1000,13 +998,15 @@ components:
           type: array
           items:
             type: number
-    GenericResponse:
+    ErrorResponse:
       type: object
-      description: Generic column-oriented Market Data response keyed by status flag s.
       properties:
         s:
           type: string
-          description: Status of the response - ok, no_data, or error.
+          description: Always error for failed requests.
+        errmsg:
+          type: string
+          description: Human-readable error message.
   securitySchemes:
     Api_Authentication:
       type: apiKey

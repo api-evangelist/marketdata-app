@@ -10,9 +10,7 @@
     "marketdata-app-stocks-api-openapi.yml",
     "marketdata-app-indices-api-openapi.yml"
   ],
-  "archived": [
-    "deleted 1 superseded output(s) from the previous generation"
-  ],
+  "archived": [],
   "errors": [],
   "warnings": [],
   "notes": [
@@ -40,14 +38,12 @@
     "tag 'Markets' spans 2 source specs (marketdata-app-openapi-original.yml, marketdata-app-openapi.yml): per-path servers applied",
     "tag 'Options' spans 2 source specs (marketdata-app-openapi-original.yml, marketdata-app-openapi.yml): per-path servers applied",
     "tag 'Stocks' spans 2 source specs (marketdata-app-openapi-original.yml, marketdata-app-openapi.yml): per-path servers applied",
-    "superseded outputs removed: marketdata-app-v1-api-openapi.yml",
-    "apis.yml register: written (+0 apis, 4 total)"
+    "apis.yml register: already-registered"
   ],
   "skipped": [
     "marketdata-app-indices-api-openapi.yml: previously refined output, superseded by openapi/_original/",
     "marketdata-app-markets-api-openapi.yml: previously refined output, superseded by openapi/_original/",
     "marketdata-app-options-api-openapi.yml: previously refined output, superseded by openapi/_original/",
-    "marketdata-app-stocks-api-openapi.yml: previously refined output, superseded by openapi/_original/",
-    "marketdata-app-v1-api-openapi.yml: previously refined output, superseded by openapi/_original/"
+    "marketdata-app-stocks-api-openapi.yml: previously refined output, superseded by openapi/_original/"
   ]
 }

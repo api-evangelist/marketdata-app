@@ -97,7 +97,29 @@ paths:
         '429':
           $ref: '#/components/responses/TooManyRequests'
 components:
+  responses:
+    Unauthorized:
+      description: Authentication failed or the token is missing or invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    TooManyRequests:
+      description: Credit allocation or simultaneous-request limit exceeded.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
   schemas:
+    ErrorResponse:
+      type: object
+      properties:
+        s:
+          type: string
+          description: Always error for failed requests.
+        errmsg:
+          type: string
+          description: Human-readable error message.
     QuoteResponse:
       type: object
       description: Column-oriented quote payload.
@@ -166,28 +188,6 @@ components:
           description: Volume.
           items:
             type: integer
-    ErrorResponse:
-      type: object
-      properties:
-        s:
-          type: string
-          description: Always error for failed requests.
-        errmsg:
-          type: string
-          description: Human-readable error message.
-  responses:
-    Unauthorized:
-      description: Authentication failed or the token is missing or invalid.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponse'
-    TooManyRequests:
-      description: Credit allocation or simultaneous-request limit exceeded.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponse'
   securitySchemes:
     bearerAuth:
       type: http
