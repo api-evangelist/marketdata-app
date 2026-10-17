@@ -98,6 +98,15 @@ paths:
           $ref: '#/components/responses/TooManyRequests'
 components:
   schemas:
+    ErrorResponse:
+      type: object
+      properties:
+        s:
+          type: string
+          description: Always error for failed requests.
+        errmsg:
+          type: string
+          description: Human-readable error message.
     CandlesResponse:
       type: object
       description: Column-oriented OHLCV candle series.
@@ -166,15 +175,6 @@ components:
           type: array
           items:
             type: integer
-    ErrorResponse:
-      type: object
-      properties:
-        s:
-          type: string
-          description: Always error for failed requests.
-        errmsg:
-          type: string
-          description: Human-readable error message.
   responses:
     Unauthorized:
       description: Authentication failed or the token is missing or invalid.

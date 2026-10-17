@@ -1396,6 +1396,15 @@ paths:
       description: Market Data API v1
 components:
   schemas:
+    ErrorResponse:
+      type: object
+      properties:
+        s:
+          type: string
+          description: Always error for failed requests.
+        errmsg:
+          type: string
+          description: Human-readable error message.
     CandlesResponse:
       type: object
       description: Column-oriented OHLCV candle series.
@@ -1433,13 +1442,6 @@ components:
           description: Volume.
           items:
             type: integer
-    GenericResponse:
-      type: object
-      description: Generic column-oriented Market Data response keyed by status flag s.
-      properties:
-        s:
-          type: string
-          description: Status of the response - ok, no_data, or error.
     QuoteResponse:
       type: object
       description: Column-oriented quote payload.
@@ -1471,15 +1473,13 @@ components:
           type: array
           items:
             type: integer
-    ErrorResponse:
+    GenericResponse:
       type: object
+      description: Generic column-oriented Market Data response keyed by status flag s.
       properties:
         s:
           type: string
-          description: Always error for failed requests.
-        errmsg:
-          type: string
-          description: Human-readable error message.
+          description: Status of the response - ok, no_data, or error.
   responses:
     Unauthorized:
       description: Authentication failed or the token is missing or invalid.
