@@ -16,3 +16,64 @@
   relationship: platform-app
   status: not-a-workflow
   arazzo: null
+- slug: marketdata-app-go-module-proxy
+  label: Go module proxy
+  partner_name: Go module proxy
+  category: official SDK (Go)
+  type: register
+  channel: package-registry
+  evidence: https://pkg.go.dev/github.com/MarketDataApp/sdk-go
+  source: edge
+  relationship: distribution-channel
+  contract_reference:
+    register: Go module proxy (public registry JSON)
+    spec_file: null
+    language: Go
+    packages:
+    - name: github.com/MarketDataApp/sdk-go
+      version: v1.2.0
+      released: '2024-05-02'
+      released_field: Time
+      lapsed: true
+      page: https://pkg.go.dev/github.com/MarketDataApp/sdk-go
+      repo_leg: github-org:marketdataapp
+      publisher_leg: org:marketdataapp
+      matched_by: github-org
+    current: false
+    signal_note: 'an official package on the registry: distribution, not an integration; lapsed = no release in
+      24 months'
+    detected_by: sweep-official-sdks.py
+    detected: '2026-10-18'
+  status: not-a-workflow
+  arazzo: null
+- slug: marketdata-app-npm-registry
+  label: npm registry
+  partner: npm
+  partner_name: npm registry
+  category: official SDK (JavaScript/TypeScript)
+  type: register
+  channel: package-registry
+  evidence: https://www.npmjs.com/package/@marketdata/sdk
+  source: edge
+  relationship: distribution-channel
+  contract_reference:
+    register: npm registry (public registry JSON)
+    spec_file: null
+    language: JavaScript/TypeScript
+    packages:
+    - name: '@marketdata/sdk'
+      version: 1.0.0
+      released: '2026-05-29'
+      released_field: modified
+      lapsed: false
+      page: https://www.npmjs.com/package/@marketdata/sdk
+      repo_leg: github-org:marketdataapp
+      publisher_leg: email:marketdata.app
+      matched_by: domain
+    current: true
+    signal_note: 'an official package on the registry: distribution, not an integration; lapsed = no release in
+      24 months'
+    detected_by: sweep-official-sdks.py
+    detected: '2026-10-18'
+  status: not-a-workflow
+  arazzo: null
